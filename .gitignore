@@ -2,11 +2,12 @@
 /*
 # Unless its these
 !.config/alacritty/
-!.config/nvim/
 !.config/ion/
+!.config/nvim/
 !.gitignore
 !.gitmodules
 !.less
 !.lesskey
+!.setup
 !.tmux.conf
 !.tmux/

@@ -1,0 +1,44 @@
+#!/bin/bash
+
+OS=$(uname -s)
+
+pushd .
+
+cd ~/
+
+if [ $OS == "Darwin" ]
+then
+	echo "Assuming OSX"
+	# Install homebrew
+	if ! brew update; then
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		sudo launchctl config user path "/usr/local/bin:$PATH"
+	fi
+	# Install rustup
+	if ! rustup update; then
+		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+		cargo install bat
+		rustup component add rls
+	fi
+
+	brew install exa fd less neovim python python@2 ripgrep tmux node yarn
+	yarn global add neovim
+	yarn global add vim-language-server
+	pip3 install pynvim neovim
+	pip install pynvim neovim
+	brew cask install alacritty gpg-suite
+	git clone https://gitlab.redox-os.org/redox-os/ion
+	cd ion/
+	cargo install --path . --force
+else
+	echo "Assuming Arch Linux"
+	sudo pacman -Syu rustup bat python python-neovim python2 python2-neovim yarn nodejs fd exa tmux ripgrep alacritty
+	yarn global add neovim
+	yarn global add vim-language-server
+	git clone https://gitlab.redox-os.org/redox-os/ion
+	cd ion/
+	cargo install --path . --force
+fi
+
+
+popd

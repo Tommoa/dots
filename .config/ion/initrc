@@ -1,0 +1,19 @@
+export SKIM_DEFAULT_OPTIONS="--multi --ansi --bind=ctrl-e:up --preview='bat --plain --color=always {}'"
+
+fn update_rust
+	let gitdr = $(git fetch --dry-run &| wc -l)
+	let gitdr:int = $((gitdr))
+	if test $(echo $gitdr) -ne 0
+		echo "${c::red}Updating${c::reset}"
+		git checkout .
+		git pull --recurse-submodules
+		cargo update
+		cargo install --path . --force
+	else
+		echo "${c::green}Already updated!${c::reset}"
+	end
+end
+
+export PATH=/usr/local/Cellar/less/530_1/bin/:$PATH:/usr/local/bin
+export PAGER=/usr/local/Cellar/less/530_1/bin/less
+source ~/.cargo/env

@@ -1,10 +1,12 @@
-Desktop/*
-Downloads/*
-Documents/*
-Music/*
-Public/*
-Pictures/*
-Movies/*
-Library/*
-Projects/*
-go/*
+# Kill it all with fire
+/*
+# Unless its these
+!.config/alacritty/
+!.config/nvim/
+!.config/ion/
+!.gitignore
+!.gitmodules
+!.less
+!.lesskey
+!.tmux.conf
+!.tmux/

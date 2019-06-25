@@ -97,9 +97,6 @@ nnoremap gV `[v`]
 
 let g:autofmt_autosave = 1
 
-let g:LanguageClient_autoStart = 1 
-let g:LanguageClient_serverCommands = { 'rust': ['rustup', 'run', 'stable', 'rls'], 'python': ['pyls'] }
-
 map <silent> H :call CocAction('doHover')<CR>
 map <silent> <leader>d <Plug>(coc-type-definition)
 map <silent> gd <Plug>(coc-definition)

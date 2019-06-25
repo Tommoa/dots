@@ -11,6 +11,7 @@ Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 Plug 'rust-lang/rust.vim'
+Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 Plug 'sjl/gundo.vim'
 call plug#end()
 
@@ -105,7 +106,8 @@ map <silent> gd <Plug>(coc-definition)
 map <silent> gi <Plug>(coc-implementation)
 map <silent> gr <Plug>(coc-references)
 map <silent> <leader>r Plug(coc-rename)
-map <leader>l :GundoToggle<CR>
+map <silent> <leader>l :GundoToggle<CR>
+map <silent> <leader>n :NERDTreeToggle<CR>
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>

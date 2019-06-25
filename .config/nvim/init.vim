@@ -3,6 +3,7 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
 Plug 'iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
 Plug 'itchyny/lightline.vim'
+Plug 'junegunn/goyo.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -165,5 +166,22 @@ augroup netrw_buf_hidden_fix
                 \| endif
 
 augroup end
+
+function! s:goyo_enter()
+	if executable('tmux') && strlen($TMUX)
+		silent !tmux set status off
+		silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+	endif
+endfunction
+
+function! s:goyo_leave()
+	if executable('tmux') && strlen($TMUX)
+		silent !tmux set status on
+		silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+	endif
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 colorscheme nord 

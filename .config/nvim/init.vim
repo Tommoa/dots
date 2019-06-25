@@ -1,15 +1,15 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'rust-lang/rust.vim'
-Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
 Plug 'arcticicestudio/nord-vim'
+Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
+Plug 'iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+Plug 'rust-lang/rust.vim'
 Plug 'sjl/gundo.vim'
 call plug#end()
 

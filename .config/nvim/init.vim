@@ -105,6 +105,12 @@ map <silent> gr <Plug>(coc-references)
 map <silent> <leader>r Plug(coc-rename)
 map <silent> <leader>l :GundoToggle<CR>
 map <silent> <leader>n :NERDTreeToggle<CR>
+
+let g:NERDTreeMapOpenSplit = "u"
+let g:NERDTreeMapOpenExpl = "y"
+let g:NERDTreeMapUpdir = "l"
+let g:NERDTreeMapUpdirKeepOpen = "L"
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>

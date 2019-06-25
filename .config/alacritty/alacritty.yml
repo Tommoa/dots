@@ -34,7 +34,7 @@ window:
 
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
-  decorations: full
+  decorations: buttonless
 
 # Display tabs using this many cells (changes require restart)
 tabspaces: 4

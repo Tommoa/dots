@@ -1,3 +1,5 @@
+source ~/.config/ion/plugins/init.ion
+
 export SKIM_DEFAULT_OPTIONS="--multi --ansi --bind=ctrl-e:up --preview='bat --plain --color=always {}'"
 
 fn update_rust

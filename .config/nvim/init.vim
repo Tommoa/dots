@@ -4,6 +4,7 @@ Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
 Plug 'iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'LnL7/vim-nix'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}

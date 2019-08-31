@@ -26,91 +26,11 @@ if exists -s SSH_CLIENT
 	end
 end
 
-fn setup_nix
-	# Only execute this file once per shell.
-	if test -n $or(${__ETC_PROFILE_NIX_SOURCED} "")
-		break
-	end
-	export __ETC_PROFILE_NIX_SOURCED=1
-
-	# Set up secure multi-user builds: non-root users build through the
-	# Nix daemon.
-	if test "$USER" != root || not test -w /nix/var/nix/db
-		export NIX_REMOTE=daemon
-	end
-
-	export NIX_USER_PROFILE_DIR="/nix/var/nix/profiles/per-user/$USER"
-	let nix_profiles = [ "/nix/var/nix/profiles/default" "$HOME/.nix-profile" ]
-	export NIX_PROFILES=$join(nix_profiles)
-
-	# Set up the per-user profile.
-	mkdir -m 0755 -p $NIX_USER_PROFILE_DIR
-	if not test -O "$NIX_USER_PROFILE_DIR"
-		echo "WARNING: bad ownership on $NIX_USER_PROFILE_DIR"
-	end
-
-	if test -w $HOME
-	  if not test -L $HOME/.nix-profile
-		  if test "$USER" != root
-			  ln -s $NIX_USER_PROFILE_DIR/profile $HOME/.nix-profile
-		  else
-			  # Root installs in the system-wide profile by default.
-			  ln -s /nix/var/nix/profiles/default $HOME/.nix-profile
-		  end
-	  end
-
-	  # Subscribe the root user to the NixOS channel by default.
-	  if test "$USER" = root && not test -e $HOME/.nix-channels
-		  echo "https://nixos.org/channels/nixpkgs-unstable nixpkgs" > $HOME/.nix-channels
-	  end
-
-	  # Create the per-user garbage collector roots directory.
-	  let NIX_USER_GCROOTS_DIR=/nix/var/nix/gcroots/per-user/$USER
-	  mkdir -m 0755 -p $NIX_USER_GCROOTS_DIR
-	  if not test -O "$NIX_USER_GCROOTS_DIR"
-		  echo "WARNING: bad ownership on $NIX_USER_GCROOTS_DIR"
-	  end
-
-	  # Set up a default Nix expression from which to install stuff.
-	  if not test -e $HOME/.nix-defexpr || test -L $HOME/.nix-defexpr
-		  rm -f $HOME/.nix-defexpr
-		  mkdir -p $HOME/.nix-defexpr
-		  if test "$USER" != root
-			  ln -s /nix/var/nix/profiles/per-user/root/channels $HOME/.nix-defexpr/channels_root
-		  end
-	  end
-	end
-
-
-	# Set $NIX_SSL_CERT_FILE so that Nixpkgs applications like curl work.
-	if not test -z $or(${NIX_SSL_CERT_FILE} "")
-		: # Allow users to override the NIX_SSL_CERT_FILE
-	else if test -e /etc/ssl/certs/ca-certificates.crt # NixOS, Ubuntu, Debian, Gentoo, Arch
-		export NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
-	else if test -e /etc/ssl/ca-bundle.pem # openSUSE Tumbleweed
-		export NIX_SSL_CERT_FILE=/etc/ssl/ca-bundle.pem
-	else if test -e /etc/ssl/certs/ca-bundle.crt # Old NixOS
-		export NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
-	else if test -e /etc/pki/tls/certs/ca-bundle.crt # Fedora, CentOS
-		export NIX_SSL_CERT_FILE=/etc/pki/tls/certs/ca-bundle.crt
-	else
-	  # Fall back to what is in the nix profiles, favouring whatever is defined last.
-	  for i in @nix_profiles
-		if test -e $i/etc/ssl/certs/ca-bundle.crt
-		  export NIX_SSL_CERT_FILE=$i/etc/ssl/certs/ca-bundle.crt
-		end
-	  end
-	end
-
-	export NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels"
-	export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
-end
-
 if matches $(uname) "Darwin"
 	# We're on OSX
 	# Set path to use homebrew's less
 	export PATH=$PATH:/usr/local/bin
 	export PAGER=$HOME/.nix-profile/bin/less
-	setup_nix
+	source ~/.config/ion/plugins/tools/nix.ion
 end
 source ~/.cargo/env

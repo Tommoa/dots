@@ -14,7 +14,7 @@ export MAIL=/var/mail/$USER
 
 # this is the path - this one should allow
 # the user to use most applications on most machines.
-export PATH=/usr/local/bin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin:/usr/sfw/bin:/usr/ccs/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/dt/bin:/usr/openwin/bin:/opt/csw/gcc3/bin:/opt/SUNWspro/bin:/usr/freeware/bin:/usr/games:/usr/local/games:/home/wheel/tommoa/.local/bin:/home/wheel/tommoa/scripts
+export PATH=/usr/local/bin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin:/usr/sfw/bin:/usr/ccs/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/dt/bin:/usr/openwin/bin:/opt/csw/gcc3/bin:/opt/SUNWspro/bin:/usr/freeware/bin:/usr/games:/usr/local/games:$HOME/.local/bin:$HOME/scripts
 PROMPT=%U%m%u:%~\>\ 
 RPROMPT=%T
 # some convienience settings
@@ -57,17 +57,17 @@ autoload -U compinit
 compinit
 # End of lines added by compinstall
 
-export CARGO_HOME="/home/wheel/tommoa/.cargo"
-export RUSTUP_HOME="/home/wheel/tommoa/.rustup"
+export CARGO_HOME="$HOME/.cargo"
+export RUSTUP_HOME="$HOME/.rustup"
 
 if [[ $(uname) == "FreeBSD" ]]
 then
-	export CARGO_HOME="/home/wheel/tommoa/.cargo_freebsd"
-	export RUSTUP_HOME= "/home/wheel/tommoa/.rustup_freebsd"
+	export CARGO_HOME="$HOME/.cargo_freebsd"
+	export RUSTUP_HOME= "$HOME/.rustup_freebsd"
 elif [[ $(lscpu | grep 'Architecture' | cut -f2 -d: | egrep -o "\S+") == "i686" ]]
 then
-	export CARGO_HOME="/home/wheel/tommoa/.cargox32"
-	export RUSTUP_HOME="/home/wheel/tommoa/.rustupx32"
+	export CARGO_HOME="$HOME/.cargox32"
+	export RUSTUP_HOME="$HOME/.rustupx32"
 fi
 
 if [[ -e $CARGO_HOME/env ]]

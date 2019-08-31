@@ -14,7 +14,7 @@ export MAIL=/var/mail/$USER
 
 # this is the path - this one should allow
 # the user to use most applications on most machines.
-export PATH=/usr/local/bin:/bin:/sbin:/usr/bin:/usr/sbin:/opt/csw/bin:/usr/sfw/bin:/usr/ccs/bin:/usr/bin/X11:/usr/X11R6/bin:/usr/dt/bin:/usr/openwin/bin:/opt/csw/gcc3/bin:/opt/SUNWspro/bin:/usr/freeware/bin:/usr/games:/usr/local/games:$HOME/.local/bin:$HOME/scripts
+export PATH=$HOME/.local/bin:$HOME/scripts:$PATH
 PROMPT=%U%m%u:%~\>\ 
 RPROMPT=%T
 # some convienience settings

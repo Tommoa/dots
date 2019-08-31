@@ -1,4 +1,5 @@
 source ~/.config/ion/plugins/init.ion
+source ~/.config/ion/plugins/tools/gpg-agent.ion
 
 export SKIM_DEFAULT_OPTIONS="--multi --ansi --bind=ctrl-e:up --preview='bat --plain --color=always {}'"
 
@@ -16,7 +17,18 @@ fn update_rust
 	end
 end
 
+if exists -s SSH_CLIENT
+	# We're in an SSH session
+
+	# Set a custom prompt
+	fn PROMPT
+		echo -n ${x::07}${c::0x55,bold}${USER}${c::red}'@'${c::black}${HOST}${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}
+	end
+end
+
 if matches $(uname) "Darwin"
+	# We're on OSX
+	# Set path to use homebrew's less
 	export PATH=/usr/local/Cellar/less/530_1/bin/:$PATH:/usr/local/bin
 	export PAGER=/usr/local/Cellar/less/530_1/bin/less
 end

@@ -1,10 +1,3 @@
-
-# This file is the prototype UCC standard 'sane' configuration script
-# for zsh. It is intended as a useful script for first time members to
-# use.
-# Many ideas taken from Nick Bannon, David Luyer, Grahame Bowland and
-# James Andrewartha.
-
 # set the umask
 umask 022
 
@@ -25,7 +18,6 @@ export PAGER=less
 
 # some example (and useful) aliases
 alias ls="ls --color"
-alias lsd="ls --color -F | grep \/ | more"
 
 # zsh options - see zshoptions(1)
 setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_NO_STORE INTERACTIVE_COMMENTS

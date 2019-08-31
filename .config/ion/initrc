@@ -16,6 +16,8 @@ fn update_rust
 	end
 end
 
-export PATH=/usr/local/Cellar/less/530_1/bin/:$PATH:/usr/local/bin
-export PAGER=/usr/local/Cellar/less/530_1/bin/less
+if matches $(uname) "Darwin"
+	export PATH=/usr/local/Cellar/less/530_1/bin/:$PATH:/usr/local/bin
+	export PAGER=/usr/local/Cellar/less/530_1/bin/less
+end
 source ~/.cargo/env

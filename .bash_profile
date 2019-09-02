@@ -33,7 +33,11 @@ fi
 if [[ -e $CARGO_HOME/env ]]
 then
 	source $CARGO_HOME/env
-	export PAGER=bat
+fi
+
+if [[ -e $CARGO_HOME/bin/bat ]]
+then
+	export PAGER=$CARGO_HOME/bin/bat
 fi
 
 if [[ -e $CARGO_HOME/bin/ion ]]

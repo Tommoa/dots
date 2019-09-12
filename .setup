@@ -1,44 +1,119 @@
-#!/bin/bash
-
-OS=$(uname -s)
-
-pushd .
+#!/bin/sh
 
 cd ~/
 
-if [ $OS == "Darwin" ]
-then
-	echo "Assuming OSX"
-	# Install homebrew
-	if ! brew update; then
-		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-		sudo launchctl config user path "/usr/local/bin:$PATH"
-	fi
-	# Install rustup
-	if ! rustup update; then
-		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-		cargo install bat
-		rustup component add rls
-	fi
+get_os() {
+	case $(uname -s) in
+		*Darwin*)
+			echo "macOS"
+			;;
+		*Linux*)
+			source /etc/os-release
+			case $(test -n "$ID_LIKE" && echo $ID_LIKE || echo $ID) in
+				*[Ff]edora*)
+					echo "fedora"
+					;;
+				*[Dd]ebian*)
+					echo "debian"
+					;;
+				*[Aa]rch*)
+					echo "arch"
+					;;
+				*)
+					test -n "$ID_LIKE" && echo $ID_LIKE || echo $ID
+					;;
+			esac
+			;;
+	esac
+}
 
-	brew install exa fd less neovim python python@2 ripgrep tmux node yarn
-	yarn global add neovim
-	yarn global add vim-language-server
-	pip3 install pynvim neovim
-	pip install pynvim neovim
-	brew cask install alacritty gpg-suite
-	git clone https://gitlab.redox-os.org/redox-os/ion
-	cd ion/
-	cargo install --path . --force
-else
-	echo "Assuming Arch Linux"
-	sudo pacman -Syu rustup bat python python-neovim python2 python2-neovim yarn nodejs fd exa tmux ripgrep alacritty
-	yarn global add neovim
-	yarn global add vim-language-server
-	git clone https://gitlab.redox-os.org/redox-os/ion
-	cd ion/
-	cargo install --path . --force
+get_packman() {
+	case $(get_os) in
+		macOS)
+			if ! brew update; then
+				/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+				sudo launchctl config user path "/usr/local/bin:$PATH"
+			fi
+			echo "brew install"
+			;;
+		fedora)
+			echo "sudo yum -y install"
+			;;
+		debian)
+			echo "sudo apt -y install"
+			;;
+		arch)
+			echo "sudo pacman -S"
+			;;
+	esac
+}
+
+install() {
+	MAN=$(get_packman)
+	if ! type "$1" > /dev/null 2>&1; then
+		echo "Installing $1"
+		$MAN $1
+	fi
+}
+
+# Install rustup
+if ! rustup update; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	rustup component add rls
 fi
 
+cargo install bat
+cargo install exa
+cargo install fd-find
 
-popd
+install git
+install neovim
+install ripgrep
+install tmux
+install python
+
+case $(get_os) in
+	macOS)
+		brew install python@2 less node yarn
+		yarn global add neovim
+		yarn global add vim-language-server
+		pip3 install pynvim neovim
+		pip2 install pynvim neovim
+		brew cask install alacritty
+		;;
+	debian)
+		sudo apt install yarnpkg nodejs
+		if test "$(python -V ^| cut -f2 -d' ' | cut -f1 -d.)" = "2"; then
+			sudo apt install python3
+		else
+			sudo apt install python2
+		fi
+		yarnpkg global add neovim
+		yarnpkg global add vim-language-server
+		pip3 install pynvim neovim
+		pip2 install pynvim neovim
+		;;
+	fedora)
+		sudo yum install nodejs
+		curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+		sudo yum install yarn
+		yarn global add neovim
+		yarn global add vim-language-server
+		if test "$(python -V ^| cut -f2 -d' ' | cut -f1 -d.)" = "2"; then
+			sudo yum -y install python3
+		else
+			sudo yum -y install python2
+		fi
+		pip3 install pynvim neovim
+		pip2 install pynvim neovim
+		;;
+	arch)
+		sudo pacman -Syu python-neovim python2 python2-neovim yarn nodejs
+		yarn global add neovim
+		yarn global add vim-language-server
+		;;
+esac
+
+git clone https://gitlab.redox-os.org/redox-os/ion.git
+cd ion
+cargo install --force --path .

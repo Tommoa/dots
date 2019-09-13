@@ -191,3 +191,6 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 colorscheme nord 
+
+set t_ZH=[3m
+set t_ZR=[23m

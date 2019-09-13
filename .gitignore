@@ -2,7 +2,7 @@
 /*
 # Unless its these
 !.config/alacritty/
-!.config/ion/
+!.config/ion/initrc
 !.config/nvim/
 !.gitignore
 !.gitmodules

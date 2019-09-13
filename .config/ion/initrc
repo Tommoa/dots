@@ -1,3 +1,8 @@
+if not test -d $HOME/.config/ion/plugins
+	# We don't have plugins, so clone them in first.
+	git clone https://gitlab.redox-os.org/redox-os/ion-plugins $HOME/.config/ion/plugins
+end
+
 source ~/.config/ion/plugins/init.ion
 source ~/.config/ion/plugins/tools/gpg-agent.ion
 
@@ -10,7 +15,6 @@ fn update_rust
 		echo "${c::red}Updating${c::reset}"
 		git checkout .
 		git pull --recurse-submodules
-		cargo update
 		cargo install --path . --force
 	else
 		echo "${c::green}Already updated!${c::reset}"
@@ -22,7 +26,7 @@ if exists -s SSH_CLIENT
 
 	# Set a custom prompt
 	fn PROMPT
-		echo -n ${x::07}${c::0x55,bold}${USER}${c::red}'@'${c::black}${HOST}${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}
+		echo -n "${x::07}${c::0x55,bold}${USER}${c::red}'@'${c::black}${HOST}${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}"
 	end
 end
 

@@ -4,6 +4,3 @@
 [submodule ".tmux/plugins/nord-tmux"]
 	path = .tmux/plugins/nord-tmux
 	url = https://github.com/arcticicestudio/nord-tmux.git
-[submodule ".config/ion/plugins"]
-	path = .config/ion/plugins
-	url = https://gitlab.redox-os.org/redox-os/ion-plugins.git

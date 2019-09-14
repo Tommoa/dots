@@ -1,15 +1,22 @@
+if executable('yarnpkg')
+	let yarnpkg='yarnpkg install --frozen-lockfile'
+else
+	let yarnpkg='yarn install --frozen-lockfile'
+endif
+
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'arcticicestudio/nord-vim'
+Plug 'fannheyward/coc-texlab', {'do': yarnpkg}
 Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
-Plug 'iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
+Plug 'iamcco/coc-vimlsp', {'do': yarnpkg}
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'LnL7/vim-nix'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-git', {'do': yarnpkg}
+Plug 'neoclide/coc-json', {'do': yarnpkg}
+Plug 'neoclide/coc-python', {'do': yarnpkg}
+Plug 'neoclide/coc-rls', {'do': yarnpkg}
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }

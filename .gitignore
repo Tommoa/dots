@@ -10,6 +10,5 @@
 !.lesskey
 !.setup
 !.tmux.conf
-!.tmux/
 !.zshrc
 !.bash_profile

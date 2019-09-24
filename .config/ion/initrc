@@ -30,6 +30,8 @@ if exists -s SSH_CLIENT
 	end
 end
 
+export EDITOR=nvim
+
 if matches $(uname) "Darwin"
 	# We're on OSX
 	# Set path to use homebrew's less

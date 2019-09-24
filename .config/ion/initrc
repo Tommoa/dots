@@ -26,7 +26,7 @@ if exists -s SSH_CLIENT
 
 	# Set a custom prompt
 	fn PROMPT
-		echo -n "${x::07}${c::0x55,bold}${USER}${c::red}'@'${c::black}${HOST}${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}"
+		printf "${c::0x55,bold}${USER}${c::red}\@${c::black}${HOST}${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}"
 	end
 end
 

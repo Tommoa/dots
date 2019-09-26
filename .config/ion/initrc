@@ -35,7 +35,7 @@ export EDITOR=nvim
 if matches $(uname) "Darwin"
 	# We're on OSX
 	# Set path to use homebrew's less
-	export PATH=/usr/local/bin:$PATH
+	export PATH=/usr/local/bin:$PATH:/usr/local/texlive/2019/bin/x86_64-darwin
 	export PAGER=less
 end
 source ~/.cargo/env

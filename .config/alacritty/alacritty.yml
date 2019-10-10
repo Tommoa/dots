@@ -130,39 +130,39 @@ debug:
   # Record all characters and escape sequences as test data.
   ref_test: false
 
-# Colors (Tomorrow Night Bright)
+# Colors (Palenight)
 colors:
   # Default colors
   primary:
-    background: '0x0F111A' # '0x2E3440'
-    foreground: '0xe3cbd0' # '0xD8DEE9'
+    background: '0x292d3e'
+    foreground: '0x959dcb'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
-    text: '0x0F111A' # '0x2E3440'
-    cursor: '0xe3cbd0' # '0xD8DEE9'
+    text:   '0x292d3e'
+    cursor: '0x959dcb'
 
   # Normal colors
   normal:
-    black:   '0x0F111A'
-    red:     '0x354C74'
-    green:   '0x921B5C'
-    yellow:  '0xDB396F'
-    blue:    '0x5A458D'
-    magenta: '0xB85195'
-    cyan:    '0x7696AC'
-    white:   '0xe3cbd0'
+    black:   '0x292d3e'
+    red:     '0xf07178'
+    green:   '0xc3e88d'
+    yellow:  '0xffcb6b'
+    blue:    '0x82aaff'
+    magenta: '0xc792ea'
+    cyan:    '0x89ddff'
+    white:   '0x959dcb'
 
   # Bright colors
   bright:
-    black:   '0x333A59'
-    red:     '0x4C6DA6'
-    green:   '0xD62887'
-    yellow:  '0xFF4281'
-    blue:    '0x7459B5'
-    magenta: '0xCF5BA7'
-    cyan:    '0x88ADC7'
-    white:   '0xe3cbd0'
+    black:   '0x676e95'
+    red:     '0xf78c6c'
+    green:   '0x444267'
+    yellow:  '0x32374d'
+    blue:    '0x8796b0'
+    magenta: '0x959dcb'
+    cyan:    '0xff5370'
+    white:   '0xffffff'
 
 # Visual Bell
 #

@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# Ensure brew is installed
+if ! brew update; then
+	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	sudo launchctl config user path "/usr/local/bin:$PATH"
+fi
+
+# Install GNU core utils
+brew install coreutils
+brew install exa
+brew install bat
+brew install fd
+brew install git
+brew install gettext
+brew link --force gettext
+brew install rg
+brew install less
+
+brew install tmux
+brew install jq
+brew install neovim
+brew install bitwarden-cli
+
+# Replace system curl
+brew install curl --with-openssl
+brew link curl --force
+
+# Python
+brew install python
+brew install python@2
+brew install luajit
+brew install node
+brew install yarn
+
+# Window manager
+brew tap koekeishiya/formulae
+brew install skhd
+brew install yabai
+yabai --install-sa
+brew services start skhd
+brew services start yabai
+
+# Fonts
+brew tap homebrew/cask-fonts
+brew cask install font-space-mono
+brew cask install font-fontawesome
+
+# Casks
+brew cask install spotify
+brew cask install alacritty
+brew cask install firefox
+brew cask install mactex
+brew cask install gpg-suite
+brew cask install android-platform-tools
+brew cask install google-backup-and-sync
+brew cask install google-chat
+brew cask install bitwarden
+brew cask install discord
+brew cask install slack
+brew cask install mattermost
+
+brew cleanup
+brew cask cleanup

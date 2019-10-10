@@ -4,6 +4,7 @@
 !.config/alacritty/
 !.config/ion/initrc
 !.config/nvim/
+!.config/osx/
 !.gitignore
 !.gitmodules
 !.less

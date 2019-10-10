@@ -62,6 +62,19 @@ if ! rustup update; then
 	rustup component add rls
 fi
 
+git clone https://gitlab.redox-os.org/redox-os/ion.git
+cd ion
+cargo install --force --path .
+
+# If we're on OSX, pass off to the scripts that handle that
+if test "$(get_os)" = "macOS"; then
+	for script in $(ls .config/osx/)
+	do
+		bash $script
+	done
+	exit
+fi
+
 cargo install bat
 cargo install exa
 cargo install fd-find
@@ -73,14 +86,6 @@ install tmux
 install python
 
 case $(get_os) in
-	macOS)
-		brew install python@2 less node yarn
-		yarn global add neovim
-		yarn global add vim-language-server
-		pip3 install pynvim neovim
-		pip2 install pynvim neovim
-		brew cask install alacritty
-		;;
 	debian)
 		sudo apt install yarnpkg nodejs
 		if test "$(python -V ^| cut -f2 -d' ' | cut -f1 -d.)" = "2"; then
@@ -113,7 +118,3 @@ case $(get_os) in
 		yarn global add vim-language-server
 		;;
 esac
-
-git clone https://gitlab.redox-os.org/redox-os/ion.git
-cd ion
-cargo install --force --path .

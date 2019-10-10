@@ -1,27 +1,20 @@
-if executable('yarnpkg')
-	let yarnpkg='yarnpkg install --frozen-lockfile'
-else
-	let yarnpkg='yarn install --frozen-lockfile'
-endif
-
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'arcticicestudio/nord-vim'
-Plug 'fannheyward/coc-texlab', {'do': yarnpkg}
 Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
-Plug 'iamcco/coc-vimlsp', {'do': yarnpkg}
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'LnL7/vim-nix'
 Plug 'mengelbrecht/lightline-bufferline'
-Plug 'neoclide/coc-git', {'do': yarnpkg}
-Plug 'neoclide/coc-json', {'do': yarnpkg}
-Plug 'neoclide/coc-python', {'do': yarnpkg}
-Plug 'neoclide/coc-rls', {'do': yarnpkg}
-Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'rust-lang/rust.vim'
-Plug 'scrooloose/nerdtree', { 'on' : 'NERDTreeToggle' }
 Plug 'sjl/gundo.vim'
+Plug 'zxqfl/tabnine-vim'
+Plug 'drewtempelmeyer/palenight.vim'
 call plug#end()
+
+function! s:has_plugin(plugin)
+	let lookup = 'g:plugs["' . a:plugin . '"]'
+	return exists(lookup)
+endfunction
 
 let mapleader=","
 set relativenumber
@@ -32,6 +25,7 @@ set mouse=a
 set nohls
 set shortmess+=c
 set signcolumn=yes
+set background=dark
 syntax on
 set tabstop=4
 set shiftwidth=4
@@ -105,35 +99,11 @@ nnoremap gV `[v`]
 
 let g:autofmt_autosave = 1
 
-map <silent> H :call CocAction('doHover')<CR>
-map <silent> <leader>d <Plug>(coc-type-definition)
-map <silent> gd <Plug>(coc-definition)
-map <silent> gi <Plug>(coc-implementation)
-map <silent> gr <Plug>(coc-references)
-map <silent> <leader>r Plug(coc-rename)
-map <silent> <leader>l :GundoToggle<CR>
-map <silent> <leader>n :NERDTreeToggle<CR>
-
-let g:NERDTreeMapOpenSplit = "u"
-let g:NERDTreeMapOpenExpl = "y"
-let g:NERDTreeMapUpdir = "l"
-let g:NERDTreeMapUpdirKeepOpen = "L"
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
 
 if executable('rg')
 	set grepprg=rg\ --no-heading\ --vimgrep
@@ -142,30 +112,58 @@ endif
 
 tnoremap <Esc> <c-\><c-n>
 
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
-endfunction
+if s:has_plugin('gundo.nvim')
+	map <silent> <leader>l :GundoToggle<CR>
+endif
 
-autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+if s:has_plugin('coc.nvim')
+	function! CocCurrentFunction()
+		return get(b:, 'coc_current_function', '')
+	endfunction
 
-let g:lightline = {
-      \ 'colorscheme': 'nord',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status',
-      \   'currentfunction': 'CocCurrentFunction'
-      \ },
-	  \ 'tabline': { 'left': [['buffers']] },
-	  \ 'component_expand': { 'buffers': 'lightline#bufferline#buffers' },
-	  \ 'component_type': { 'buffers': 'tabsel' },
-      \ }
+	map <silent> H :call CocAction('doHover')<CR>
+	map <silent> <leader>d <Plug>(coc-type-definition)
+	map <silent> gd <Plug>(coc-definition)
+	map <silent> gi <Plug>(coc-implementation)
+	map <silent> gr <Plug>(coc-references)
+	map <silent> <leader>r Plug(coc-rename)
 
-let g:lightline#bufferline#show_number  = 1
-let g:lightline#bufferline#shorten_path = 1
-let g:lightline#bufferline#unnamed      = '[No Name]'
+	" Use tab for trigger completion with characters ahead and navigate.
+	" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+	inoremap <silent><expr> <TAB>
+		  \ pumvisible() ? "\<C-n>" :
+		  \ <SID>check_back_space() ? "\<TAB>" :
+		  \ coc#refresh()
+	inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+	" Use <c-space> to trigger completion.
+	inoremap <silent><expr> <c-space> coc#refresh()
+
+	call coc#add_extension('coc-git', 'coc-json', 'coc-python', 'coc-rls', 'coc-vimlsp', 'coc-texlab')
+endif
+
+if s:has_plugin('lightline.vim')
+	autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
+
+	let g:lightline = {
+		  \ 'colorscheme': 'palenight',
+		  \ 'active': {
+		  \   'left': [ [ 'mode', 'paste' ],
+		  \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+		  \ },
+		  \ 'component_function': {
+		  \   'cocstatus': 'coc#status',
+		  \   'currentfunction': 'CocCurrentFunction'
+		  \ },
+		  \ 'tabline': { 'left': [['buffers']] },
+		  \ 'component_expand': { 'buffers': 'lightline#bufferline#buffers' },
+		  \ 'component_type': { 'buffers': 'tabsel' },
+		  \ }
+
+	let g:lightline#bufferline#show_number  = 1
+	let g:lightline#bufferline#shorten_path = 1
+	let g:lightline#bufferline#unnamed      = '[No Name]'
+endif
 
 autocmd FileType netrw setl bufhidden=wipe
 
@@ -180,24 +178,27 @@ augroup netrw_buf_hidden_fix
 
 augroup end
 
-function! s:goyo_enter()
-	if executable('tmux') && strlen($TMUX)
-		silent !tmux set status off
-		silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-	endif
-endfunction
+if s:has_plugin('goyo.vim')
+	function! s:goyo_enter()
+		if executable('tmux') && strlen($TMUX)
+			silent !tmux set status off
+			silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+		endif
+	endfunction
 
-function! s:goyo_leave()
-	if executable('tmux') && strlen($TMUX)
-		silent !tmux set status on
-		silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-	endif
-endfunction
+	function! s:goyo_leave()
+		if executable('tmux') && strlen($TMUX)
+			silent !tmux set status on
+			silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+		endif
+	endfunction
 
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
+	autocmd! User GoyoEnter nested call <SID>goyo_enter()
+	autocmd! User GoyoLeave nested call <SID>goyo_leave()
+endif
 
-colorscheme nord 
+colorscheme palenight
+let g:palenight_terminal_italics=1
 
 set t_ZH=[3m
 set t_ZR=[23m

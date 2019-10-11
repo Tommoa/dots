@@ -7,7 +7,6 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'rust-lang/rust.vim'
 Plug 'sjl/gundo.vim'
-Plug 'zxqfl/tabnine-vim'
 Plug 'drewtempelmeyer/palenight.vim'
 call plug#end()
 
@@ -139,7 +138,7 @@ if s:has_plugin('coc.nvim')
 	" Use <c-space> to trigger completion.
 	inoremap <silent><expr> <c-space> coc#refresh()
 
-	call coc#add_extension('coc-git', 'coc-json', 'coc-python', 'coc-rls', 'coc-vimlsp', 'coc-texlab')
+	call coc#add_extension('coc-git', 'coc-json', 'coc-python', 'coc-rls', 'coc-vimlsp', 'coc-texlab', 'coc-tabnine')
 endif
 
 if s:has_plugin('lightline.vim')

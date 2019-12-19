@@ -126,6 +126,8 @@ if s:has_plugin('coc.nvim')
 	map <silent> gi <Plug>(coc-implementation)
 	map <silent> gr <Plug>(coc-references)
 	map <silent> <leader>r Plug(coc-rename)
+	nmap <silent> [g <Plug>(coc-diagnostic-prev)
+	nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 	" Use tab for trigger completion with characters ahead and navigate.
 	" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -138,7 +140,7 @@ if s:has_plugin('coc.nvim')
 	" Use <c-space> to trigger completion.
 	inoremap <silent><expr> <c-space> coc#refresh()
 
-	call coc#add_extension('coc-git', 'coc-json', 'coc-python', 'coc-rls', 'coc-vimlsp', 'coc-texlab', 'coc-tabnine')
+	call coc#add_extension('coc-git', 'coc-json', 'coc-python', 'coc-rls', 'coc-vimlsp', 'coc-texlab', 'coc-tabnine', 'coc-pyright', 'coc-sh')
 endif
 
 if s:has_plugin('lightline.vim')

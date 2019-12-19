@@ -8,6 +8,25 @@ source ~/.config/ion/plugins/tools/gpg-agent.ion
 
 export SKIM_DEFAULT_OPTIONS="--multi --ansi --bind=ctrl-e:up --preview='bat --plain --color=always {}'"
 
+if exists -s SSH_CLIENT
+	# We're in an SSH session
+
+	# Set a custom prompt
+	fn PROMPT
+		printf "${c::0x55,bold}${USER}${c::red}\@${c::black}${HOST}${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}"
+	end
+else
+	# Only launch TMUX if we're not in an SSH session
+	if not exists -s TMUX
+		let tmux = $(/usr/bin/env which tmux)
+		$tmux attach
+		if not eq $? 0
+			$tmux new-session
+		end
+		exit
+	end
+end
+
 fn update_rust
 	let gitdr = $(git fetch --dry-run &| wc -l)
 	let gitdr:int = $((gitdr))
@@ -18,15 +37,6 @@ fn update_rust
 		cargo install --path . --force
 	else
 		echo "${c::green}Already updated!${c::reset}"
-	end
-end
-
-if exists -s SSH_CLIENT
-	# We're in an SSH session
-
-	# Set a custom prompt
-	fn PROMPT
-		printf "${c::0x55,bold}${USER}${c::red}\@${c::black}${HOST}${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}"
 	end
 end
 

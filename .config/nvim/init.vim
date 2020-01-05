@@ -125,7 +125,7 @@ if s:has_plugin('coc.nvim')
 	map <silent> gd <Plug>(coc-definition)
 	map <silent> gi <Plug>(coc-implementation)
 	map <silent> gr <Plug>(coc-references)
-	map <silent> <leader>r Plug(coc-rename)
+	map <silent> <leader>r <Plug>(coc-rename)
 	nmap <silent> [g <Plug>(coc-diagnostic-prev)
 	nmap <silent> ]g <Plug>(coc-diagnostic-next)
 

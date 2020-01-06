@@ -82,8 +82,6 @@ noremap <c-w> <c-w>k
 noremap <c-a> <c-w>h
 noremap <c-r> <c-w>j
 noremap <c-s> <c-w>l
-noremap <c-q> <c-w>-
-noremap <c-f> <c-w>+
 noremap <M-h> <c-w>h
 noremap <M-n> <c-w>j
 noremap <M-e> <c-w>k

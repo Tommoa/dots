@@ -17,14 +17,7 @@ source ~/.config/ion/plugins/tools/gpg-agent.ion
 
 export SKIM_DEFAULT_OPTIONS="--multi --ansi --bind=ctrl-e:up --preview='bat --plain --color=always {}'"
 
-if exists -s SSH_CLIENT
-	# We're in an SSH session
-
-	# Set a custom prompt
-	fn PROMPT
-		printf "${c::0x55,bold}${USER}${c::red}\@${c::black}${HOST}${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}"
-	end
-else
+if not exists -s SSH_CLIENT
 	# Only launch TMUX if we're not in an SSH session
 	if not exists -s TMUX
 		# We're not already in a TMUX session
@@ -34,6 +27,58 @@ else
 			$tmux new-session
 		end
 		exit
+	end
+end
+
+fn PROMPT
+	fn ssh_prompt
+		if exists -s SSH_CLIENT
+			# We're in an SSH session.
+			printf "${c::red}\@${c::black}${HOST}"
+		end
+	end
+	fn kube_prompt
+		if exists -b kubectl
+			# We have kubectl.
+			let context = $(kubectl config current-context)
+			if not eq $len(context) 0
+				# Icons:
+				# \u2388: ⎈
+				# \u2638: ☸
+				printf "${c::default,bold}{${c::light_red}☸${c::default}:${c::blue}${context}${c::default}}${c::reset} "
+			end
+		end
+	end
+	printf "$(kube_prompt)${c::0x55,bold}${USER}$(ssh_prompt)${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}"
+	drop kube_prompt
+	drop ssh_prompt
+end
+
+fn kctx context:str
+	kubectl config use-context $context
+end
+
+fn show what:str
+	match @split(what)[0]
+		case "kctx"
+			kubectl config get-contexts
+		case _
+			echo "[${color::red}@split(what)[0]${color::reset}] does not seem to exist"
+			echo "options:${color::blue}"
+			echo -e "\tkctx"
+			printf "${color::reset}"
+	end
+end
+
+fn no what:str
+	match @split(what)[0]
+		case "kctx"
+			kubectl config unset current-context
+		case _
+			echo "[${color::red}@split(what)[0]${color::reset}] does not seem to exist"
+			echo "options:${color::blue}"
+			echo -e "\tkctx"
+			printf "${color::reset}"
 	end
 end
 

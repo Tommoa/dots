@@ -120,7 +120,7 @@ if s:has_plugin('coc.nvim')
 		return get(b:, 'coc_current_function', '')
 	endfunction
 
-	map <silent> H :call CocAction('doHover')<CR>
+	map <silent> <leader>h :call CocAction('doHover')<CR>
 	map <silent> <leader>d <Plug>(coc-type-definition)
 	map <silent> gd <Plug>(coc-definition)
 	map <silent> gi <Plug>(coc-implementation)

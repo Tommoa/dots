@@ -49,7 +49,30 @@ fn PROMPT
 			end
 		end
 	end
-	printf "$(kube_prompt)${c::0x55,bold}${USER}$(ssh_prompt)${c::default}:${c::0x4B}${SWD}${c::default}# ${c::reset}"
+	fn git_prompt
+		if exists -s GIT_PROMPT && test $GIT_PROMPT -eq 1
+			let num_added: int = 0;
+			let num_removed: int = 0;
+			for line in @lines($(git diff --numstat))
+				let new_added = $(echo $line | cut -f1)
+				let new_removed = $(echo $line | cut -f2)
+				let num_added = $((num_added+new_added))
+				let num_removed = $((num_removed+new_removed))
+			end
+			let totals = "";
+			if test $num_added -gt 0 || test $num_removed -gt 0
+				let totals = ":"
+				if test $num_added -gt 0
+					let totals = "$totals${c::0x55}+$num_added"
+				end
+				if test $num_removed -gt 0
+					let totals = "$totals${c::light_red}-$num_removed"
+				end
+			end
+			printf "[${c::red,bold}$(git symbolic-ref --short -q HEAD || git rev-parse --short HEAD)${c::default}$totals${c::default}] "
+		end
+	end
+	printf "$(kube_prompt)${c::0x55,bold}${USER}$(ssh_prompt)${c::default}:${c::0x4B}${SWD}${c::default}# $(git_prompt)${c::reset}"
 	drop kube_prompt
 	drop ssh_prompt
 end
@@ -96,5 +119,6 @@ fn update_rust
 end
 
 export EDITOR=nvim
+export GIT_PROMPT=1
 
 source ~/.cargo/env

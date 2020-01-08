@@ -50,7 +50,7 @@ fn PROMPT
 		end
 	end
 	fn git_prompt
-		if exists -s GIT_PROMPT && test $GIT_PROMPT -eq 1
+		if exists -s GIT_PROMPT && test $GIT_PROMPT -eq 1 && git rev-parse --is-inside-work-tree -q &> /dev/null
 			let num_added: int = 0;
 			let num_removed: int = 0;
 			for line in @lines($(git diff --numstat))

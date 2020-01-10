@@ -29,6 +29,7 @@ set background=dark
 syntax on
 set tabstop=4
 set shiftwidth=4
+set wildoptions=pum
 filetype indent on
 
 nnoremap i l

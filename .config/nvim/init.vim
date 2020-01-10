@@ -8,6 +8,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'rust-lang/rust.vim'
 Plug 'sjl/gundo.vim'
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 call plug#end()
 
 function! s:has_plugin(plugin)

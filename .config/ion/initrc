@@ -22,11 +22,12 @@ if not exists -s SSH_CLIENT
 	if not exists -s TMUX
 		# We're not already in a TMUX session
 		let tmux = $(/usr/bin/env which tmux)
-		$tmux attach
-		if not eq $? 0
-			$tmux new-session
+		let sessions: int = $len(@lines($($tmux list-sessions)))
+		if eq $sessions 1
+			exec $tmux attach
+		else
+			exec $tmux new-session
 		end
-		exit
 	end
 end
 

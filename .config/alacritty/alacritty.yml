@@ -222,9 +222,6 @@ mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
 
-  url:
-      launcher: xdg-open
-
   faux_scrolling_lines: 1
   scrolling_lines: 3
   hide_when_typing: false

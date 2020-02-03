@@ -119,7 +119,7 @@ fn update_rust
 	end
 end
 
-export EDITOR=nvim
+export EDITOR=$(which nvim)
 export GIT_PROMPT=1
 
 source ~/.cargo/env

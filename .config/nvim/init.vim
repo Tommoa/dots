@@ -19,7 +19,6 @@ endfunction
 let mapleader=","
 set relativenumber
 set number
-set showtabline=2
 set hidden
 set mouse=a
 set nohls

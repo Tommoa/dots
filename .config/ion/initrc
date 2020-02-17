@@ -19,14 +19,17 @@ export SKIM_DEFAULT_OPTIONS="--multi --ansi --bind=ctrl-e:up --preview='bat --pl
 
 if not exists -s SSH_CLIENT
 	# Only launch TMUX if we're not in an SSH session
-	if not exists -s TMUX
-		# We're not already in a TMUX session
-		let tmux = $(/usr/bin/env which tmux)
-		let sessions: int = $len(@lines($($tmux list-sessions)))
-		if eq $sessions 1
-			exec $tmux attach
-		else
-			exec $tmux new-session
+	if not exists -s VIMRUNTIME
+		# We're not in a VIM session
+		if not exists -s TMUX
+			# We're not already in a TMUX session
+			let tmux = $(/usr/bin/env which tmux)
+			let sessions: int = $len(@lines($($tmux list-sessions)))
+			if eq $sessions 1
+				exec $tmux attach
+			else
+				exec $tmux new-session
+			end
 		end
 	end
 end

@@ -32,6 +32,7 @@ brew install python@2
 brew install luajit
 brew install node
 brew install yarn
+brew install llvm
 
 # Window manager
 brew tap koekeishiya/formulae

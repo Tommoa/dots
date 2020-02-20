@@ -3,15 +3,6 @@ if not test -d $HOME/.config/ion/plugins
 	git clone https://gitlab.redox-os.org/redox-os/ion-plugins $HOME/.config/ion/plugins
 end
 
-if matches $(uname) "Darwin"
-	# We're on OSX
-	# We need to set PATH here because if we try to set it later, we will error
-	# on all things installed by homebrew.
-	# Set path to use homebrew's less
-	export PATH=/usr/local/bin:$PATH:/usr/local/texlive/2019/bin/x86_64-darwin
-	export PAGER=less
-end
-
 source ~/.config/ion/plugins/init.ion
 source ~/.config/ion/plugins/tools/gpg-agent.ion
 
@@ -122,7 +113,17 @@ fn update_rust
 	end
 end
 
+if matches $(uname) "Darwin"
+	# We're on OSX
+	# We need to set PATH here because if we try to set it later, we will error
+	# on all things installed by homebrew.
+	# Set path to use homebrew's less
+	export PATH=$PATH:/usr/local/texlive/2019/bin/x86_64-darwin
+	export PAGER=less
+end
+
 export EDITOR=$(which nvim)
 export GIT_PROMPT=1
+export LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
 
 source ~/.cargo/env

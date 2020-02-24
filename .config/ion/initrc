@@ -118,7 +118,7 @@ if matches $(uname) "Darwin"
 	# We need to set PATH here because if we try to set it later, we will error
 	# on all things installed by homebrew.
 	# Set path to use homebrew's less
-	export PATH=$PATH:/usr/local/texlive/2019/bin/x86_64-darwin
+	# export PATH=$PATH
 	export PAGER=less
 end
 

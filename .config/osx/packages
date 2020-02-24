@@ -34,6 +34,8 @@ brew install node
 brew install yarn
 brew install llvm
 
+brew install tectonic
+
 # Window manager
 brew tap koekeishiya/formulae
 brew install skhd
@@ -46,20 +48,25 @@ brew services start yabai
 brew tap homebrew/cask-fonts
 brew cask install font-space-mono
 brew cask install font-fontawesome
+brew cask install font-awesome-terminal-fonts
 
 # Casks
-brew cask install spotify
 brew cask install alacritty
-brew cask install firefox
-brew cask install mactex
-brew cask install gpg-suite
 brew cask install android-platform-tools
-brew cask install google-backup-and-sync
-brew cask install google-chat
 brew cask install bitwarden
 brew cask install discord
-brew cask install slack
+brew cask install docker
+brew cask install firefox
+brew cask install google-backup-and-sync
+brew cask install google-chat
+brew cask install google-chrome
+brew cask install gpg-suite
 brew cask install mattermost
+brew cask install slack
+brew cask install spotify
+brew cask install tunnelblick
+brew cask install vimr
+brew cask install xquartz
 
 brew cleanup
 brew cask cleanup

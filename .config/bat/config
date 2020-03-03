@@ -1,0 +1,4 @@
+# Set theme to ansi-dark
+--theme="Nord"
+
+--italic-text=always

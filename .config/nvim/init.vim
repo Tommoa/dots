@@ -150,7 +150,7 @@ if s:has_plugin('lightline.vim')
 	autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 
 	let g:lightline = {
-		  \ 'colorscheme': 'palenight',
+		  \ 'colorscheme': 'nord',
 		  \ 'active': {
 		  \   'left': [ [ 'mode', 'paste' ],
 		  \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
@@ -201,7 +201,8 @@ if s:has_plugin('goyo.vim')
 	autocmd! User GoyoLeave nested call <SID>goyo_leave()
 endif
 
-colorscheme palenight
+" colorscheme palenight
+colorscheme nord
 let g:palenight_terminal_italics=1
 
 set t_ZH=[3m

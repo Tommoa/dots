@@ -81,10 +81,6 @@ vnoremap K N
 vnoremap l u
 vnoremap L U
 
-noremap <c-w> <c-w>k
-noremap <c-a> <c-w>h
-noremap <c-r> <c-w>j
-noremap <c-s> <c-w>l
 noremap <M-h> <c-w>h
 noremap <M-n> <c-w>j
 noremap <M-e> <c-w>k

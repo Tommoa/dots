@@ -142,7 +142,7 @@ if s:has_plugin('coc.nvim')
 	" Use <c-space> to trigger completion.
 	inoremap <silent><expr> <c-space> coc#refresh()
 
-	call coc#add_extension('coc-git', 'coc-json', 'coc-python', 'coc-rls', 'coc-vimlsp', 'coc-texlab', 'coc-tabnine', 'coc-sh')
+	call coc#add_extension('coc-git', 'coc-json', 'coc-python', 'coc-rust-analyzer', 'coc-vimlsp', 'coc-texlab', 'coc-tabnine', 'coc-sh')
 endif
 
 if s:has_plugin('lightline.vim')

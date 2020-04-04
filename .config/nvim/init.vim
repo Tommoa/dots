@@ -98,6 +98,8 @@ nnoremap <right> <c-w>l
 nnoremap <down> <c-w>j
 nnoremap <up> <c-w>k
 
+inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+
 let g:autofmt_autosave = 1
 
 function! s:check_back_space() abort
@@ -143,6 +145,7 @@ if s:has_plugin('coc.nvim')
 	"	  \ <SID>check_back_space() ? "\<TAB>" :
 	"	  \ coc#refresh()
 	inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+	inoremap <silent><expr> <c-,> coc#refresh()
 
 	" Use <c-space> to trigger completion.
 	inoremap <silent><expr> <c-space> coc#refresh()

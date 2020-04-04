@@ -93,6 +93,11 @@ noremap <silent> <M-l> :bp!<CR>
 nnoremap <silent> zk :bd!<CR>
 nnoremap gV `[v`]
 
+nnoremap <left> <c-w>h
+nnoremap <right> <c-w>l
+nnoremap <down> <c-w>j
+nnoremap <up> <c-w>k
+
 let g:autofmt_autosave = 1
 
 function! s:check_back_space() abort

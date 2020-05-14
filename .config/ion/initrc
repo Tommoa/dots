@@ -72,11 +72,11 @@ fn PROMPT
 	drop ssh_prompt
 end
 
-fn kctx context:str
+fn kctx context:str -- Set the kubernetes context
 	kubectl config use-context $context
 end
 
-fn show what:str
+fn show what:str -- Show the existing setting for a variable
 	match @split(what)[0]
 		case "kctx"
 			kubectl config get-contexts
@@ -88,7 +88,7 @@ fn show what:str
 	end
 end
 
-fn no what:str
+fn no what:str -- Remove an existing setting for a variable
 	match @split(what)[0]
 		case "kctx"
 			kubectl config unset current-context
@@ -100,7 +100,7 @@ fn no what:str
 	end
 end
 
-fn update_rust
+fn update_rust -- Update a rust crate
 	let gitdr = $(git fetch --dry-run &| wc -l)
 	let gitdr:int = $((gitdr))
 	if test $(echo $gitdr) -ne 0

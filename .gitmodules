@@ -3,4 +3,5 @@
 	url = https://gitlab.redox-os.org/redox-os/ion-plugins
 [submodule ".config/bat/themes/nord"]
 	path = .config/bat/themes/nord
-	url = https://github.com/crabique/Nord-plist/tree/master
+	url = https://github.com/crabique/Nord-plist
+    branch = master

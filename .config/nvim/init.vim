@@ -17,7 +17,7 @@ function! s:has_plugin(plugin)
 endfunction
 
 let mapleader=","
-set relativenumber
+set cursorline
 set number
 set hidden
 set mouse=a

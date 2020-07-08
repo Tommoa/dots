@@ -190,6 +190,7 @@ augroup end
 " colorscheme palenight
 colorscheme nord
 let g:palenight_terminal_italics=1
+highlight Comment cterm=italic
 
 set t_ZH=[3m
 set t_ZR=[23m

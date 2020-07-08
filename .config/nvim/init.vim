@@ -1,15 +1,16 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
-Plug 'itchyny/lightline.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'LnL7/vim-nix'
-Plug 'mengelbrecht/lightline-bufferline'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'rust-lang/rust.vim'
-Plug 'sjl/gundo.vim'
-Plug 'drewtempelmeyer/palenight.vim'
+" Visual customization
 Plug 'arcticicestudio/nord-vim'
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
+
+" Languages
+Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
+Plug 'rust-lang/rust.vim'
+
+" Functionality
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 call plug#end()
 
 function! s:has_plugin(plugin)
@@ -116,10 +117,6 @@ endif
 
 tnoremap <Esc> <c-\><c-n>
 
-if s:has_plugin('gundo.nvim')
-	map <silent> <leader>l :GundoToggle<CR>
-endif
-
 if s:has_plugin('coc.nvim')
 	function! CocCurrentFunction()
 		return get(b:, 'coc_current_function', '')
@@ -151,7 +148,7 @@ if s:has_plugin('coc.nvim')
 	" Use <c-space> to trigger completion.
 	inoremap <silent><expr> <c-space> coc#refresh()
 
-	call coc#add_extension('coc-git', 'coc-json', 'coc-python', 'coc-rust-analyzer', 'coc-vimlsp', 'coc-texlab', 'coc-tabnine', 'coc-sh')
+	call coc#add_extension('coc-clangd', 'coc-git', 'coc-json', 'coc-python', 'coc-rust-analyzer', 'coc-sh', 'coc-texlab', 'coc-tabnine', 'coc-vimlsp')
 endif
 
 if s:has_plugin('lightline.vim')
@@ -189,25 +186,6 @@ augroup netrw_buf_hidden_fix
                 \| endif
 
 augroup end
-
-if s:has_plugin('goyo.vim')
-	function! s:goyo_enter()
-		if executable('tmux') && strlen($TMUX)
-			silent !tmux set status off
-			silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-		endif
-	endfunction
-
-	function! s:goyo_leave()
-		if executable('tmux') && strlen($TMUX)
-			silent !tmux set status on
-			silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-		endif
-	endfunction
-
-	autocmd! User GoyoEnter nested call <SID>goyo_enter()
-	autocmd! User GoyoLeave nested call <SID>goyo_leave()
-endif
 
 " colorscheme palenight
 colorscheme nord

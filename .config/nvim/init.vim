@@ -179,10 +179,6 @@ endif
 
 autocmd FileType netrw setl bufhidden=wipe
 
-autocmd FileType tex set linebreak
-autocmd FileType tex set textwidth=100
-autocmd FileType tex set colorcolumn=100
-
 augroup netrw_buf_hidden_fix
     autocmd!
 

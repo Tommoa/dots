@@ -174,6 +174,17 @@ if s:has_plugin('lightline.vim')
 	let g:lightline#bufferline#unnamed      = '[No Name]'
 endif
 
+" Language settings
+
+" LaTeX
+autocmd FileType tex set linebreak
+
+" Markdown
+autocmd FileType markdown set linebreak
+autocmd FileType markdown set tabstop=2
+autocmd FileType markdown set softtabstop=2
+autocmd FileType markdown set shiftwidth=2
+
 autocmd FileType netrw setl bufhidden=wipe
 
 augroup netrw_buf_hidden_fix

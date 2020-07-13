@@ -120,12 +120,14 @@ if s:has_plugin('coc.nvim')
     inoremap <silent><expr> <c-,> coc#refresh()
     inoremap <silent><expr> <c-space> coc#refresh()
     " On tab...
+    " If completion is up, select it
+    " If you can expand or jump to the next snippet option, do it
+    " Otherwise, insert tab
     inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() : " If completion is up, select it
-      \ coc#expandableOrJumpable() ? " If you can jump to the next snippet option, do it
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ?
       \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" : " If there is previous whitespace, insert tab
-      \ coc#refresh() " Trigger completion
+      \ "\<TAB>"
     " Add a bunch of extensions
     call coc#add_extension(
                 \ 'coc-clangd',

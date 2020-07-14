@@ -1,0 +1,10 @@
+{
+    "languageserver": {
+        "gluon": {
+            "command": "gluon_language-server",
+            "filetypes": ["gluon"]
+        }
+    },
+    "git.addGBlameToBufferVar": true,
+    "git.enableGlobalStatus": true
+}

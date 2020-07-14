@@ -4,7 +4,10 @@
 !.config/alacritty/*
 !.config/bat/config
 !.config/ion/initrc
-!.config/nvim/*
+!.config/nvim/init.vim
+!.config/nvim/autoload/**
+!.config/nvim/coc-settings.json
+!.config/coc/ultisnips/**
 !.config/osx/*
 !.gitignore
 !.gitmodules

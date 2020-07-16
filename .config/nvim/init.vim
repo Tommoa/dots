@@ -50,6 +50,8 @@ set expandtab
 set updatetime=300
 " Use semantic indentation for all filetypes
 filetype indent on
+" Make sure that when we're spell checking, we use Australian English
+set spelllang=en_au
 
 "--- Keymaps ---"
 " Colemak problems

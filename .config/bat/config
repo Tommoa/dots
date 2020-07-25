@@ -1,4 +1,7 @@
 # Set theme to ansi-dark
---theme="Nord"
+--theme="TwoDark"
+
+# Remove grid
+--style="numbers,changes,header"
 
 --italic-text=always

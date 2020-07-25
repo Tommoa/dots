@@ -15,6 +15,7 @@ call plug#end()
 
 " Set the colourscheme
 let s:scheme = 'nord'
+set termguicolors
 
 "--- Helpful functions ---"
 " Check if a plugin is loaded

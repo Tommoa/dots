@@ -14,7 +14,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 call plug#end()
 
 " Set the colourscheme
-let s:scheme = 'nord'
+let s:scheme = 'palenight'
 set termguicolors
 
 "--- Helpful functions ---"

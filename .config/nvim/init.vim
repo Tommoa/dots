@@ -13,6 +13,9 @@ Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 call plug#end()
 
+" Set the colourscheme
+let s:scheme = 'nord'
+
 "--- Helpful functions ---"
 " Check if a plugin is loaded
 function! s:has_plugin(plugin)
@@ -149,7 +152,7 @@ if s:has_plugin('lightline.vim')
     autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
     " Setting it up
     let g:lightline = {
-                \ 'colorscheme': 'nord',
+                \ 'colorscheme': s:scheme,
                 \ 'active': {
                 \   'left': [
                 \     [ 'mode', 'paste' ],
@@ -200,11 +203,11 @@ augroup netrw_buf_hidden_fix
 augroup end
 
 "--- Visuals ---"
-"if s:has_plugin('palenight.vim')
-"    colorscheme palenight
-"    let g:palenight_terminal_italics=1
-"endif
-if s:has_plugin('nord-vim')
+if s:has_plugin('palenight.vim') && s:scheme == 'palenight'
+    colorscheme palenight
+    let g:palenight_terminal_italics=1
+endif
+if s:has_plugin('nord-vim') && s:scheme == 'nord'
     colorscheme nord
 endif
 " Comments are italicized

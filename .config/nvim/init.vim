@@ -189,6 +189,11 @@ autocmd FileType markdown set linebreak
 autocmd FileType markdown set tabstop=2
 autocmd FileType markdown set softtabstop=2
 autocmd FileType markdown set shiftwidth=2
+" YAML
+autocmd FileType yaml set linebreak
+autocmd FileType yaml set tabstop=2
+autocmd FileType yaml set softtabstop=2
+autocmd FileType yaml set shiftwidth=2
 
 "--- NetRW settings ---"
 autocmd FileType netrw setl bufhidden=wipe

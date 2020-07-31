@@ -2,9 +2,15 @@
     "languageserver": {
         "gluon": {
             "command": "gluon_language-server",
-            "filetypes": ["gluon"]
+            "filetypes": [
+                "gluon"
+            ]
         }
     },
     "git.addGBlameToBufferVar": true,
-    "git.enableGlobalStatus": true
+    "git.enableGlobalStatus": true,
+    "markdownlint.config": {
+        "default": true,
+        "line_length": false
+    }
 }

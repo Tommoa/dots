@@ -8,6 +8,8 @@ Plug 'mengelbrecht/lightline-bufferline'
 " Languages
 Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
 Plug 'rust-lang/rust.vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 " Functionality
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
@@ -139,6 +141,7 @@ if s:has_plugin('coc.nvim')
                 \ 'coc-clangd',
                 \ 'coc-git',
                 \ 'coc-json',
+                \ 'coc-markdownlint',
                 \ 'coc-python',
                 \ 'coc-rust-analyzer',
                 \ 'coc-sh',
@@ -180,6 +183,10 @@ if s:has_plugin('lightline.vim')
     let g:lightline#bufferline#show_number  = 1
     let g:lightline#bufferline#shorten_path = 1
     let g:lightline#bufferline#unnamed      = '[No Name]'
+endif
+if s:has_plugin('vim-markdown')
+  let g:vim_markdown_no_default_key_mappings = 1
+  let g:vim_markdown_folding_disabled = 1
 endif
 
 "--- Language settings ---"

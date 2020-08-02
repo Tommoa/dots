@@ -224,7 +224,7 @@ if s:has_plugin('nord-vim') && s:scheme == 'nord'
     colorscheme nord
 endif
 " Comments are italicized
-highlight Comment cterm=italic
+highlight Comment cterm=italic gui=italic
 " Make sure italics are displayed correctly
 set t_ZH=[3m
 set t_ZR=[23m

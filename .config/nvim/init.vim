@@ -17,7 +17,9 @@ call plug#end()
 
 " Set the colourscheme
 let s:scheme = 'palenight'
-set termguicolors
+if (has("termguicolors"))
+    set termguicolors
+endif
 
 "--- Helpful functions ---"
 " Check if a plugin is loaded

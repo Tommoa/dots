@@ -68,6 +68,12 @@ fn PROMPT
 		end
 	end
 	printf "$(kube_prompt)${c::0x55,bold}${USER}$(ssh_prompt)${c::default}:${c::0x4B}${SWD}${c::default}# $(git_prompt)${c::reset}"
+    fn venv
+        if exists -s VIRTUAL_ENV
+            let env = $(echo $VIRTUAL_ENV | awk -F'/' '{printf $NF}')
+            printf "${c::bold}(${c::yellow}$env${c::default,bold})${c::default} "
+        end
+    end
 	drop kube_prompt
 	drop ssh_prompt
 end

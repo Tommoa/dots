@@ -100,6 +100,23 @@ fn no what:str -- Remove an existing setting for a variable
 	end
 end
 
+fn mux session:str -- Move or create a tmux session
+    let tmux = $(/usr/bin/env which tmux)
+    let fd = $(/usr/bin/env which fd || /usr/bin/env which fdfind)
+    let dir = $($fd --no-ignore -i -td "$session" ~/Documents | awk -F'/' 'NR==1{n=NF; m=$0} NF<n{ m=$0; n=NF } END { print m }')
+    $tmux if-shell                      \
+        "$tmux has-session -t $session" \
+        "switch-client -t $session"     \
+        "new-session -Pds $session -c $dir; switch-client -t $session"
+end
+
+alias tls="tmux ls"
+
+fn del session:str -- Delete a tmux session
+    let tmux = $(/usr/bin/env which tmux)
+    $tmux kill-session -t $session
+end
+
 fn update_rust -- Update a rust crate
 	let gitdr = $(git fetch --dry-run &| wc -l)
 	let gitdr:int = $((gitdr))

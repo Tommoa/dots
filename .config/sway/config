@@ -170,8 +170,9 @@ exec mako
 
 # Window assignments
 assign [class="Microsoft Teams - Preview"] workspace 3
-assign [class="Slack"] workspace 3
-assign [class="discord"] workspace 3
+for_window [class="Microsoft Teams - Preview"] move to workspace 3
+for_window [class="Slack"] move to workspace 3
+for_window [class="discord"] move to workspace 3
 for_window [class="[Ss]potify"] move to scratchpad
 
 include ~/.config/sway/config.d/*

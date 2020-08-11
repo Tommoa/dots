@@ -6,7 +6,8 @@ set $down n
 set $up e
 set $right i
 set $term alacritty
-set $menu wofi -diImSdrun | xargs swaymsg exec --
+set $appmenu wofi -diImSdrun | xargs swaymsg exec --
+set $pathmenu wofi -diImSrun | xargs swaymsg exec --
 
 # Settings
 default_border pixel 2
@@ -73,7 +74,8 @@ bindsym {
     # Execution
     $mod+Return exec $term
     $mod+q kill
-    $mod+p exec $menu
+    $mod+p exec $appmenu
+    $mod+Shift+p exec $pathmenu
     $mod+Shift+c reload
     $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
     # Focussing containers

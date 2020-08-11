@@ -23,6 +23,7 @@
 !/.config/sway
 /.config/sway*
 !/.config/sway/config
+!/.config/wofi
 !/.gitignore
 !/.gitmodules
 !/.less

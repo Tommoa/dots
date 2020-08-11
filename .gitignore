@@ -9,7 +9,7 @@
 !.config/nvim/coc-settings.json
 !.config/coc/ultisnips/**
 !.config/osx/*
-!.config/waybar/config
+!.config/waybar/**
 !.gitignore
 !.gitmodules
 !.less

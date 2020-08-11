@@ -139,12 +139,12 @@ bindsym {
 }
 
 # Theming
-seat seat0 xcursor_theme "Pop-dark"
+seat seat0 xcursor_theme "Pop"
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
     gsettings set $gnome-schema gtk-theme 'Pop-dark'
-    gsettings set $gnome-schema icon-theme 'Pop-dark'
-    gsettings set $gnome-schema cursor-theme 'Pop-dark'
+    gsettings set $gnome-schema icon-theme 'Pop'
+    gsettings set $gnome-schema cursor-theme 'Pop'
 }
 # class                 border  backgr. text    indicator child_border
 client.focused          #f07178 #285577 #ffffff #7c818c   #f07178

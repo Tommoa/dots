@@ -24,6 +24,7 @@
 /.config/sway*
 !/.config/sway/config
 !/.config/wofi
+!/.config/gammastep
 !/.gitignore
 !/.gitmodules
 !/.less

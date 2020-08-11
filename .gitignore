@@ -10,6 +10,7 @@
 !.config/coc/ultisnips/**
 !.config/osx/*
 !.config/waybar/**
+!.config/mako/config
 !.gitignore
 !.gitmodules
 !.less

@@ -11,6 +11,7 @@
 !.config/osx/*
 !.config/waybar/**
 !.config/mako/config
+!.config/sway/config
 !.gitignore
 !.gitmodules
 !.less

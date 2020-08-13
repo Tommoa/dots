@@ -20,8 +20,8 @@
 !/.config/waybar
 !/.config/mako
 !/.config/mako/config
-!/.config/sway
-/.config/sway*
+!/.config/sway/
+/.config/sway/*
 !/.config/sway/config
 !/.config/wofi
 !/.config/gammastep

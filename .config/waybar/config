@@ -28,7 +28,8 @@
         "format-icons": {
             "activated": "",
             "deactivated": ""
-        }
+        },
+        "tooltip": false
     },
     "tray": {
         // "icon-size": 21,
@@ -36,7 +37,8 @@
     },
     "clock": {
         "tooltip-format": "{:%Y-%m-%d | %H:%M}",
-        "format-alt": "{:%Y-%m-%d}"
+        "format-alt": "{:%Y-%m-%d}",
+        "tooltip": false
     },
     "cpu": {
         "format": "{usage}% ",
@@ -83,7 +85,8 @@
             "",
             "",
             ""
-        ]
+        ],
+        "tooltip": false
     },
     "battery#bat2": {
         "bat": "BAT2"
@@ -93,7 +96,8 @@
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip": false
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
@@ -116,7 +120,8 @@
                 ""
             ]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol",
+        "tooltip": false
     },
     "tray": {
         "icon-size": 21,

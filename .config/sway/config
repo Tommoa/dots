@@ -100,6 +100,7 @@ bindsym {
     $mod+l workspace prev_on_output
     $mod+u workspace next_on_output
     $mod+y workspace back_and_forth
+    $mod+Tab workspace back_and_forth
     $mod+1 workspace 1
     $mod+2 workspace 2
     $mod+3 workspace 3
@@ -114,6 +115,7 @@ bindsym {
     $mod+Shift+l move container to workspace prev_on_output
     $mod+Shift+u move container to workspace next_on_output
     $mod+Shift+y move container to workspace back_and_forth
+    $mod+Shift+Tab move container to workspace back_and_forth
     $mod+Shift+1 move container to workspace 1
     $mod+Shift+2 move container to workspace 2
     $mod+Shift+3 move container to workspace 3

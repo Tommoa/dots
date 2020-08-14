@@ -8,6 +8,7 @@ set $right i
 set $term alacritty
 set $appmenu wofi -diImSdrun | xargs swaymsg exec --
 set $pathmenu wofi -diImSrun | xargs swaymsg exec --
+set $sleep 'swaylock -f -c 292d3e'
 
 # Settings
 default_border pixel 2
@@ -72,6 +73,7 @@ mode "resize" {
 
 bindsym {
     # Execution
+    $mod+Escape exec $sleep
     $mod+Return exec $term
     $mod+q kill
     $mod+p exec $appmenu
@@ -164,10 +166,10 @@ bar {
 
 # Execing
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 292d3e' \
+         timeout 300 $sleep \
          timeout 600 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 292d3e'
+         before-sleep $sleep
 exec mako
 
 # Window assignments

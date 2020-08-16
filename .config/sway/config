@@ -8,7 +8,7 @@ set $right i
 set $term alacritty
 set $appmenu wofi -diImSdrun | xargs swaymsg exec --
 set $pathmenu wofi -diImSrun | xargs swaymsg exec --
-set $sleep 'swaylock -f -c 292d3e'
+set $sleep 'swaylock -f'
 
 # Settings
 default_border pixel 2

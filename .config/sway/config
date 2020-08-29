@@ -24,10 +24,17 @@ output * bg /home/tommoa/Pictures/Wallpapers/j2eeeqfztip11.png fill
 
 ### Input configuration
 input type:touchpad {
+    accel_profile adaptive
     dwt enabled
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
+}
+
+input type:pointer {
+    accel_profile flat
+    dwt disabled
+    natural_scroll disabled
 }
 
 input * xkb_layout "us"

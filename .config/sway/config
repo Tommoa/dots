@@ -105,6 +105,16 @@ bindsym {
     $mod+Shift+Down move down
     $mod+Shift+Up move up
     $mod+Shift+Right move right
+    # Focussing outputs
+    $mod+Alt+$left focus output left
+    $mod+Alt+$down focus output down
+    $mod+Alt+$up focus output up
+    $mod+Alt+$right focus output right
+    # Moving workspaces to outputs
+    $mod+Alt+Shift+$left move workspace to left
+    $mod+Alt+Shift+$down move workspace to down
+    $mod+Alt+Shift+$up move workspace to up
+    $mod+Alt+Shift+$right move workspace to right
     # Selecting workspaces
     $mod+l workspace prev_on_output
     $mod+u workspace next_on_output

@@ -1,4 +1,4 @@
-snippet "\documentclass" "Standard preamble template for reports" b
+snippet "\report" "Standard preamble template for reports" b
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper]{geometry}
@@ -49,6 +49,40 @@ snippet "\documentclass" "Standard preamble template for reports" b
 \maketitle{}
 \tableofcontents{}
 \newpage{}
+$0
+\end{document}
+endsnippet
+snippet "\presentation" "Standard preamble template for presentations" b
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{multicol}
+
+\usecolortheme{cormorant}
+
+\title{${4:title}}
+\author{${1:authorname}}
+\institute{${2:institute}}
+\titlegraphic{${3:titlegraphic}}
+\date{May 2020}
+
+\pgfplotsset{compat=1.15}
+
+\begin{document}
+
+% Title page
+\begin{frame}
+    \maketitle
+\end{frame}
+
+\begin{frame}{${5:Structure}}
+    \tableofcontents{}
+\end{frame}
 $0
 \end{document}
 endsnippet

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+x=2;
+for account in ~/.config/mutt/accounts/*;
+do
+    echo source $account
+    echo "folder-hook \$folder 'source $account'"
+    echo "macro index,pager <F$x> '<sync-mailbox><enter-command>source $account<enter><change-folder>!<enter>' 'swap to mailbox'"
+    echo
+    x=$((x += 1));
+done

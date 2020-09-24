@@ -6,4 +6,4 @@ source ~/.config/mutt/mappings
 
 # Accounts
 
-`for account in ~/.config/mutt/accounts/*; do echo "source $account"; echo "folder-hook \$folder 'source $account'"; done`
+source ~/.config/mutt/account|

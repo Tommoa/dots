@@ -20,6 +20,8 @@
 !/.config/waybar
 !/.config/mako
 !/.config/mako/config
+!/.config/mutt/
+/.config/mutt/accounts
 !/.config/sway/
 /.config/sway/*
 !/.config/sway/config

@@ -1,0 +1,13 @@
+# vim: filetype=muttrc
+
+set header_cache = ~/.cache/mutt
+set message_cachedir = ~/.cache/mutt
+
+set editor = "nvim"
+set charset = "utf-8"
+unset help
+
+auto_view text/html text/calendar application/ics
+alternative_order text/html text/plain text/enriched text/*
+
+set wait_key=no

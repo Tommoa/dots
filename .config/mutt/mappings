@@ -1,0 +1,18 @@
+# vim: filetype=muttrc
+
+bind index \CF imap-fetch-mail
+bind pager n next-line
+bind pager e previous-line
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+bind pager g top
+bind pager G bottom
+bind attach,index g first-entry
+bind attach,index G last-entry
+bind index n next-undeleted
+bind index e previous-undeleted
+bind pager l previous-undeleted
+bind pager u next-undeleted
+bind pager q exit
+
+macro compose \e5 "F pandoc -s -f gfm+tex_math_dollars -t html --katex \ny^T^Utext/html; charset=utf-8\n"

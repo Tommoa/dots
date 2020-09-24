@@ -1,0 +1,9 @@
+# vim: filetype=muttrc
+
+source ~/.config/mutt/settings
+source ~/.config/mutt/colors
+source ~/.config/mutt/mappings
+
+# Accounts
+
+`for account in ~/.config/mutt/accounts/*; do echo "source $account"; echo "folder-hook \$folder 'source $account'"; done`

@@ -1,5 +1,7 @@
 # vim: filetype=muttrc
 
+bind editor <space> noop
+
 bind index \CF imap-fetch-mail
 bind pager n next-line
 bind pager e previous-line
@@ -14,5 +16,9 @@ bind index e previous-undeleted
 bind pager l previous-undeleted
 bind pager u next-undeleted
 bind pager q exit
+bind browser n next-entry
+bind browser e previous-entry
+
+macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 
 macro compose \e5 "F pandoc -s -f gfm+tex_math_dollars -t html --katex \ny^T^Utext/html; charset=utf-8\n"

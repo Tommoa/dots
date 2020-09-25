@@ -4,7 +4,10 @@ x=2;
 for account in ~/.config/mutt/accounts/*;
 do
     echo source $account
-    echo "folder-hook \$folder 'source $account'"
+    # We narrow things down to folder/spoolfile so one gmail acocunt can
+    # serve multiple mutt accounts. This means that all email can be sent
+    # through gmail with different *from*'s using gmail filters.
+    echo "folder-hook \$folder/\$spoolfile 'source $account'"
     echo "macro index,pager <F$x> '<sync-mailbox><enter-command>source $account<enter><change-folder>!<enter>' 'swap to mailbox'"
     echo
     x=$((x += 1));

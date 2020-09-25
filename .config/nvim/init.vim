@@ -14,6 +14,7 @@ Plug 'plasticboy/vim-markdown'
 " Functionality
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'liuchengxu/vista.vim'
+Plug 'junegunn/fzf', {'do': { -> fzf#install()}}
 call plug#end()
 
 " Set the colourscheme

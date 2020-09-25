@@ -13,6 +13,7 @@ Plug 'plasticboy/vim-markdown'
 
 " Functionality
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'liuchengxu/vista.vim'
 call plug#end()
 
 " Set the colourscheme
@@ -189,6 +190,13 @@ endif
 if s:has_plugin('vim-markdown')
   let g:vim_markdown_no_default_key_mappings = 1
   let g:vim_markdown_folding_disabled = 1
+endif
+if s:has_plugin('vista.vim')
+    if s:has_plugin('coc.nvim')
+        let g:vista_default_executive = 'coc'
+    else
+        let g:vista_default_executive = 'nvim_lsp'
+    endif
 endif
 
 "--- Language settings ---"

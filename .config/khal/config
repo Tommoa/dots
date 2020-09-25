@@ -1,0 +1,23 @@
+[calendars]
+
+[[calendar_local]]
+path = ~/.local/share/calendar/*
+type = discover
+
+[[contacts_local]]
+path = ~/.local/share/contacts/*
+type = discover
+
+[locale]
+timeformat = %H:%M
+dateformat = %Y-%m-%d
+longdateformat = %Y-%m-%d
+datetimeformat = %Y-%m-%d %H:%M
+longdatetimeformat = %Y-%m-%d %H:%M
+
+[keybindings]
+down = "down", "n"
+up = "up", "e"
+right = "right", "i", "space"
+export = "f"
+new = "k"

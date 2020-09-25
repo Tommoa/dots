@@ -3,6 +3,9 @@
 set header_cache = ~/.cache/mutt
 set message_cachedir = ~/.cache/mutt
 
+set sort_re
+set sort_aux = reverse-last-date-received
+
 set editor = "nvim"
 set charset = "utf-8"
 unset help

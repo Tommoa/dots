@@ -1,0 +1,35 @@
+[general]
+status_path = "~/.cache/vdirsyncer"
+
+[pair calendar]
+a = "calendar_local"
+b = "calendar_remote"
+collections = ["from a", "from b"]
+
+[storage calendar_local]
+type = "filesystem"
+path = "~/.local/share/calendar/"
+fileext = ".ics"
+
+[storage calendar_remote]
+type = "google_calendar"
+token_file = "~/.cache/gcal_token"
+client_id.fetch = ["command", "~/.config/vdirsyncer/client_id"]
+client_secret.fetch = ["command", "~/.config/vdirsyncer/client_secret"]
+
+[pair contacts]
+a = "contacts_local"
+b = "contacts_remote"
+collections = ["from a", "from b"]
+
+[storage contacts_local]
+type = "filesystem"
+path = "~/.local/share/contacts/"
+fileext = ".vcf"
+
+[storage contacts_remote]
+type = "google_contacts"
+token_file = "~/.cache/gcon_token"
+client_id.fetch = ["command", "~/.config/vdirsyncer/client_id"]
+client_secret.fetch = ["command", "~/.config/vdirsyncer/client_secret"]
+

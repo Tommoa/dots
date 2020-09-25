@@ -19,6 +19,8 @@ bind pager q exit
 bind browser n next-entry
 bind browser e previous-entry
 
+bind editor <Tab> complete-query
+
 macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 
 macro compose \e5 "F pandoc -s -f gfm+tex_math_dollars -t html --katex \ny^T^Utext/html; charset=utf-8\n"

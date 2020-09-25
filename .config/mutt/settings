@@ -10,4 +10,6 @@ unset help
 auto_view text/html text/calendar application/ics
 alternative_order text/html text/plain text/enriched text/*
 
+set query_command = "khard email --parsable --search-in-source-files '%s'"
+
 set wait_key=no

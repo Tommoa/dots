@@ -8,6 +8,7 @@
 !/.config/ion
 /.config/ion/*
 !/.config/ion/initrc
+!/.config/khard
 !/.config/nvim/
 /.config/nvim/*
 !/.config/nvim/init.vim

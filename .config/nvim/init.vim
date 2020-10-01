@@ -16,6 +16,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'liuchengxu/vista.vim'
 Plug 'junegunn/fzf', {'do': { -> fzf#install()}}
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " Set the colourscheme
@@ -166,7 +167,7 @@ if s:has_plugin('lightline.vim')
                 \   'left': [
                 \     [ 'mode', 'paste' ],
                 \     [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified'],
-                \     [ 'git' ]
+                \     [ 'gitbranch', 'git' ]
                 \   ],
                 \   'right': [
                 \     ['lineinfo'],
@@ -179,6 +180,7 @@ if s:has_plugin('lightline.vim')
                 \   'cocstatus': 'coc#status',
                 \   'currentfunction': 'CocCurrentFunction',
                 \   'git': 'GitStatus',
+                \   'gitbranch': 'fugitive#statusline',
                 \ },
                 \ 'tabline': { 'left': [['buffers']] },
                 \ 'component_expand': { 'buffers': 'lightline#bufferline#buffers' },

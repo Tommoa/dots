@@ -242,3 +242,5 @@ highlight Comment cterm=italic gui=italic
 " Make sure italics are displayed correctly
 set t_ZH=[3m
 set t_ZR=[23m
+
+set shell=/bin/sh

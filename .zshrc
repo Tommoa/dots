@@ -8,7 +8,31 @@ export MAIL=/var/mail/$USER
 # this is the path - this one should allow
 # the user to use most applications on most machines.
 export PATH=$HOME/.local/bin:$HOME/scripts:$PATH
-PROMPT=%U%m%u:%~\>\ 
+prompt_git() {
+    if [[ -n GIT_PROMPT && $GIT_PROMPT = 1 ]] && git rev-parse --is-inside-work-tree -q &> /dev/null; then
+        (( num_added = 0 ))
+        (( num_removed = 0 ))
+        for line in "$(git diff-files --numstat -r)"; do
+            new_added=0$(echo $line | cut -f1)
+            new_removed=0$(echo $line | cut -f2)
+            let "num_added += ${new_added}"
+            let "num_removed += ${new_removed}"
+        done
+        totals="";
+        if [[ $num_added -gt 0 || $num_removed -gt 0 ]]; then
+            totals=":"
+            if [[ $num_added -gt 0 ]]; then
+                totals="$totals%%F{85}+$num_added"
+            fi
+            if [[ $num_removed -gt 0 ]]; then
+                totals="$totals%%F{red}-$num_removed"
+            fi
+        fi
+        printf "%%B[%%F{red}$(git symbolic-ref --short -q HEAD || git rev-parse --short HEAD)%%f$totals%%f] %%b"
+    fi
+}
+setopt prompt_subst
+PROMPT=%F{85}%B%n${SSH_CLIENT:+%F{red}@%F{cyan}%U%m%u}%f:%F{75}%~%f\#%b\ \$(prompt_git)
 RPROMPT=%T
 # some convienience settings
 export PYTHONSTARTUP=$HOME/.pyrc
@@ -17,7 +41,7 @@ export PAGER=less
 [ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
 # some example (and useful) aliases
-alias ls="ls --color"
+alias ls="exa --color=auto"
 
 # zsh options - see zshoptions(1)
 setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_NO_STORE INTERACTIVE_COMMENTS
@@ -70,10 +94,4 @@ fi
 if [[ -e $CARGO_HOME/bin/bat ]]
 then
 	export PAGER=$CARGO_HOME/bin/bat
-fi
-
-if [[ -e $CARGO_HOME/bin/ion ]]
-then
-	exec $CARGO_HOME/bin/ion
-	exit
 fi

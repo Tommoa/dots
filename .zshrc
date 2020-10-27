@@ -97,3 +97,20 @@ if [[ -e $CARGO_HOME/bin/bat ]]
 then
 	export PAGER=$CARGO_HOME/bin/bat
 fi
+
+if [[ -z $SSH_CLIENT && -z $VIMRUNTIME && -z $TMUX ]]; then
+    # Only launch TMUX if we're not in an SSH session
+    # and we're not in a VIM session
+    # and we're not already in a TMUX session
+    tmux=$(/usr/bin/env which tmux)
+    ns=$($tmux list-sessions | wc -l)
+    (( sessions = ns ))
+    echo $sessions
+    if [[ $sessions -gt 0 ]]; then
+        exec $tmux attach
+    else
+        exec $tmux new-session
+    fi
+fi
+
+export GIT_PROMPT=1

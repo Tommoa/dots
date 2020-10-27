@@ -113,4 +113,14 @@ if [[ -z $SSH_CLIENT && -z $VIMRUNTIME && -z $TMUX ]]; then
     fi
 fi
 
+mux() {
+    tmux=$(/usr/bin/env which tmux)
+    fd=$(/usr/bin/env which fd || /usr/bin/env which fdfind)
+    dir=$($fd --no-ignore -i -td "$1" ~/Documents | awk -F'/' 'NR==1{n=NF; m=$0} NF<n{ m=$0; n=NF } END { print m }')
+    $tmux if-shell                      \
+        "$tmux has-session -t $1" \
+        "switch-client -t $1"     \
+        "new-session -ds $1 -c $dir; switch-client -t $1"
+}
+
 export GIT_PROMPT=1

@@ -58,6 +58,8 @@ bindkey '^[[B' down-line-or-history
 # arrow keys
 bindkey '^U' kill-whole-line
 # ^U kills the entire line, not just back from cursor
+bindkey -v
+bindkey '^R' history-incremental-search-backward
 
 # Disable core dumps
 limit coredumpsize 0

@@ -1,6 +1,8 @@
 # set the umask
 umask 022
 
+autoload -U colors && colors
+
 # set some basic environment variables
 export EDITOR=nvim
 export MAIL=/var/mail/$USER
@@ -72,6 +74,8 @@ zstyle ':completion:*' menu select=long
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 
 autoload -U compinit
+ZLS_COLOURS="${(s.:.)LS_COLORS}"
+zmodload zsh/complist
 compinit
 # End of lines added by compinstall
 

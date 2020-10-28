@@ -123,4 +123,5 @@ mux() {
         "new-session -ds $1 -c $dir; switch-client -t $1"
 }
 
+setopt auto_cd
 export GIT_PROMPT=1

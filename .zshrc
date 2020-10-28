@@ -128,4 +128,5 @@ mux() {
 }
 
 setopt auto_cd
+stty stop undef
 export GIT_PROMPT=1

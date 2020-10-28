@@ -127,6 +127,8 @@ mux() {
         "new-session -ds $1 -c $dir; switch-client -t $1"
 }
 
+alias tls="tmux list-sessions"
+
 setopt auto_cd
 stty stop undef
 export GIT_PROMPT=1

@@ -68,6 +68,8 @@ bindkey '^R' history-incremental-search-backward
 # Disable core dumps
 limit coredumpsize 0
 
+LS_COLORS="pi=00;33:cd=01;33:di=01;34:so=01;31:ln=00;36:ex=01;32:bd=01;33:or=00;31:fi=00;00"
+
 # The following lines were added by compinstall
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}

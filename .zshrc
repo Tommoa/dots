@@ -14,6 +14,8 @@ prompt_git() {
     if [[ -n GIT_PROMPT && $GIT_PROMPT = 1 ]] && git rev-parse --is-inside-work-tree -q &> /dev/null; then
         (( num_added = 0 ))
         (( num_removed = 0 ))
+        typeset -Z 1 new_added
+        typeset -Z 1 new_removed
         for line in "$(git diff-files --numstat -r)"; do
             new_added=0$(echo $line | cut -f1)
             new_removed=0$(echo $line | cut -f2)

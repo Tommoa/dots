@@ -51,14 +51,17 @@ alias ls="exa --color=auto"
 setopt HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_NO_STORE INTERACTIVE_COMMENTS
 setopt LONG_LIST_JOBS PRINT_EXIT_VALUE RC_QUOTES
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 
 # key bindings
 bindkey '^[=' expand-cmd-path
 # tab completion
-bindkey '^[[A' up-line-or-history
-bindkey '^[[B' down-line-or-history
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "$key[Up]" history-beginning-search-backward-end
+bindkey "$key[Down]" history-beginning-search-forward-end
 # arrow keys
 bindkey '^U' kill-whole-line
 # ^U kills the entire line, not just back from cursor

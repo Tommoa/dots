@@ -16,7 +16,7 @@ prompt_git() {
         (( num_removed = 0 ))
         typeset -Z 1 new_added
         typeset -Z 1 new_removed
-        for line in "$(git diff-files --numstat -r)"; do
+        for line in "$(git diff-files --numstat -r 2>/dev/null)"; do
             new_added=0$(echo $line | cut -f1)
             new_removed=0$(echo $line | cut -f2)
             let "num_added += ${new_added}"
@@ -32,7 +32,7 @@ prompt_git() {
                 totals="$totals%%F{red}-$num_removed"
             fi
         fi
-        printf "%%B[%%F{red}$(git symbolic-ref --short -q HEAD || git rev-parse --short HEAD)%%f$totals%%f] %%b"
+        printf "%%B[%%F{red}$(git symbolic-ref --short -q HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)%%f$totals%%f] %%b"
     fi
 }
 setopt prompt_subst

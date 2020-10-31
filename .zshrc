@@ -104,11 +104,6 @@ then
 	source $CARGO_HOME/env
 fi
 
-if [[ -e $CARGO_HOME/bin/bat ]]
-then
-	export PAGER=$CARGO_HOME/bin/bat
-fi
-
 if [[ -z $SSH_CLIENT && -z $VIMRUNTIME && -z $TMUX ]]; then
     # Only launch TMUX if we're not in an SSH session
     # and we're not in a VIM session

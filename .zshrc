@@ -61,8 +61,8 @@ bindkey '^[=' expand-cmd-path
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
-bindkey "$key[Up]" history-beginning-search-backward-end
-bindkey "$key[Down]" history-beginning-search-forward-end
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[[B" history-beginning-search-forward-end
 # arrow keys
 bindkey '^U' kill-whole-line
 # ^U kills the entire line, not just back from cursor

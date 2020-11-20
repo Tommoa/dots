@@ -197,3 +197,4 @@ for_window [class="discord"] move to workspace 3
 for_window [class="[Ss]potify"] move to scratchpad
 
 include ~/.config/sway/config.d/*
+include "~/.config/sway/machines/`uname -n`"

@@ -27,6 +27,7 @@
 !/.config/sway/
 /.config/sway/*
 !/.config/sway/config
+!/.config/sway/machines/
 !/.config/swaylock/
 !/.config/wofi
 !/.config/gammastep

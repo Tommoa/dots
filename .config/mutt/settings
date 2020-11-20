@@ -51,11 +51,12 @@ set menu_scroll
 set tilde
 unset markers
 
-set header_cache = ~/.cache/mutt
+set header_cache = ~/.cache/mutt_headers
 set message_cachedir = ~/.cache/mutt
+set mailcap_path = ~/.config/mutt/mailcap
 
 auto_view text/html text/calendar application/ics
-alternative_order text/html text/plain text/enriched text/*
+alternative_order text/plain text/enriched text/html text/*
 
 set query_command = "khard email --parsable --search-in-source-files '%s'"
 

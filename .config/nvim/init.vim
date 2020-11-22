@@ -8,8 +8,6 @@ Plug 'mengelbrecht/lightline-bufferline'
 " Languages
 Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
 Plug 'rust-lang/rust.vim'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
 
 " Functionality
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
@@ -191,10 +189,6 @@ if s:has_plugin('lightline.vim')
     let g:lightline#bufferline#shorten_path = 1
     let g:lightline#bufferline#unnamed      = '[No Name]'
 endif
-if s:has_plugin('vim-markdown')
-  let g:vim_markdown_no_default_key_mappings = 1
-  let g:vim_markdown_folding_disabled = 1
-endif
 if s:has_plugin('vista.vim')
     if s:has_plugin('coc.nvim')
         let g:vista_default_executive = 'coc'
@@ -207,6 +201,7 @@ endif
 " LaTeX
 autocmd FileType tex set linebreak
 " Markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'rust', 'cpp']
 autocmd FileType markdown set linebreak
 autocmd FileType markdown set tabstop=2
 autocmd FileType markdown set softtabstop=2
@@ -232,7 +227,6 @@ augroup end
 "--- Visuals ---"
 if s:has_plugin('palenight.vim') && s:scheme == 'palenight'
     colorscheme palenight
-    let g:palenight_terminal_italics=1
 endif
 if s:has_plugin('nord-vim') && s:scheme == 'nord'
     colorscheme nord

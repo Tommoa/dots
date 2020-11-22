@@ -157,6 +157,7 @@ bindsym {
     $mod+Shift+space floating toggle
     $mod+space focus mode_toggle
     $mod+a focus parent
+    $mod+c focus child
     $mod+r mode "resize"
     $mod+Shift+minus move scratchpad
     $mod+minus scratchpad show

@@ -14,9 +14,11 @@ prompt_git() {
     if [[ -n GIT_PROMPT && $GIT_PROMPT = 1 ]] && git rev-parse --is-inside-work-tree -q &> /dev/null; then
         (( num_added = 0 ))
         (( num_removed = 0 ))
+        (( total = 0 ))
         separator=$IFS
         IFS=$'\n'
         for line in $(git diff-files --numstat -r 2>/dev/null); do
+            (( total += 1 ))
             new_added=$(echo $line | cut -f1)
             new_removed=$(echo $line | cut -f2)
             let "num_added += ${new_added}"
@@ -24,8 +26,8 @@ prompt_git() {
         done
         IFS=$separator
         totals="";
-        if [[ $num_added -gt 0 || $num_removed -gt 0 ]]; then
-            totals=":"
+        if [[ $total -gt 0 ]]; then
+            totals=":%%F{blue}$total"
             if [[ $num_added -gt 0 ]]; then
                 totals="$totals%%F{85}+$num_added"
             fi

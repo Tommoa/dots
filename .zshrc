@@ -96,7 +96,7 @@ if [[ $(uname) == "FreeBSD" ]]
 then
 	export CARGO_HOME="$HOME/.cargo_freebsd"
 	export RUSTUP_HOME= "$HOME/.rustup_freebsd"
-elif [[ $(lscpu | grep 'Architecture' | cut -f2 -d: | egrep -o "\S+") == "i686" ]]
+elif [[ $(uname -m) == "i686" ]]
 then
 	export CARGO_HOME="$HOME/.cargox32"
 	export RUSTUP_HOME="$HOME/.rustupx32"

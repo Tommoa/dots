@@ -22,7 +22,7 @@ focus_wrapping no
 mouse_warping container
 
 ### Output configuration
-output * bg /home/tommoa/Pictures/Wallpapers/j2eeeqfztip11.png fill
+output * bg ~/.config/sway/background.png fill
 
 ### Input configuration
 input type:touchpad {

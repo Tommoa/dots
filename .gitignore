@@ -27,6 +27,7 @@
 /.config/mutt/accounts
 !/.config/sway/
 /.config/sway/*
+!/.config/sway/background*
 !/.config/sway/config
 !/.config/sway/machines/
 !/.config/swaylock/

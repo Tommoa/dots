@@ -5,9 +5,6 @@
 /.config/*
 !/.config/alacritty
 !/.config/bat
-!/.config/ion
-/.config/ion/*
-!/.config/ion/initrc
 !/.config/imv/
 !/.config/khard
 !/.config/khal

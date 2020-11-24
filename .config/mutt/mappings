@@ -2,7 +2,7 @@
 
 bind editor <space> noop
 
-bind index \CF imap-fetch-mail
+macro index \CF "<shell-escape>mbsync -a<enter>" "Run mbsync to sync all mail"
 
 # Bindings
 # Movement

@@ -134,5 +134,5 @@ mux() {
 alias tls="tmux list-sessions"
 
 setopt auto_cd
-stty stop undef
+stty -ixon
 export GIT_PROMPT=1

@@ -7,8 +7,19 @@ autoload -U colors && colors
 export EDITOR=nvim
 export MAIL=/var/mail/$USER
 
-# this is the path - this one should allow
-# the user to use most applications on most machines.
+if [[ -z $SSH_CLIENT && -z $VIMRUNTIME && -z $TMUX ]]; then
+    # Only launch TMUX if we're not in an SSH session
+    # and we're not in a VIM session
+    # and we're not already in a TMUX session
+    tmux=$(/usr/bin/env which tmux)
+    ns=$($tmux list-sessions | wc -l)
+    if [[ $ns -gt 0 ]]; then
+        exec $tmux attach
+    else
+        exec $tmux new-session
+    fi
+fi
+
 export PATH=$HOME/.local/bin:$HOME/scripts:$PATH
 prompt_git() {
     if [[ -n GIT_PROMPT && $GIT_PROMPT = 1 ]] && git rev-parse --is-inside-work-tree -q &> /dev/null; then
@@ -105,21 +116,6 @@ fi
 if [[ -e $CARGO_HOME/env ]]
 then
 	source $CARGO_HOME/env
-fi
-
-if [[ -z $SSH_CLIENT && -z $VIMRUNTIME && -z $TMUX ]]; then
-    # Only launch TMUX if we're not in an SSH session
-    # and we're not in a VIM session
-    # and we're not already in a TMUX session
-    tmux=$(/usr/bin/env which tmux)
-    ns=$($tmux list-sessions | wc -l)
-    (( sessions = ns ))
-    echo $sessions
-    if [[ $sessions -gt 0 ]]; then
-        exec $tmux attach
-    else
-        exec $tmux new-session
-    fi
 fi
 
 mux() {

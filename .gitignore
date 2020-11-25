@@ -5,6 +5,8 @@
 /.config/*
 !/.config/alacritty
 !/.config/bat
+!/.config/fontconfig/
+!/.config/fontconfig/fonts.conf
 !/.config/imv/
 !/.config/khard
 !/.config/khal

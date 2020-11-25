@@ -81,6 +81,9 @@ bindkey "${terminfo[kcud1]}" history-beginning-search-forward-end
 bindkey '^U' kill-whole-line
 bindkey '^R' history-incremental-search-backward
 
+bindkey '\e[1~' beginning-of-line
+bindkey '\e[4~' end-of-line
+
 # Disable core dumps
 limit coredumpsize 0
 

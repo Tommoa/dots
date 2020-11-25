@@ -81,12 +81,13 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' menu select=long
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' rehash true
 
 autoload -U compinit
 ZLS_COLOURS="${(s.:.)LS_COLORS}"
 zmodload zsh/complist
 compinit
-# End of lines added by compinstall
+autoload -U bashcompinit && bashcompinit
 
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"

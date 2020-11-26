@@ -6,6 +6,9 @@ color header brightmagenta default "^(From)"
 color header brightcyan default "^(Subject)"
 color header brightwhite default "^(CC|BCC)"
 
+set sidebar_visible = yes
+set sidebar_width = 16
+
 mono bold bold
 mono underline underline
 mono indicator reverse

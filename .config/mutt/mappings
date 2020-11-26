@@ -2,7 +2,7 @@
 
 bind editor <space> noop
 
-macro index \CF "<shell-escape>mbsync -a<enter>" "Run mbsync to sync all mail"
+macro index \CF "<shell-escape>mbsync -a && notmuch new<enter>" "Run mbsync to sync all mail"
 
 # Bindings
 # Movement

@@ -59,5 +59,6 @@ auto_view text/html text/calendar application/ics
 alternative_order text/plain text/enriched text/html text/*
 
 set query_command = "khard email --parsable --search-in-source-files '%s'"
+set nm_default_url = "notmuch:///home/tommoa/.mail"
 
 set wait_key=no

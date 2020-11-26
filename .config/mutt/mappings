@@ -2,7 +2,7 @@
 
 bind editor <space> noop
 
-macro index \CF "<shell-escape>mbsync -a && notmuch new<enter>" "Run mbsync to sync all mail"
+macro index \CF "<shell-escape>notmuch new<enter>" "Run mbsync to sync all mail"
 
 # Bindings
 # Movement
@@ -19,8 +19,6 @@ bind attach,index gg first-entry
 bind attach,index G last-entry
 bind pager gg top
 bind pager G bottom
-bind index,pager d delete-message
-bind index,pager u undelete-message
 bind index,pager,browser D half-down
 bind index,pager,browser U half-up
 bind attach,index,pager \Cd next-page
@@ -46,6 +44,9 @@ bind index,pager <up>     sidebar-prev
 bind index,pager <right>  sidebar-open
 
 # Macros
+macro index,pager d '<modify-labels>-inbox +killed<enter><delete-message>' "Delete a message"
+macro index,pager u '<modify-labels>+inbox -killed<enter><undelete-message>' "Undelete a message"
+macro index \\\\ "<vfolder-from-query>" "Search mailbox"
 macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>' "change IMAP folder"
 macro compose \e5 "F pandoc -s -f gfm+tex_math_dollars -t html --katex \ny^T^Utext/html; charset=utf-8\n" "convert markdown to html"
 macro index,pager A "<pipe-message>khard add-email<return>" "add the sender email address to khard"

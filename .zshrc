@@ -7,18 +7,21 @@ autoload -U colors && colors
 export EDITOR=nvim
 export MAIL=/var/mail/$USER
 
-if [[ -z $SSH_CLIENT && -z $VIMRUNTIME && -z $TMUX ]]; then
-    # Only launch TMUX if we're not in an SSH session
-    # and we're not in a VIM session
-    # and we're not already in a TMUX session
-    tmux=$(/usr/bin/env which tmux)
-    ns=$($tmux list-sessions | wc -l)
-    if [[ $ns -gt 0 ]]; then
-        exec $tmux attach
-    else
-        exec $tmux new-session
+() {
+    if [[ -z $SSH_CLIENT && -z $VIMRUNTIME && -z $TMUX ]]; then
+        # Only launch TMUX if we're not in an SSH session
+        # and we're not in a VIM session
+        # and we're not already in a TMUX session
+        local tmux=$(/usr/bin/env which tmux)
+        [ -z $tmux ] && return
+        local ns=$($tmux list-sessions | wc -l)
+        if [[ $ns -gt 0 ]]; then
+            exec $tmux attach
+        else
+            exec $tmux new-session
+        fi
     fi
-fi
+}
 
 export PATH=$HOME/.local/bin:$HOME/scripts:$PATH
 prompt_git() {
@@ -77,8 +80,6 @@ limit coredumpsize 0
 
 LS_COLORS="pi=00;33:cd=01;33:di=01;34:so=01;31:ln=00;36:ex=01;32:bd=01;33:or=00;31:fi=00;00"
 
-# The following lines were added by compinstall
-
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' menu select=long
@@ -110,9 +111,11 @@ then
 fi
 
 mux() {
-    tmux=$(/usr/bin/env which tmux)
-    fd=$(/usr/bin/env which fd || /usr/bin/env which fdfind)
-    dir=$($fd --no-ignore -i -td "$1" ~/Documents | awk -F'/' 'NR==1{n=NF; m=$0} NF<n{ m=$0; n=NF } END { print m }')
+    local tmux=$(/usr/bin/env which tmux)
+    local fd=$(/usr/bin/env which fd || /usr/bin/env which fdfind)
+    [ -z $tmux ] && return
+    [ -z $fd ] && return
+    local dir=$($fd --no-ignore -i -td "$1" ~/Documents | awk -F'/' 'NR==1{n=NF; m=$0} NF<n{ m=$0; n=NF } END { print m }')
     $tmux if-shell                      \
         "$tmux has-session -t $1" \
         "switch-client -t $1"     \

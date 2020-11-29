@@ -1,11 +1,20 @@
 #!/bin/sh
 
+# The folder that will be used for trash
+trash='[Gmail]/Trash'
+# The folder that will be used for archiving
+archive='[Gmail]/All Mail'
+# The folder that will be used for sent mail
+sent='[Gmail]/Sent Mail'
+
 # If its already in trash, remove it from the inbox
-notmuch tag +deleted -inbox -- folder:"[Gmail]/Trash"
+notmuch tag +deleted -inbox -- folder:"\"$trash\""
 # If its already been archived, mark it as such
-notmuch tag +archive -inbox -- folder:'"[Gmail]/All Mail"' and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
+notmuch tag +archive -inbox -- folder:"\"$archive\"" and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
 # If its been sent, pass that on through
-notmuch tag +sent -inbox -- folder:'"[Gmail]/Sent Mail"' and not tag:sent
+notmuch tag +sent -- folder:"\"$sent\"" and not tag:sent
+# If its not in an inbox, don't mark it as "inbox"
+notmuch tag -inbox -- tag:inbox and not folder:'"/(INBOX|.*@.*)/"'
 
 count=$(notmuch count tag:unread and tag:inbox)
 if [[ $count -gt 0 ]]; then

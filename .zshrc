@@ -81,15 +81,10 @@ limit coredumpsize 0
 LS_COLORS="pi=00;33:cd=01;33:di=01;34:so=01;31:ln=00;36:ex=01;32:bd=01;33:or=00;31:fi=00;00"
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' rehash true
 
-autoload -U compinit
 ZLS_COLOURS="${(s.:.)LS_COLORS}"
-zmodload zsh/complist
-compinit
+autoload -U compinit && compinit
 autoload -U bashcompinit && bashcompinit
 
 export CARGO_HOME="$HOME/.cargo"

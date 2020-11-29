@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# If its already in trash, remove it from the inbox
+notmuch tag +deleted -inbox -- folder:"[Gmail]/Trash"
+# If its already been archived, mark it as such
+notmuch tag +archive -inbox -- folder:'"[Gmail]/All Mail"' and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
+# If its been sent, pass that on through
+notmuch tag +sent -inbox -- folder:'"[Gmail]/Sent Mail"' and not tag:sent
+
+count=$(notmuch count tag:unread and tag:inbox)
+if [[ $count -gt 0 ]]; then
+    notify-send -i /usr/share/doc/neomutt/logo/neomutt.svg "$count new emails"
+fi

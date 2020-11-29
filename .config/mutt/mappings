@@ -1,4 +1,4 @@
-# vim: filetype=muttrc
+# vim: filetype=neomuttrc
 
 bind editor <space> noop
 
@@ -31,6 +31,9 @@ bind pager \005 next-line		# Mouse wheel
 bind index h noop
 bind index i display-message
 bind pager q exit
+bind index,pager \\ vfolder-from-query
+bind index,pager + entire-thread
+bind index,pager . modify-labels
 
 bind index,pager @ compose-to-sender
 bind index <tab> sync-mailbox
@@ -44,9 +47,13 @@ bind index,pager <up>     sidebar-prev
 bind index,pager <right>  sidebar-open
 
 # Macros
-macro index,pager d '<modify-labels>-inbox +killed<enter><delete-message>' "Delete a message"
-macro index u '<modify-labels>+inbox -killed<enter><undelete-message>' "Undelete a message"
-macro index \\\\ "<vfolder-from-query>" "Search mailbox"
-macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>' "change IMAP folder"
-macro compose \e5 "F pandoc -s -f gfm+tex_math_dollars -t html --katex \ny^T^Utext/html; charset=utf-8\n" "convert markdown to html"
-macro index,pager A "<pipe-message>khard add-email<return>" "add the sender email address to khard"
+macro index,pager a "<modify-labels-then-hide>-inbox -deleted +archive<enter>" "Archive message"
+macro index,pager d '<modify-labels-then-hide>-inbox +deleted -archive<enter>' "Delete a message"
+macro index c "<change-vfolder>?" "Change folder"
+macro compose \e5 \
+"<pipe-message>pandoc -s -f gfm+tex_math_dollars -t html5 --katex -o /tmp/msg.html<enter>\
+<attach-file>^U/tmp/msg.html<enter>\
+<edit-type>^Utext/html; charset=utf-8<enter>\
+<first-entry><tag-entry><tag-entry><group-alternatives><edit-description>^U<enter>"\
+ "Convert markdown to html"
+macro index,pager A "<pipe-message>khard add-email<return>" "Add the sender email address to khard"

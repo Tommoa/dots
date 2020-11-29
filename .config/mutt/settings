@@ -24,6 +24,7 @@ set text_flowed # set the text to be flowed - soft and hard line breaks are dist
 unset mime_forward # Forwarded attachments are a part of the body
 unset help # I don't want to see the help bar
 
+unset confirmappend # Yes, I'm sure I want to move folders
 set quit # Don't ask before quitting
 unset mark_old # I don't need to see "old" mail. Just new/read is good enough for me
 set beep_new # bell on new mail
@@ -56,9 +57,8 @@ set header_cache = ~/.cache/mutt_headers
 set message_cachedir = ~/.cache/mutt
 
 auto_view text/html text/calendar application/ics
-alternative_order text/plain text/enriched text/html text/*
+alternative_order text/flowed text/plain text/enriched text/html text/*
 
 set query_command = "khard email --parsable --search-in-source-files '%s'"
-set nm_default_url = "notmuch:///home/tommoa/.mail"
 
 set wait_key=no

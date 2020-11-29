@@ -13,7 +13,6 @@ dir=$(notmuch config get database.path)
 mbdir=${dir##*/}
 
 # Set the separator to a newline -- without this some of the mvs will fail
-separator=$IFS
 IFS=$'\n'
 
 # Move it to the trash if its deleted and not already there
@@ -59,8 +58,5 @@ done
 # If its in All Mail and not in an inbox, tag it as archived
 # One such reason why it might be this way is because of trash removal
 notmuch tag +archive -inbox -- folder:"\"$archive\"" and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
-
-# Set the IFS back to what it was before
-IFS=$separator
 
 mbsync $mbdir

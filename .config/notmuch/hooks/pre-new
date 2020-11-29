@@ -19,7 +19,11 @@ IFS=$'\n'
 # Move it to the trash if its deleted and not already there
 for file in $(notmuch search --output=files tag:deleted and not folder:"\"$trash\"" | grep -iv "$trash"); do
     name="${file##*/}"
+    # Get the IMAP flags
     flags="${name##*:}"
+    directory=${file%%/${name}}
+    # If its in the "new" directory, we need to set the flags ourselves when it moves
+    [ "${directory##*/}" = "new" ] && flags="2," || true
     echo "Trashing $file"
     mv "$file" "$dir/$trash/cur/$(uuidgen):${flags%%T}"
 done
@@ -28,7 +32,11 @@ done
 # This will be retagged below
 for file in $(notmuch search --output=files folder:"\"$trash\"" and not tag:deleted); do
     name="${file##*/}"
+    # Get the IMAP flags
     flags="${name##*:}"
+    directory=${file%%/${name}}
+    # If its in the "new" directory, we need to set the flags ourselves when it moves
+    [ ${directory##*/} = "new" ] && flags="2," || true
     echo "Untrashing $file"
     mv "$file" "$dir/$archive/cur/$(uuidgen):${flags%%T}"
 done
@@ -39,7 +47,11 @@ notmuch tag +archive -- folder:'"/(INBOX|.*@.*)/"' and not tag:inbox
 # Archive things that are marked "archive"
 for file in $(notmuch search --output=files tag:archive and folder:'"/(INBOX|.*@.*)/"' | grep -iv "$archive"); do
     name="${file##*/}"
+    # Get the IMAP flags
     flags="${name##*:}"
+    directory=${file%%/${name}}
+    # If its in the "new" directory, we need to set the flags ourselves when it moves
+    [ ${directory##*/} = "new" ] && flags="2," || true
     echo "Archiving $file"
     mv "$file" "$dir/$archive/cur/$(uuidgen):${flags%%T}"
 done

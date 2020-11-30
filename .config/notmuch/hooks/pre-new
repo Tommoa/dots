@@ -4,9 +4,11 @@
 
 # The tag and folder that will be used for trash
 trash='[Gmail]/Trash'
+trash_re='\[Gmail\]/Trash'
 
 # The tag and folder that will be used for archiving
 archive='[Gmail]/All Mail'
+archive_re='\[Gmail\]/All Mail'
 
 # Fix up directories with tags before we sync
 dir=$(notmuch config get database.path)
@@ -16,7 +18,7 @@ mbdir=${dir##*/}
 IFS=$'\n'
 
 # Move it to the trash if its deleted and not already there
-for file in $(notmuch search --output=files tag:deleted and not folder:"\"$trash\"" | grep -iv "$trash"); do
+for file in $(notmuch search --output=files tag:deleted and not folder:"\"$trash\"" | grep -iv "$trash_re"); do
     name="${file##*/}"
     # Get the IMAP flags
     flags="${name##*:}"
@@ -44,7 +46,7 @@ done
 notmuch tag +archive -- folder:'"/(INBOX|.*@.*)/"' and not tag:inbox
 
 # Archive things that are marked "archive"
-for file in $(notmuch search --output=files tag:archive and folder:'"/(INBOX|.*@.*)/"' | grep -iv "$archive"); do
+for file in $(notmuch search --output=files tag:archive and folder:'"/(INBOX|.*@.*)/"' | grep -iv "$archive_re"); do
     name="${file##*/}"
     # Get the IMAP flags
     flags="${name##*:}"

@@ -1,4 +1,4 @@
-# vim: filetype=muttrc
+# vim: filetype=neomuttrc
 
 # set editor to neovim
 set editor = "nvim"
@@ -60,5 +60,7 @@ auto_view text/html text/calendar application/ics
 alternative_order text/flowed text/plain text/enriched text/html text/*
 
 set query_command = "khard email --parsable --search-in-source-files '%s'"
+
+set sidebar_format = "%D%* %S"
 
 set wait_key=no

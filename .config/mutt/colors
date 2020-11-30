@@ -17,7 +17,6 @@ color normal default default
 color indicator brightyellow default # currently selected message. default makes bar clear, disabled arrow to save space.
 color sidebar_highlight red default
 color sidebar_divider brightblack black
-color sidebar_flagged red black
 color sidebar_new green black
 color normal brightyellow default
 color error red default

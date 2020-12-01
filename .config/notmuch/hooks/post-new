@@ -17,6 +17,4 @@ notmuch tag +sent -- folder:"\"$sent\"" and not tag:sent
 notmuch tag -inbox -- tag:inbox and not folder:'"/(INBOX|.*@.*)/"'
 
 count=$(notmuch count tag:unread and tag:inbox)
-if [[ $count -gt 0 ]]; then
-    notify-send -i /usr/share/doc/neomutt/logo/neomutt.svg "$count new emails"
-fi
+[ $count -gt 0 ] && notify-send -i /usr/share/doc/neomutt/logo/neomutt.svg "$count new emails" || true

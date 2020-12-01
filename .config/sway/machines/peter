@@ -1,6 +1,6 @@
 # vim: filetype=conf
 
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec gammastep-indicator
+exec wlsunset -t 3500 -l 48.1 -L 11.6
 exec /usr/lib/kdeconnectd
 exec kdeconnect-indicator

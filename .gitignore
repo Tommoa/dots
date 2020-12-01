@@ -34,7 +34,6 @@
 !/.config/sway/machines/
 !/.config/swaylock/
 !/.config/wofi
-!/.config/gammastep
 !/.config/vdirsyncer
 /.config/vdirsyncer/client*
 !/.gitignore

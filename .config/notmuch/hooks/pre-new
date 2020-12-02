@@ -54,7 +54,9 @@ for file in $(notmuch search --output=files tag:archive and folder:'"/(INBOX|.*@
     # If its in the "new" directory, we need to set the flags ourselves when it moves
     [ ${directory##*/} = "new" ] && flags="2," || true
     echo "Archiving $file"
-    mv "$file" "$dir/$archive/cur/$(uuidgen):${flags%%T}"
+    # In gmail, everything is already archived in "All Mail"
+    # We can prevent file duplication by just deleting the extra file in whatever inbox it is.
+    rm $file
 done
 
 # If its in All Mail and not in an inbox, tag it as archived

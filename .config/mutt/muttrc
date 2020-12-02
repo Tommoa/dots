@@ -7,3 +7,5 @@ source ~/.config/mutt/mappings
 # Accounts
 
 source ~/.config/mutt/account|
+
+source ~/.config/mutt/gpg.rc

@@ -1,6 +1,7 @@
 # Kill it all with fire
 /*
 # Unless its these
+!.LICENSE
 !/.config
 /.config/*
 !/.config/alacritty

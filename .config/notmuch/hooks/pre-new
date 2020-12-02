@@ -24,7 +24,7 @@ do
     flags="${name##*:}"
     directory=${file%%/${name}}
     # If its in the "new" directory, we need to set the flags ourselves
-    [ "${directory##*/}" = "new" ] && flags="2," || true
+    if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
     echo "Trashing $file"
     mv "$file" "$dir/$trash/cur/$(uuidgen):${flags%%T}"
 done
@@ -39,7 +39,7 @@ do
     flags="${name##*:}"
     directory=${file%%/${name}}
     # If its in the "new" directory, we need to set the flags ourselves
-    [ ${directory##*/} = "new" ] && flags="2," || true
+    if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
     echo "Untrashing $file"
     mv "$file" "$dir/$archive/cur/$(uuidgen):${flags%%T}"
 done
@@ -57,12 +57,12 @@ do
     flags="${name##*:}"
     directory=${file%%/${name}}
     # If its in the "new" directory, we need to set the flags ourselves
-    [ ${directory##*/} = "new" ] && flags="2," || true
+    if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
     echo "Archiving $file"
     # In gmail, everything is already archived in "All Mail"
     # We can prevent file duplication by just deleting the extra file in
     # whatever inbox it is.
-    rm $file
+    rm "$file"
 done
 
 # If its in All Mail and not in an inbox, tag it as archived
@@ -71,4 +71,4 @@ notmuch tag +archive -inbox -- folder:"\"$archive\"" \
     and not folder:'"/(INBOX|.*@.*)/"' \
     and not tag:archive
 
-mbsync $mbdir
+mbsync "$mbdir"

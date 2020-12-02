@@ -90,6 +90,8 @@ bindsym {
     $mod+Shift+c reload
     $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
     # Focussing containers
+    $mod+o focus prev
+    $mod+apostrophe focus next
     $mod+$left focus left
     $mod+$down focus down
     $mod+$up focus up

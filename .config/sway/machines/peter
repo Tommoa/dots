@@ -4,3 +4,6 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wlsunset -t 3500 -l 48.1 -L 11.6
 exec /usr/lib/kdeconnectd
 exec kdeconnect-indicator
+
+output * max_render_time 5
+for_window [app_id=Alacritty] max_render_time 3

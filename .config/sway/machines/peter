@@ -1,7 +1,7 @@
 # vim: filetype=conf
 
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec wlsunset -t 3500 -l 48.1 -L 11.6
+exec wlsunset -t 3500 -l -31.95 -L 115.86
 exec /usr/lib/kdeconnectd
 exec kdeconnect-indicator
 

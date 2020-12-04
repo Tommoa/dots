@@ -7,15 +7,16 @@ autoload -U colors && colors
 export EDITOR=nvim
 export MAIL=/var/mail/$USER
 
-() {
-    if [[ -z $SSH_CLIENT && -z $VIMRUNTIME && -z $TMUX ]]; then
+{
+    # Technically not strictly POSIX because "local", but `dash` supports it
+    if [ -z "$SSH_CLIENT" -a -z "$VIMRUNTIME" -a -z "$TMUX" ]; then
         # Only launch TMUX if we're not in an SSH session
         # and we're not in a VIM session
         # and we're not already in a TMUX session
         local tmux=$(/usr/bin/env which tmux)
         [ -z $tmux ] && return
         local ns=$($tmux list-sessions | wc -l)
-        if [[ $ns -gt 0 ]]; then
+        if [ "$ns" -gt 0 ]; then
             exec $tmux attach
         else
             exec $tmux new-session
@@ -25,15 +26,25 @@ export MAIL=/var/mail/$USER
 
 export PATH=$HOME/.local/bin:$HOME/scripts:$PATH
 prompt_git() {
-    if [[ -n GIT_PROMPT && $GIT_PROMPT = 1 ]] && git rev-parse --is-inside-work-tree -q &> /dev/null; then
-        eval $(git diff-files --numstat -r 2>/dev/null | awk '{add+=$1; remove+=$2} END {printf "((num_added = %d));((num_removed = %d));((total = %d))", add, remove, NR}')
+    # This can't actually be turned into a flly POSIX function because it
+    # shifts the RPROMPT
+    # For future reference, here are the necessary colours
+    #
+    # blue="\e[38;5;4m"
+    # green="\e[38;5;85m"
+    # red="\e[38;5;1m"
+    # reset="\e[m"
+    # bold="\e[1m"
+
+    if [ "$GIT_PROMPT" = "1" ] && git rev-parse --is-inside-work-tree -q >/dev/null 2>&1; then
+        eval $(git diff-files --numstat -r 2>/dev/null | awk '{add+=$1; remove+=$2} END {printf "num_added='%d';num_removed='%d';total='%d';", add, remove, NR}')
         totals="";
-        if [[ $total -gt 0 ]]; then
+        if [ "$total" -gt 0 ]; then
             totals=":%%F{blue}$total"
-            if [[ $num_added -gt 0 ]]; then
+            if [ "$num_added" -gt 0 ]; then
                 totals="$totals%%F{85}+$num_added"
             fi
-            if [[ $num_removed -gt 0 ]]; then
+            if [ "$num_removed" -gt 0 ]; then
                 totals="$totals%%F{red}-$num_removed"
             fi
         fi
@@ -92,19 +103,19 @@ autoload -U bashcompinit && bashcompinit
 export CARGO_HOME="$HOME/.cargo"
 export RUSTUP_HOME="$HOME/.rustup"
 
-if [[ $(uname) == "FreeBSD" ]]
+if [ "$(uname)" = "FreeBSD" ]
 then
 	export CARGO_HOME="$HOME/.cargo_freebsd"
 	export RUSTUP_HOME= "$HOME/.rustup_freebsd"
-elif [[ $(uname -m) == "i686" ]]
+elif [ "$(uname -m)" = "i686" ]
 then
 	export CARGO_HOME="$HOME/.cargox32"
 	export RUSTUP_HOME="$HOME/.rustupx32"
 fi
 
-if [[ -e $CARGO_HOME/env ]]
+if [ -e $CARGO_HOME/env ]
 then
-	source $CARGO_HOME/env
+	. $CARGO_HOME/env
 fi
 
 mux() {

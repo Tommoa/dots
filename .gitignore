@@ -37,6 +37,9 @@
 !/.config/wofi
 !/.config/vdirsyncer
 /.config/vdirsyncer/client*
+!/.ssh
+/.ssh/*
+!/.ssh/config
 !/.bashrc
 !/.bash_profile
 !/.env

@@ -15,12 +15,8 @@ prompt_git() {
         totals="";
         if [ "$total" -gt 0 ]; then
             totals=":%%F{blue}$total"
-            if [ "$num_added" -gt 0 ]; then
-                totals="$totals%%F{85}+$num_added"
-            fi
-            if [ "$num_removed" -gt 0 ]; then
-                totals="$totals%%F{red}-$num_removed"
-            fi
+            [ "$num_added" -gt 0 ] && totals="$totals%%F{85}+$num_added"
+            [ "$num_removed" -gt 0 ] && totals="$totals%%F{red}-$num_removed"
         fi
         printf "%%B[%%F{red}$(git symbolic-ref --short -q HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)%%f$totals%%f] %%b"
     fi

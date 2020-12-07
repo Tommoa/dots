@@ -8,13 +8,13 @@ archive='[Gmail]/All Mail'
 sent='[Gmail]/Sent Mail'
 
 # If its already in trash, remove it from the inbox
-notmuch tag +deleted -inbox -- folder:"\"$trash\""
+notmuch tag +deleted -inbox -- folder:"\"${trash}\""
 # If its already been archived, mark it as such
-notmuch tag +archive -inbox -- folder:"\"$archive\"" and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
+notmuch tag +archive -inbox -- folder:"\"${archive}\"" and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
 # If its been sent, pass that on through
-notmuch tag +sent -- folder:"\"$sent\"" and not tag:sent
+notmuch tag +sent -- folder:"\"${sent}\"" and not tag:sent
 # If its not in an inbox, don't mark it as "inbox"
 notmuch tag -inbox -- tag:inbox and not folder:'"/(INBOX|.*@.*)/"'
 
 count=$(notmuch count tag:unread and tag:inbox)
-[ $count -gt 0 ] && notify-send -i /usr/share/doc/neomutt/logo/neomutt.svg "$count new emails" || true
+[ "${count}" -gt 0 ] && notify-send -i /usr/share/doc/neomutt/logo/neomutt.svg "${count} new emails" || true

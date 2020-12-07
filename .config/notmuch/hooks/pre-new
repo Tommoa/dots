@@ -15,8 +15,8 @@ dir=$(notmuch config get database.path)
 mbdir=${dir##*/}
 
 # Move it to the trash if its deleted and not already there
-notmuch search --output=files tag:deleted and not folder:"\"$trash\"" \
-    | grep -iv "$trash_re" \
+notmuch search --output=files tag:deleted and not folder:"\"${trash}\"" \
+    | grep -iv "${trash_re}" \
     | while IFS= read -r file;
 do
     name="${file##*/}"
@@ -25,13 +25,13 @@ do
     directory=${file%%/${name}}
     # If its in the "new" directory, we need to set the flags ourselves
     if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-    echo "Trashing $file"
-    mv "$file" "$dir/$trash/cur/$(uuidgen):${flags%%T}"
+    echo "Trashing ${file}"
+    mv "${file}" "${dir}/${trash}/cur/$(uuidgen):${flags%%T}"
 done
 
 # Remove it from trash if its been undeleted and put it back in the archive
 # This will be retagged below
-notmuch search --output=files folder:"\"$trash\"" and not tag:deleted \
+notmuch search --output=files folder:"\"${trash}\"" and not tag:deleted \
     | while IFS= read -r file;
 do
     name="${file##*/}"
@@ -40,8 +40,8 @@ do
     directory=${file%%/${name}}
     # If its in the "new" directory, we need to set the flags ourselves
     if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-    echo "Untrashing $file"
-    mv "$file" "$dir/$archive/cur/$(uuidgen):${flags%%T}"
+    echo "Untrashing ${file}"
+    mv "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
 done
 
 # If its not tagged inbox and is in an inbox, archive it
@@ -49,7 +49,7 @@ notmuch tag +archive -- folder:'"/(INBOX|.*@.*)/"' and not tag:inbox
 
 # Archive things that are marked "archive"
 notmuch search --output=files tag:archive and folder:'"/(INBOX|.*@.*)/"' \
-    | grep -iv "$archive_re" \
+    | grep -iv "${archive_re}" \
     | while IFS= read -r file;
 do
     name="${file##*/}"
@@ -58,17 +58,17 @@ do
     directory=${file%%/${name}}
     # If its in the "new" directory, we need to set the flags ourselves
     if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-    echo "Archiving $file"
+    echo "Archiving ${file}"
     # In gmail, everything is already archived in "All Mail"
     # We can prevent file duplication by just deleting the extra file in
     # whatever inbox it is.
-    rm "$file"
+    rm "${file}"
 done
 
 # If its in All Mail and not in an inbox, tag it as archived
 # One such reason why it might be this way is because of trash removal
-notmuch tag +archive -inbox -- folder:"\"$archive\"" \
+notmuch tag +archive -inbox -- folder:"\"${archive}\"" \
     and not folder:'"/(INBOX|.*@.*)/"' \
     and not tag:archive
 
-mbsync "$mbdir"
+mbsync "${mbdir}"

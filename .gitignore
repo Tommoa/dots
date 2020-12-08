@@ -22,7 +22,6 @@
 !/.config/coc/
 /.config/coc/*
 !/.config/coc/ultisnips/
-!/.config/osx
 !/.config/waybar
 !/.config/mako
 !/.config/mako/config
@@ -48,6 +47,5 @@
 !/.less
 !/.lesskey
 !/.profile
-!/.setup
 !/.tmux.conf
 !/.zshrc

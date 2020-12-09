@@ -25,5 +25,7 @@ then
     export PATH=$CARGO_HOME/bin:$PATH
 fi
 
+[ -e "$CARGO_HOME/env" ] && . $CARGO_HOME/env
+
 # If there's a profile for this specific host, then source it
 [ -e ".config/$(uname -n).profile" ] && . .config/$(uname -n).profile

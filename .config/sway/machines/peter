@@ -4,6 +4,9 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wlsunset -t 3500 -l -31.95 -L 115.86
 exec /usr/lib/kdeconnectd
 exec kdeconnect-indicator
+# kanshi fails when sway reloads
+exec_always killall kanshi
+exec_always kanshi
 
 output * max_render_time 5
 for_window [app_id=Alacritty] max_render_time 3

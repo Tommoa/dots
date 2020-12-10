@@ -22,10 +22,10 @@ esac
 
 if [ -d "$CARGO_HOME/bin" ]
 then
-    export PATH=$CARGO_HOME/bin:$PATH
+    export PATH="$CARGO_HOME/bin:$PATH"
 fi
 
-[ -e "$CARGO_HOME/env" ] && . $CARGO_HOME/env
+[ -e "$CARGO_HOME/env" ] && . "$CARGO_HOME/env"
 
 # If there's a profile for this specific host, then source it
-[ -e ".config/$(uname -n).profile" ] && . .config/$(uname -n).profile
+[ -e "$HOME/.config/$(uname -n).profile" ] && . "$HOME/.config/$(uname -n).profile"

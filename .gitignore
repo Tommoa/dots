@@ -8,6 +8,7 @@
 !/.config/bat
 !/.config/fontconfig/
 !/.config/fontconfig/fonts.conf
+!/.config/git/
 !/.config/imv/
 !/.config/khard
 !/.config/khal

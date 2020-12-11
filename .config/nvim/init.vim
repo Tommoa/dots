@@ -144,9 +144,10 @@ if s:has_plugin('coc.nvim')
     call coc#add_extension(
                 \ 'coc-clangd',
                 \ 'coc-git',
+                \ 'coc-jedi',
                 \ 'coc-json',
                 \ 'coc-markdownlint',
-                \ 'coc-python',
+                \ 'coc-pyright',
                 \ 'coc-rust-analyzer',
                 \ 'coc-sh',
                 \ 'coc-snippets',

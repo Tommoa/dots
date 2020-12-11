@@ -7,6 +7,8 @@
             ]
         }
     },
+    "jedi.startupMessage": false,
+    "python.formatting.provider": "yapf",
     "git.addGBlameToBufferVar": true,
     "git.enableGlobalStatus": true,
     "markdownlint.config": {

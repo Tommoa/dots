@@ -10,3 +10,14 @@ exec_always kanshi
 
 output * max_render_time 5
 for_window [app_id=Alacritty] max_render_time 3
+
+# The function row of the Thinkpad E485 has the following map:
+# - F10 -> XF86Bluetooth
+# - F11 -> XF86Keyboard
+# - F12 -> XF86Favorites
+# We can remap these to something actually useful
+bindsym --locked {
+    XF86Bluetooth exec playerctl previous
+    XF86Keyboard exec playerctl play-pause
+    XF86Favorites exec playerctl next
+}

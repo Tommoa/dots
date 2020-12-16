@@ -2,7 +2,7 @@
 
 # set editor to neovim
 set editor = "nvim"
-set sendmail="/usr/bin/msmtp"
+set sendmail="msmtp"
 
 set my_name = "Tom Almeida"
 set imap_check_subscribed # check all subscribed folders

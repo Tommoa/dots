@@ -10,15 +10,15 @@ prompt_git() {
     # RPROMPT, so we need a custom function
     # To see a fully POSIX version of this function, see ~/.env
 
-    if [ "$GIT_PROMPT" = "1" ] && git rev-parse --is-inside-work-tree -q >/dev/null 2>&1; then
+    if [ "${GIT_PROMPT}" = "1" ] && git rev-parse --is-inside-work-tree -q >/dev/null 2>&1; then
         eval $(git diff-files --numstat -r 2>/dev/null | awk '{add+=$1; remove+=$2} END {printf "num_added='%d';num_removed='%d';total='%d';", add, remove, NR}')
         totals="";
-        if [ "$total" -gt 0 ]; then
-            totals=":%%F{blue}$total"
-            [ "$num_added" -gt 0 ] && totals="$totals%%F{85}+$num_added"
-            [ "$num_removed" -gt 0 ] && totals="$totals%%F{red}-$num_removed"
+        if [ "${total}" -gt 0 ]; then
+            totals=":%%F{blue}${total}"
+            [ "${num_added}" -gt 0 ] && totals="${totals}%%F{85}+${num_added}"
+            [ "${num_removed}" -gt 0 ] && totals="${totals}%%F{red}-${num_removed}"
         fi
-        printf "%%B[%%F{red}$(git symbolic-ref --short -q HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)%%f$totals%%f] %%b"
+        printf "%%B[%%F{red}$(git symbolic-ref --short -q HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)%%f${totals}%%f] %%b"
     fi
 }
 setopt prompt_subst

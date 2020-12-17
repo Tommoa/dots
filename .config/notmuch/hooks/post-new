@@ -9,10 +9,14 @@ sent='[Gmail]/Sent Mail'
 
 # If its already in trash, remove it from the inbox
 notmuch tag +deleted -inbox -- folder:"\"${trash}\""
-# If its already been archived, mark it as such
-notmuch tag +archive -inbox -- folder:"\"${archive}\"" and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
 # If its been sent, pass that on through
 notmuch tag +sent -- folder:"\"${sent}\"" and not tag:sent
+
+# If it has been deleted from an inbox, make sure we remove it from
+# the IMAP folder
+notmuch search --output=files tag:inbox | grep 'T$' | xargs rm -f
+# If its already been archived, mark it as such
+notmuch tag +archive -inbox -- folder:"\"${archive}\"" and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
 # If its not in an inbox, don't mark it as "inbox"
 notmuch tag -inbox -- tag:inbox and not folder:'"/(INBOX|.*@.*)/"'
 

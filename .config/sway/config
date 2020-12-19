@@ -6,9 +6,15 @@ set $down n
 set $up e
 set $right i
 set $term alacritty
+set $sleep 'swaylock -f'
+
+# -d -- dmenu mode - output to stdout
+# -i -- insensitive
+# -I -- allow images
+# -m -- allow pango markup
+# -S -- select mode [drun -- desktop files, run -- $PATH]
 set $appmenu wofi -diImSdrun | xargs swaymsg exec --
 set $pathmenu wofi -diImSrun | xargs swaymsg exec --
-set $sleep 'swaylock -f'
 
 xwayland disable
 

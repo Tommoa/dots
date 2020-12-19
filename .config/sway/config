@@ -18,13 +18,26 @@ set $pathmenu wofi -diImSrun | xargs swaymsg exec --
 
 xwayland disable
 
-# Settings
+# Visual settings
 default_border pixel 2
 default_floating_border pixel 2
 gaps outer 2
 gaps inner 2
+
+# Colour scheme
+# class                 border  backgr. text    indicator child_border
+client.focused          #f07178 #285577 #ffffff #7c818c   #f07178
+client.focused_inactive #383c4a #5f676a #ffffff #7c818c   #383c4a
+client.unfocused        #676e95 #222222 #888888 #7c818c   #676e95
+client.urgent           #7c818c #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+# Control settings
+# left click drags, right click resizes
 floating_modifier $mod normal
+# don't cycle focus back around
 focus_wrapping no
+# jump the mouse to the centre of the focused container
 mouse_warping container
 
 ### Output configuration
@@ -32,7 +45,9 @@ output * bg ~/.config/sway/background.* fill
 
 ### Input configuration
 input type:touchpad {
+    # Mouse acceleration for touchpads
     accel_profile adaptive
+    # "Disable while typing"
     dwt enabled
     tap enabled
     natural_scroll enabled
@@ -40,6 +55,7 @@ input type:touchpad {
 }
 
 input type:pointer {
+    # Kill mouse acceleration when using a mouse
     accel_profile flat
     dwt disabled
     natural_scroll disabled
@@ -56,6 +72,7 @@ bindsym --locked {
     XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pamixer --get-volume > $SWAYSOCK.wob
     XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
     XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    # An equivalent without rg is "grep '(\([[:digit:]]\+%\))' -o | sed 's/[^[:digit:]]//g'"
     XF86MonBrightnessDown exec brightnessctl set 5%- | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob
     XF86MonBrightnessUp exec brightnessctl set +5% | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob
     XF86AudioPlay exec playerctl play-pause
@@ -95,7 +112,7 @@ bindsym {
     $mod+Shift+p exec $pathmenu
     $mod+Shift+c reload
     $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
-    # Focussing containers
+    # Focusing containers
     $mod+o focus prev
     $mod+apostrophe focus next
     $mod+$left focus left
@@ -115,7 +132,7 @@ bindsym {
     $mod+Shift+Down move down
     $mod+Shift+Up move up
     $mod+Shift+Right move right
-    # Focussing outputs
+    # Focusing outputs
     $mod+Alt+$left focus output left
     $mod+Alt+$down focus output down
     $mod+Alt+$up focus output up
@@ -180,12 +197,6 @@ exec_always {
     gsettings set $gnome-schema icon-theme 'Pop'
     gsettings set $gnome-schema cursor-theme 'Pop'
 }
-# class                 border  backgr. text    indicator child_border
-client.focused          #f07178 #285577 #ffffff #7c818c   #f07178
-client.focused_inactive #383c4a #5f676a #ffffff #7c818c   #383c4a
-client.unfocused        #676e95 #222222 #888888 #7c818c   #676e95
-client.urgent           #7c818c #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 # Pass off the bar to waybar
 bar {

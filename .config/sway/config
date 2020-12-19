@@ -70,14 +70,14 @@ input * xkb_variant "colemak"
 bindsym --locked {
     XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pamixer --get-volume > $SWAYSOCK.wob
     XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pamixer --get-volume > $SWAYSOCK.wob
-    XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
     # An equivalent without rg is "grep '(\([[:digit:]]\+%\))' -o | sed 's/[^[:digit:]]//g'"
     XF86MonBrightnessDown exec brightnessctl set 5%- | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob
-    XF86MonBrightnessUp exec brightnessctl set +5% | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob
-    XF86AudioPlay exec playerctl play-pause
-    XF86AudioNext exec playerctl next
-    XF86AudioPrev exec playerctl previous
+    XF86MonBrightnessUp   exec brightnessctl set +5% | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob
+    XF86AudioPlay         exec playerctl play-pause
+    XF86AudioNext         exec playerctl next
+    XF86AudioPrev         exec playerctl previous
 }
 
 mode "resize" {
@@ -86,16 +86,10 @@ mode "resize" {
     # up will shrink the containers height
     # down will grow the containers height
     bindsym {
-        $left resize shrink width 10px
-        $down resize grow height 10px
-        $up resize shrink height 10px
+        $left  resize shrink width 10px
+        $down  resize grow height 10px
+        $up    resize shrink height 10px
         $right resize grow width 10px
-
-        # Ditto, with arrow keys
-        Left resize shrink width 10px
-        Down resize grow height 10px
-        Up resize shrink height 10px
-        Right resize grow width 10px
 
         # Return to default mode
         Return mode "default"
@@ -105,88 +99,81 @@ mode "resize" {
 
 bindsym {
     # Execution
-    $mod+Escape exec $sleep
-    $mod+Return exec $term
-    $mod+q kill
-    $mod+p exec $appmenu
+    $mod+Escape  exec $sleep
+    $mod+Return  exec $term
+    $mod+q       kill
+    $mod+p       exec $appmenu
     $mod+Shift+p exec $pathmenu
     $mod+Shift+c reload
     $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
     # Focusing containers
-    $mod+o focus prev
+    $mod+o          focus prev
     $mod+apostrophe focus next
-    $mod+$left focus left
-    $mod+$down focus down
-    $mod+$up focus up
-    $mod+$right focus right
-    $mod+Left focus left
-    $mod+Down focus down
-    $mod+Up focus up
-    $mod+Right focus right
+    $mod+$left      focus left
+    $mod+$down      focus down
+    $mod+$up        focus up
+    $mod+$right     focus right
     # Moving containers
-    $mod+Shift+$left move left
-    $mod+Shift+$down move down
-    $mod+Shift+$up move up
+    $mod+Shift+$left  move left
+    $mod+Shift+$down  move down
+    $mod+Shift+$up    move up
     $mod+Shift+$right move right
-    $mod+Shift+Left move left
-    $mod+Shift+Down move down
-    $mod+Shift+Up move up
-    $mod+Shift+Right move right
     # Focusing outputs
-    $mod+Alt+$left focus output left
-    $mod+Alt+$down focus output down
-    $mod+Alt+$up focus output up
+    $mod+Alt+$left  focus output left
+    $mod+Alt+$down  focus output down
+    $mod+Alt+$up    focus output up
     $mod+Alt+$right focus output right
     # Moving workspaces to outputs
-    $mod+Alt+Shift+$left move workspace to left
-    $mod+Alt+Shift+$down move workspace to down
-    $mod+Alt+Shift+$up move workspace to up
+    $mod+Alt+Shift+$left  move workspace to left
+    $mod+Alt+Shift+$down  move workspace to down
+    $mod+Alt+Shift+$up    move workspace to up
     $mod+Alt+Shift+$right move workspace to right
     # Selecting workspaces
-    $mod+l workspace prev_on_output
-    $mod+u workspace next_on_output
-    $mod+y workspace back_and_forth
+    $mod+l   workspace prev_on_output
+    $mod+u   workspace next_on_output
+    $mod+y   workspace back_and_forth
     $mod+Tab workspace back_and_forth
-    $mod+1 workspace 1
-    $mod+2 workspace 2
-    $mod+3 workspace 3
-    $mod+4 workspace 4
-    $mod+5 workspace 5
-    $mod+6 workspace 6
-    $mod+7 workspace 7
-    $mod+8 workspace 8
-    $mod+9 workspace 9
-    $mod+0 workspace 10
+    $mod+1   workspace 1
+    $mod+2   workspace 2
+    $mod+3   workspace 3
+    $mod+4   workspace 4
+    $mod+5   workspace 5
+    $mod+6   workspace 6
+    $mod+7   workspace 7
+    $mod+8   workspace 8
+    $mod+9   workspace 9
+    $mod+0   workspace 10
     # Moving to workspaces
-    $mod+Shift+l move container to workspace prev_on_output
-    $mod+Shift+u move container to workspace next_on_output
-    $mod+Shift+y move container to workspace back_and_forth
+    $mod+Shift+l   move container to workspace prev_on_output
+    $mod+Shift+u   move container to workspace next_on_output
+    $mod+Shift+y   move container to workspace back_and_forth
     $mod+Shift+Tab move container to workspace back_and_forth
-    $mod+Shift+1 move container to workspace 1
-    $mod+Shift+2 move container to workspace 2
-    $mod+Shift+3 move container to workspace 3
-    $mod+Shift+4 move container to workspace 4
-    $mod+Shift+5 move container to workspace 5
-    $mod+Shift+6 move container to workspace 6
-    $mod+Shift+7 move container to workspace 7
-    $mod+Shift+8 move container to workspace 8
-    $mod+Shift+9 move container to workspace 9
-    $mod+Shift+0 move container to workspace 10
+    $mod+Shift+1   move container to workspace 1
+    $mod+Shift+2   move container to workspace 2
+    $mod+Shift+3   move container to workspace 3
+    $mod+Shift+4   move container to workspace 4
+    $mod+Shift+5   move container to workspace 5
+    $mod+Shift+6   move container to workspace 6
+    $mod+Shift+7   move container to workspace 7
+    $mod+Shift+8   move container to workspace 8
+    $mod+Shift+9   move container to workspace 9
+    $mod+Shift+0   move container to workspace 10
     # Layouts
-    $mod+b splith
-    $mod+v splitv
-    $mod+s layout stacking
-    $mod+w layout tabbed
-    $mod+t layout toggle split
-    $mod+f fullscreen
+    $mod+b           splith
+    $mod+v           splitv
+    $mod+s           layout stacking
+    $mod+w           layout tabbed
+    $mod+t           layout toggle split
+    $mod+f           fullscreen
     $mod+Shift+space floating toggle
-    $mod+space focus mode_toggle
-    $mod+a focus parent
-    $mod+c focus child
-    $mod+r mode "resize"
+    $mod+space       focus mode_toggle # Move focus between floating and tiled
+    $mod+a           focus parent
+    $mod+c           focus child
+
+    $mod+r           mode "resize"
     $mod+Shift+minus move scratchpad
-    $mod+minus scratchpad show
-    $mod+m [class="[Ss]potify"] scratchpad show
+    $mod+minus       scratchpad show
+    $mod+m           [class="[Ss]potify"] scratchpad show
 }
 
 # Theming
@@ -213,7 +200,7 @@ exec mako
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 
 # Window assignments
-assign [class="Microsoft Teams - Preview"] workspace 3
+assign     [class="Microsoft Teams - Preview"] workspace 3
 for_window [class="Microsoft Teams - Preview"] move to workspace 3
 for_window [class="Slack"] move to workspace 3
 for_window [class="discord"] move to workspace 3

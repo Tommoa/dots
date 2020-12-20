@@ -7,6 +7,7 @@ Plug 'mengelbrecht/lightline-bufferline'
 
 " Languages
 Plug 'https://gitlab.redox-os.org/redox-os/ion-vim.git'
+Plug 'kevinoid/vim-jsonc'
 Plug 'rust-lang/rust.vim'
 
 " Functionality

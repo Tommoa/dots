@@ -1,0 +1,13 @@
+# -- youtube-dl config file --
+
+# If we're on YouTube, then providing cookies will make sure that
+# we're logged in
+--cookies=$HOME/.config/youtube-dl/yt-cookies
+
+# If we can, mark the video as watched
+--mark-watched
+
+# Take the best video that is 1080p and ensure the best possible audio
+# Why 1080p? Well my laptop is only 1080p, so...
+# Once I start a 1440p monitor more I'll move over
+--format=bestvideo[height<=?1080]+bestaudio/best

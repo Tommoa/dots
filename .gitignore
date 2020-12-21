@@ -37,6 +37,9 @@
 !/.config/wofi
 !/.config/vdirsyncer
 /.config/vdirsyncer/client*
+!/.config/youtube-dl
+/.config/youtube-dl/*
+!/.config/youtube-dl/config
 !/.ssh
 /.ssh/*
 !/.ssh/config

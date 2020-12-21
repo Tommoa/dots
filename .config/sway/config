@@ -90,6 +90,7 @@ mode "resize" {
         $down  resize grow height 10px
         $up    resize shrink height 10px
         $right resize grow width 10px
+        $mod+u move position center
 
         # Return to default mode
         Return mode "default"

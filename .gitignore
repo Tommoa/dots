@@ -26,6 +26,9 @@
 !/.config/waybar
 !/.config/mako
 !/.config/mako/config
+!/.config/mpv
+/.config/mpv/*
+!/.config/mpv/mpv.conf
 !/.config/mutt/
 /.config/mutt/accounts
 !/.config/sway/

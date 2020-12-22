@@ -42,5 +42,7 @@ done
 # Retag things that have been deleted
 notmuch tag -archive -inbox -- tag:deleted and "(tag:archive or tag:inbox)"
 
+notmuch new --no-hooks
+
 count=$(notmuch count tag:unread and tag:inbox)
 [ "${count}" -gt 0 ] && notify-send -i /usr/share/doc/neomutt/logo/neomutt.svg "${count} new emails" || true

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# A script that sets up the environment for all other programs at login.
+# This should really only be used for adding environment variables.
+
 export ENV="${HOME}/.env"
 export EDITOR="nvim"
 export PAGER="less"

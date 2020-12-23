@@ -1,3 +1,5 @@
+#!/bin/sh
+
 export ENV="${HOME}/.env"
 export EDITOR="nvim"
 export PAGER="less"

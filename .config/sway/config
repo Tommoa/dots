@@ -61,8 +61,9 @@ input type:pointer {
     natural_scroll disabled
 }
 
-input * xkb_layout "us"
+input * xkb_layout  "us"
 input * xkb_variant "colemak"
+input * xkb_options "caps:super"
 
 # Keybinds
 #

@@ -120,6 +120,7 @@
         "max-length": 40,
         "format-icons": {
             "spotify": "",
+            "kdeconnect": "",
             "default": ""
         },
         "escape": true,

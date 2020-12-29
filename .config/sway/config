@@ -171,8 +171,7 @@ bindsym {
     # Layouts
     $mod+b           splith
     $mod+v           splitv
-    $mod+s           layout stacking
-    $mod+w           layout tabbed
+    $mod+s           layout toggle stacking tabbed
     $mod+t           layout toggle split
     $mod+f           fullscreen
     $mod+Shift+space floating toggle

@@ -1,11 +1,17 @@
 #!/bin/sh
 
+# Are we using gmail or not?
+gmail=${GMAIL}
+
 # The folder that will be used for trash
-trash=${TRASH:-'[Gmail]/Trash'}
+trash=${gmail:+'[Gmail]/Trash'}
+trash=${trash:-'Trash'}
 # The folder that will be used for archiving
-archive=${ARCHIVE:-'[Gmail]/All Mail'}
+archive=${gmail:+'[Gmail]/All Mail'}
+archive=${archive:-'Archive'}
 # The folder that will be used for sent mail
-sent=${SENT:-'[Gmail]/Sent Mail'}
+sent=${gmail:+'[Gmail]/Sent Mail'}
+sent=${sent:-'Sent'}
 
 # If its already in trash, remove it from the inbox
 notmuch tag +deleted -inbox -- folder:"\"${trash}\""

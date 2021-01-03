@@ -3,12 +3,12 @@
 # in the correct maildir directories.
 
 # The tag and folder that will be used for trash
-trash='[Gmail]/Trash'
-trash_re='\[Gmail\]/Trash'
+trash=${TRASH:-'[Gmail]/Trash'}
+trash_re=${TRASH_RE:-'\[Gmail\]/Trash'}
 
 # The tag and folder that will be used for archiving
-archive='[Gmail]/All Mail'
-archive_re='\[Gmail\]/All Mail'
+archive=${ARCHIVE:-'[Gmail]/All Mail'}
+archive_re=${ARCHIVE_RE:-'\[Gmail\]/All Mail'}
 
 # Fix up directories with tags before we sync
 dir=$(notmuch config get database.path)
@@ -48,21 +48,39 @@ done
 notmuch tag +archive -- folder:'"/(INBOX|.*@.*)/"' and not tag:inbox
 
 # Archive things that are marked "archive"
-notmuch search --output=files tag:archive and folder:'"/(INBOX|.*@.*)/"' \
-    | grep -iv "${archive_re}" \
-    | while IFS= read -r file;
+notmuch search --output=messages tag:archive and folder:'"/(INBOX|.*@.*)/"' \
+    | while IFS= read -r message;
 do
-    name="${file##*/}"
-    # Get the IMAP flags
-    flags="${name##*:}"
-    directory=${file%%/${name}}
-    # If its in the "new" directory, we need to set the flags ourselves
-    if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-    echo "Archiving ${file}"
-    # In gmail, everything is already archived in "All Mail"
-    # We can prevent file duplication by just deleting the extra file in
-    # whatever inbox it is.
-    rm "${file}"
+    # There's two different scenarios in which we end up inside this loop:
+    #  - The message has already been archived and we're looking at a copy
+    #       (e.g. Gmail)
+    #  - The message is only in our inbox and needs to be moved to the archive
+    #       (e.g. normal mail)
+
+    # The actual files associated with this message
+    files="$(notmuch search --output=files ${message})"
+    # The files already archived
+    archived="$(echo ${files} | grep -i "${archive_re}")"
+    # The files that aren't archived
+    normal="$(echo ${files} | grep -iv "${archive_re}")"
+    if [ -n "${archived}" ]; then
+        # If the message has already been archived, then just delete it
+        # to prevent duplication.
+        echo "Already archived ${archived}"
+        echo "${normal}" | xargs rm -f
+    else
+        # The message needs to be moved to the archive
+        file="$(echo "${normal}" | head -n1)"
+        echo "Archiving ${file}"
+        name="${file##*/}"
+        # Get the IMAP flags
+        flags="${name##*:}"
+        directory=${file%%/${name}}
+        # If its in the "new" directory, we need to set the flags ourselves
+        if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
+        mv "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
+        echo "${normal}" | xargs rm -f
+    fi
 done
 
 # If its in All Mail and not in an inbox, tag it as archived

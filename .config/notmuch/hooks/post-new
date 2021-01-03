@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # The folder that will be used for trash
-trash='[Gmail]/Trash'
+trash=${TRASH:-'[Gmail]/Trash'}
 # The folder that will be used for archiving
-archive='[Gmail]/All Mail'
+archive=${ARCHIVE:-'[Gmail]/All Mail'}
 # The folder that will be used for sent mail
-sent='[Gmail]/Sent Mail'
+sent=${SENT:-'[Gmail]/Sent Mail'}
 
 # If its already in trash, remove it from the inbox
 notmuch tag +deleted -inbox -- folder:"\"${trash}\""

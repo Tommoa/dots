@@ -56,6 +56,8 @@ unset markers
 set header_cache = ~/.cache/mutt_headers
 set message_cachedir = ~/.cache/mutt
 
+set mailcap_path = ~/.config/mutt/mailcap
+
 auto_view text/html text/calendar application/ics
 alternative_order text/flowed text/plain text/enriched text/html text/*
 

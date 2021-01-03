@@ -25,7 +25,7 @@ do
     directory=${file%%/${name}}
     # If its in the "new" directory, we need to set the flags ourselves
     if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-    echo "Trashing ${file}"
+    printf "Trashing ${file}\n"
     mv "${file}" "${dir}/${trash}/cur/$(uuidgen):${flags%%T}"
 done
 
@@ -40,7 +40,7 @@ do
     directory=${file%%/${name}}
     # If its in the "new" directory, we need to set the flags ourselves
     if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-    echo "Untrashing ${file}"
+    printf "Untrashing ${file}\n"
     mv "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
 done
 
@@ -60,18 +60,18 @@ do
     # The actual files associated with this message
     files="$(notmuch search --output=files ${message})"
     # The files already archived
-    archived="$(echo ${files} | grep -i "${archive_re}")"
+    archived="$(printf "${files}\n" | grep -i "${archive_re}")"
     # The files that aren't archived
-    normal="$(echo ${files} | grep -iv "${archive_re}")"
+    normal="$(printf "${files}\n" | grep -iv "${archive_re}")"
     if [ -n "${archived}" ]; then
         # If the message has already been archived, then just delete it
         # to prevent duplication.
-        echo "Already archived ${archived}"
-        echo "${normal}" | xargs rm -f
+        printf "Already archived ${archived}\n"
+        printf "${normal}\n" | xargs rm -f
     else
         # The message needs to be moved to the archive
-        file="$(echo "${normal}" | head -n1)"
-        echo "Archiving ${file}"
+        file="$(printf "${normal}" | head -n1)"
+        printf "Archiving ${file}\n"
         name="${file##*/}"
         # Get the IMAP flags
         flags="${name##*:}"
@@ -79,7 +79,7 @@ do
         # If its in the "new" directory, we need to set the flags ourselves
         if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
         mv "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
-        echo "${normal}" | xargs rm -f
+        printf "${normal}\n" | xargs rm -f
     fi
 done
 

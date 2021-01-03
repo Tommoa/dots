@@ -2,6 +2,17 @@
 /*
 # Unless its these
 !.LICENSE
+!/.bashrc
+!/.bash_profile
+!/.env
+!/.gitignore
+!/.gitmodules
+!/.less
+!/.lesskey
+!/.profile
+!/.tmux.conf
+!/.urlview
+!/.zshrc
 !/.config
 /.config/*
 !/.config/aerc
@@ -48,14 +59,3 @@
 !/.ssh
 /.ssh/*
 !/.ssh/config
-!/.bashrc
-!/.bash_profile
-!/.env
-!/.gitignore
-!/.gitmodules
-!/.less
-!/.lesskey
-!/.profile
-!/.tmux.conf
-!/.urlview
-!/.zshrc

@@ -10,7 +10,7 @@ sent=${SENT:-'[Gmail]/Sent Mail'}
 # If its already in trash, remove it from the inbox
 notmuch tag +deleted -inbox -- folder:"\"${trash}\""
 # If its been sent, pass that on through
-notmuch tag +sent -- folder:"\"${sent}\"" and not tag:sent
+notmuch tag +sent -unread -- folder:"\"${sent}\"" and not tag:sent
 
 # If it has been deleted from an inbox, make sure we remove it from
 # the IMAP folder

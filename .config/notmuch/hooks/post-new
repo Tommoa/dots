@@ -1,7 +1,13 @@
 #!/bin/sh
 
+dir="${0%%/.notmuch/*}"
+mbdir="${dir##*/}"
+conf_file="${XDG_CONFIG_DIR:-${HOME}/.config}/notmuch/${mbdir}"
+[ -f "${conf_file}" ] &&
+    export NOTMUCH_CONFIG="${conf_file}"
+
 # Are we using gmail or not?
-gmail=${GMAIL}
+gmail=$(notmuch config get user.type 2>/dev/null)
 
 # The folder that will be used for trash
 trash=${gmail:+'[Gmail]/Trash'}

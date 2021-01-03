@@ -4,6 +4,8 @@
 !.LICENSE
 !/.config
 /.config/*
+!/.config/aerc
+/.config/aerc/accounts.conf
 !/.config/alacritty
 !/.config/bat
 !/.config/fontconfig/

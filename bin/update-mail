@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Update emails using various notmuch config files
+config_dir="${XDG_CONFIG_DIR:-${HOME}/.config}/notmuch"
+
+# If $account is set, then set it to ${config_dir}/${account}
+account=${account:+"${config_dir}/${account}"}
+# If $account isn't set, then get all config files in the config dir
+account=${account:-"${config_dir}"/*}
+
+for name in $account; do
+    [ -f "${name}" ] &&
+        notmuch --config="${name}" new
+done

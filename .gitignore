@@ -13,6 +13,9 @@
 !/.tmux.conf
 !/.urlview
 !/.zshrc
+!/bin
+/bin/*
+!/bin/update-mail
 !/.config
 /.config/*
 !/.config/aerc

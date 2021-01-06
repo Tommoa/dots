@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# When this script is called from aerc, $account is set to the name of
+# the account in aerc, and that can be used to grab the notmuch config.
+# Otherwise, if $account is not set, then go through every available
+# notmuch config.
+
 # Update emails using various notmuch config files
 config_dir="${XDG_CONFIG_DIR:-${HOME}/.config}/notmuch"
 

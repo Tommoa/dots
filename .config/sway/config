@@ -63,7 +63,7 @@ input type:pointer {
 
 input * xkb_layout  "us"
 input * xkb_variant "colemak"
-input * xkb_options "caps:super"
+input * xkb_options "caps:escape"
 
 # Keybinds
 #

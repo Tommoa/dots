@@ -45,8 +45,6 @@
 !/.config/mpv
 /.config/mpv/*
 !/.config/mpv/mpv.conf
-!/.config/mutt/
-/.config/mutt/accounts
 !/.config/sway/
 /.config/sway/*
 !/.config/sway/config

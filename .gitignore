@@ -16,6 +16,7 @@
 !/bin
 /bin/*
 !/bin/update-mail
+!/bin/currency-convert
 !/.config
 /.config/*
 !/.config/aerc

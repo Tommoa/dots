@@ -1,0 +1,61 @@
+#!/usr/bin/python3
+
+import re
+import requests
+from pathlib import Path
+from datetime import datetime, timedelta
+from bs4 import BeautifulSoup
+
+cache_location = Path(Path.home(), ".cache/currency_convert/")
+cache_location.mkdir(parents=True, exist_ok=True)
+
+
+def currency_convert(cur_to: str, cur_from: str) -> float:
+    """
+    Convert a currency from `cur_from` to `cur_to`.
+
+    The value is cached for 5d, but will be updated after then.
+
+    Example:
+        Get the conversion rate from USD to AUD.
+        ```
+        print(currency_convert("aud", "usd"))
+        ```
+
+    Arguments:
+        cur_to: The shortened name for the currency being converted to
+        cur_from: The shortened name for the currency being converted from
+    """
+    directory = cache_location / cur_to.upper()
+    directory.mkdir(parents=True, exist_ok=True)
+    location = directory / cur_from.upper()
+    value = None
+    if not location.exists() or datetime.fromtimestamp(
+            location.stat().st_mtime) < (datetime.now() - timedelta(days=5)):
+        page = requests.get("https://currency.world/convert/%s/%s" %
+                            (cur_from.upper(), cur_to.upper()))
+        soup = BeautifulSoup(page.content, "html.parser")
+        value = float(
+            re.search(r'(\d+\.?\d*)\s+%s' % cur_to.upper(),
+                      soup.select(".xrate")[0].string).groups()[0])
+        location.write_text(str(value))
+    else:
+        value = float(location.read_text())
+    return value
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="A tool to convert various currencies to other currencies."
+        " The currencies are cached locally for five days before being fetched again"
+    )
+    parser.add_argument("to", help="The acronym of the currency to convert to")
+    parser.add_argument(
+        "from",
+        help="The list of acronyms of currencies to convert from",
+        nargs="+")
+
+    parsed = parser.parse_args()
+    for cur_from in parsed.__getattribute__("from"):
+        print(currency_convert(parsed.to, cur_from))

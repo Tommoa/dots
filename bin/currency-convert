@@ -14,7 +14,7 @@ def currency_convert(cur_to: str, cur_from: str) -> float:
     """
     Convert a currency from `cur_from` to `cur_to`.
 
-    The value is cached for 5d, but will be updated after then.
+    The value is cached for 1d, but will be updated after then.
 
     Example:
         Get the conversion rate from USD to AUD.
@@ -31,7 +31,7 @@ def currency_convert(cur_to: str, cur_from: str) -> float:
     location = directory / cur_from.upper()
     value = None
     if not location.exists() or datetime.fromtimestamp(
-            location.stat().st_mtime) < (datetime.now() - timedelta(days=5)):
+            location.stat().st_mtime) < (datetime.now() - timedelta(days=1)):
         page = requests.get("https://currency.world/convert/%s/%s" %
                             (cur_from.upper(), cur_to.upper()))
         soup = BeautifulSoup(page.content, "html.parser")

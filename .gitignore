@@ -17,6 +17,8 @@
 /bin/*
 !/bin/update-mail
 !/bin/currency-convert
+!/lib
+/lib/python/__pycache__/*
 !/.config
 /.config/*
 !/.config/aerc

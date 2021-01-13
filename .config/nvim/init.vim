@@ -2,6 +2,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Visual customization
 Plug 'arcticicestudio/nord-vim'
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 
@@ -232,6 +233,9 @@ if s:has_plugin('palenight.vim') && s:scheme == 'palenight'
 endif
 if s:has_plugin('nord-vim') && s:scheme == 'nord'
     colorscheme nord
+endif
+if s:has_plugin('onedark.vim') && s:scheme == 'onedark'
+    colorscheme onedark
 endif
 " Comments are italicized
 highlight Comment cterm=italic gui=italic

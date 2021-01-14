@@ -33,3 +33,34 @@ token_file = "~/.cache/gcon_token"
 client_id.fetch = ["command", "~/.config/vdirsyncer/client_id"]
 client_secret.fetch = ["command", "~/.config/vdirsyncer/client_secret"]
 
+[pair calendar_arista]
+a = "calendar_arista_local"
+b = "calendar_arista_remote"
+collections = ["from a", "from b"]
+
+[storage calendar_arista_local]
+type = "filesystem"
+path = "~/.local/share/arista/calendar/"
+fileext = ".ics"
+
+[storage calendar_arista_remote]
+type = "google_calendar"
+token_file = "~/.cache/gcal_arista_token"
+client_id.fetch = ["command", "~/.config/vdirsyncer/client_id"]
+client_secret.fetch = ["command", "~/.config/vdirsyncer/client_secret"]
+
+[pair contacts_arista]
+a = "contacts_arista_local"
+b = "contacts_arista_remote"
+collections = ["from a", "from b"]
+
+[storage contacts_arista_local]
+type = "filesystem"
+path = "~/.local/share/arista/contacts/"
+fileext = ".vcf"
+
+[storage contacts_arista_remote]
+type = "google_contacts"
+token_file = "~/.cache/gcon_arista_token"
+client_id.fetch = ["command", "~/.config/vdirsyncer/client_id"]
+client_secret.fetch = ["command", "~/.config/vdirsyncer/client_secret"]

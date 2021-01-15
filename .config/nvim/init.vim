@@ -19,7 +19,7 @@ Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " Set the colourscheme
-let s:scheme = 'palenight'
+let s:scheme = 'onedark'
 if (has("termguicolors"))
     set termguicolors
 endif

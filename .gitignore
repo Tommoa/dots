@@ -15,8 +15,9 @@
 !/.zshrc
 !/bin
 /bin/*
-!/bin/update-mail
 !/bin/currency-convert
+!/bin/up
+!/bin/update-mail
 !/lib
 /lib/python/__pycache__/*
 !/.config

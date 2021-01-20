@@ -5,6 +5,8 @@ status_path = "~/.cache/vdirsyncer"
 a = "calendar_local"
 b = "calendar_remote"
 collections = ["from a", "from b"]
+conflict_resolution = "b wins"
+metadata = ["color", "displayname"]
 
 [storage calendar_local]
 type = "filesystem"
@@ -21,6 +23,7 @@ client_secret.fetch = ["command", "~/.config/vdirsyncer/client_secret"]
 a = "contacts_local"
 b = "contacts_remote"
 collections = ["from a", "from b"]
+conflict_resolution = "b wins"
 
 [storage contacts_local]
 type = "filesystem"
@@ -37,6 +40,8 @@ client_secret.fetch = ["command", "~/.config/vdirsyncer/client_secret"]
 a = "calendar_arista_local"
 b = "calendar_arista_remote"
 collections = ["from a", "from b"]
+conflict_resolution = "b wins"
+metadata = ["color", "displayname"]
 
 [storage calendar_arista_local]
 type = "filesystem"
@@ -53,6 +58,7 @@ client_secret.fetch = ["command", "~/.config/vdirsyncer/client_secret"]
 a = "contacts_arista_local"
 b = "contacts_arista_remote"
 collections = ["from a", "from b"]
+conflict_resolution = "b wins"
 
 [storage contacts_arista_local]
 type = "filesystem"

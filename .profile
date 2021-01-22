@@ -22,7 +22,7 @@ esac
 case "$(uname -m)" in
     (i386|i686)
         export CARGO_HOME="${CARGO_HOME}_x32"
-        export RUSTUP_HOME="${CARGO_HOME}_x32"
+        export RUSTUP_HOME="${RUSTUP_HOME}_x32"
         ;;
 esac
 

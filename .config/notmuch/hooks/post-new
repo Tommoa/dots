@@ -37,9 +37,7 @@ notmuch tag -inbox -- tag:inbox and not folder:'"/(INBOX|.*@.*)/"'
 # As such, when we see such emails, we need to make sure they are
 # properly deleted.
 # These emails will be retagged below
-notmuch search --output=files tag:deleted and not folder:"\"${trash}\"" \
-    | grep -iv "${trash_re}" \
-    | while IFS= read -r file;
+while IFS= read -r file && [ -n "${file}" ];
 do
     name="${file##*/}"
     # Get the IMAP flags
@@ -49,7 +47,10 @@ do
     if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
     echo "Trashing ${file}"
     mv "${file}" "${dir}/${trash}/cur/$(uuidgen):${flags%%T}"
-done
+done <<eof
+$(notmuch search --output=files tag:deleted and not folder:"\"${trash}\"" |
+    grep -iv "${trash_re}")
+eof
 
 # Retag things that have been deleted
 notmuch tag -archive -inbox -- tag:deleted and "(tag:archive or tag:inbox)"

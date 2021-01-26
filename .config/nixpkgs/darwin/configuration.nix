@@ -10,6 +10,8 @@
     pkgs.alacritty
     pkgs.bat
     pkgs.beancount
+    pkgs.catimg
+    pkgs.dante
     pkgs.exa
     pkgs.fd
     pkgs.git
@@ -27,6 +29,7 @@
     pkgs.ripgrep
     pkgs.tmux
     pkgs.vdirsyncer
+    pkgs.w3m
   ];
 
   system.keyboard = {

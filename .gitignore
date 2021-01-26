@@ -33,6 +33,7 @@
 !/.config/imv/
 !/.config/khard
 !/.config/khal
+!/.config/nixpkgs/
 !/.config/notmuch/
 /.config/notmuch/*
 !/.config/notmuch/hooks

@@ -10,6 +10,7 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'kevinoid/vim-jsonc'
 Plug 'rust-lang/rust.vim'
 Plug 'nathangrigg/vim-beancount'
+Plug 'lnl7/vim-nix'
 
 " Functionality
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}

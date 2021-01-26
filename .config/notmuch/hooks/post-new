@@ -6,6 +6,21 @@ conf_file="${XDG_CONFIG_DIR:-${HOME}/.config}/notmuch/${mbdir}"
 [ -f "${conf_file}" ] &&
     export NOTMUCH_CONFIG="${conf_file}"
 
+notify_send() {
+    osascript -e 'on run argv
+    display notification item 1 of argv
+end run' "$@"
+}
+
+case $(uname -s) in
+    Darwin)
+        notification=notify_send
+        ;;
+    Linux)
+        notification="notify-send"
+        ;;
+esac
+
 # Are we using gmail or not?
 gmail=$(notmuch config get user.type 2>/dev/null)
 
@@ -58,4 +73,4 @@ notmuch tag -archive -inbox -- tag:deleted and "(tag:archive or tag:inbox)"
 notmuch new --no-hooks
 
 count=$(notmuch count tag:unread and tag:inbox)
-[ "${count}" -gt 0 ] && notify-send "${mbdir}: ${count} new emails" || true
+[ "${count}" -gt 0 ] && ${notification} "${mbdir}: ${count} new emails" || true

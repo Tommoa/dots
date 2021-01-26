@@ -76,7 +76,8 @@
             ];
             RunAtLoad = true;
             EnvironmentVariables = {
-              PATH = "${pkgs.goimapnotify}/bin:${config.environment.systemPath}";
+              PATH = "${pkgs.goimapnotify}/bin:${pkgs.notmuch}/bin:${pkgs.isync}/bin:${config.environment.systemPath}";
+              NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
             };
             KeepAlive = true;
           };

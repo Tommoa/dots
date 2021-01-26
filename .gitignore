@@ -25,6 +25,7 @@
 !/.config/aerc
 /.config/aerc/accounts.conf
 !/.config/alacritty
+/.config/alacritty/platform.yml
 !/.config/bat
 !/.config/fontconfig/
 !/.config/fontconfig/fonts.conf

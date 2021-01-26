@@ -3,6 +3,14 @@
 # A script that sets up the environment for all other programs at login.
 # This should really only be used for adding environment variables.
 
+if [ -d "${HOME}/.nix-profile/etc/profile.d" ]; then
+    for i in "${HOME}/.nix-profile/etc/profile.d/"*.sh; do
+        if [ -r "${i}" ]; then
+            . "${i}"
+        fi
+    done
+fi
+
 export ENV="${HOME}/.env"
 export EDITOR="nvim"
 export PAGER="less"

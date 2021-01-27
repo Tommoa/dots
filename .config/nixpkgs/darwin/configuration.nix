@@ -65,7 +65,7 @@
   builtins.listToAttrs
     (builtins.map
       (name: {
-        name = "goimapnotify${name}";
+        name = "goimapnotify-${name}";
         value = {
           serviceConfig = {
             ProgramArguments = [

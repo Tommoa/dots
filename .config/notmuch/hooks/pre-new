@@ -24,15 +24,21 @@ conf_file="${XDG_CONFIG_DIR:-${HOME}/.config}/notmuch/${mbdir}"
 gmail=$(notmuch config get user.type 2>/dev/null)
 
 # The tag and folder that will be used for trash
-trash=${gmail:+'[Gmail]/Trash'}
+trash=$(notmuch config get user.trash 2>/dev/null)
+trash=${trash:-${gmail:+'[Gmail]/Trash'}}
 trash=${trash:-'Trash'}
-trash_re=${gmail:+'\[Gmail\]/Trash'}
+trash_re=$(notmuch config get user.trash_re 2>/dev/null)
+trash_re=${trash_re:-$(notmuch config get user.trash 2>/dev/null)}
+trash_re=${trash_re:-${gmail:+'\[Gmail\]/Trash'}}
 trash_re=${trash_re:-'Trash'}
 
 # The tag and folder that will be used for archiving
-archive=${gmail:+'[Gmail]/All Mail'}
+archive=$(notmuch config get user.archive 2>/dev/null)
+archive=${archive:-${gmail:+'[Gmail]/All Mail'}}
 archive=${archive:-'Archive'}
-archive_re=${gmail:+'\[Gmail\]/All Mail'}
+archive_re=$(notmuch config get user.archive_re 2>/dev/null)
+archive_re=${archive_re:-$(notmuch config get user.archive 2>/dev/null)}
+archive_re=${archive_re:-${gmail:+'\[Gmail\]/All Mail'}}
 archive_re=${archive_re:-'Archive'}
 
 # Fix up directories with tags before we sync

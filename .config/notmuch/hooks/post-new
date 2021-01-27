@@ -25,13 +25,16 @@ esac
 gmail=$(notmuch config get user.type 2>/dev/null)
 
 # The folder that will be used for trash
-trash=${gmail:+'[Gmail]/Trash'}
+trash=$(notmuch config get user.trash 2>/dev/null)
+trash=${trash:-${gmail:+'[Gmail]/Trash'}}
 trash=${trash:-'Trash'}
 # The folder that will be used for archiving
-archive=${gmail:+'[Gmail]/All Mail'}
+archive=$(notmuch config get user.archive 2>/dev/null)
+archive=${archive:-${gmail:+'[Gmail]/All Mail'}}
 archive=${archive:-'Archive'}
 # The folder that will be used for sent mail
-sent=${gmail:+'[Gmail]/Sent Mail'}
+sent=$(notmuch config get user.sent 2>/dev/null)
+sent=${sent:-${gmail:+'[Gmail]/Sent Mail'}}
 sent=${sent:-'Sent'}
 
 # If its already in trash, remove it from the inbox

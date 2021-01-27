@@ -4,7 +4,6 @@
   nixpkgs.overlays = [
     (import ../overlays)
   ];
-  nixpkgs.config.allowUnsupportedSystem = true;
   environment.systemPackages = [
     pkgs.aerc
     pkgs.alacritty

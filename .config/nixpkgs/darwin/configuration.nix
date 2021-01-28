@@ -43,6 +43,7 @@
   system.defaults.dock = {
     autohide = true;
     showhidden = true;
+    show-recents = false;
   };
 
   services.yabai = {

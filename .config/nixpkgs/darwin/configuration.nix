@@ -8,31 +8,31 @@
   ];
 
   # Packages that should be installed in the system
-  environment.systemPackages = [
-    pkgs.aerc
-    pkgs.alacritty
-    pkgs.bat
-    pkgs.beancount
-    pkgs.catimg
-    pkgs.dante
-    pkgs.exa
-    pkgs.fd
-    pkgs.git
-    pkgs.goimapnotify
-    pkgs.gnupg
-    pkgs.isync
-    pkgs.jq
-    pkgs.khal
-    pkgs.khard
-    pkgs.less
-    pkgs.msmtp
-    pkgs.neovim
-    pkgs.nodejs
-    pkgs.notmuch
-    pkgs.ripgrep
-    pkgs.tmux
-    pkgs.vdirsyncer
-    pkgs.w3m
+  environment.systemPackages = with pkgs; [
+    aerc
+    alacritty
+    bat
+    beancount
+    catimg
+    dante
+    exa
+    fd
+    git
+    goimapnotify
+    gnupg
+    isync
+    jq
+    khal
+    khard
+    less
+    msmtp
+    neovim
+    nodejs
+    notmuch
+    ripgrep
+    tmux
+    vdirsyncer
+    w3m
   ];
 
   system.keyboard = {

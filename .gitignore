@@ -52,6 +52,7 @@
 !/.config/mpv
 /.config/mpv/*
 !/.config/mpv/mpv.conf
+!/.config/skhd
 !/.config/sway/
 /.config/sway/*
 !/.config/sway/config

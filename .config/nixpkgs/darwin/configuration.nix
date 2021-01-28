@@ -1,9 +1,13 @@
 { config, lib, pkgs, ... }:
 
 {
+  # Override some packages for some specific changes for macOS
+  # See ~/.config/nixpkgs/overlays for the actual changes
   nixpkgs.overlays = [
     (import ../overlays)
   ];
+
+  # Packages that should be installed in the system
   environment.systemPackages = [
     pkgs.aerc
     pkgs.alacritty
@@ -56,8 +60,7 @@
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
-  # Auto upgrade nix package and the daemon service.
-  # services.nix-daemon.enable = true;
+  # Auto upgrade nix package
   nix.package = pkgs.nix;
 
   launchd.user.agents = let goimapnotifyconfs = (builtins.filter (filename: (builtins.match ".*\.conf" filename) != null) (builtins.attrNames (builtins.readDir ~/.config/imapnotify)));

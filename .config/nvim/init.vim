@@ -152,6 +152,7 @@ if s:has_plugin('coc.nvim')
                 \ 'coc-json',
                 \ 'coc-markdownlint',
                 \ 'coc-pyright',
+                \ 'coc-python',
                 \ 'coc-rust-analyzer',
                 \ 'coc-sh',
                 \ 'coc-snippets',

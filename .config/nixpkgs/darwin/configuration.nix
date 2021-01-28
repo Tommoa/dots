@@ -16,6 +16,7 @@
     catimg
     dante
     exa
+    fava
     fd
     git
     goimapnotify

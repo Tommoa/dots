@@ -5,10 +5,10 @@ cmd + alt - e : yabai -m window --focus north
 cmd + alt - i : yabai -m window --focus east
 
 # Window movement
-cmd + alt + shift - h : yabai -m window --swap west
-cmd + alt + shift - n : yabai -m window --swap south
-cmd + alt + shift - e : yabai -m window --swap north
-cmd + alt + shift - i : yabai -m window --swap east
+cmd + alt + shift - h : yabai -m window --warp west
+cmd + alt + shift - n : yabai -m window --warp south
+cmd + alt + shift - e : yabai -m window --warp north
+cmd + alt + shift - i : yabai -m window --warp east
 
 # Space focusing
 cmd + alt - l : yabai -m space --focus prev

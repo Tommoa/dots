@@ -65,29 +65,50 @@
   # Auto upgrade nix package
   nix.package = pkgs.nix;
 
-  launchd.user.agents = let goimapnotifyconfs = (builtins.filter (filename: (builtins.match ".*\.conf" filename) != null) (builtins.attrNames (builtins.readDir ~/.config/imapnotify)));
-  in
-  builtins.listToAttrs
-    (builtins.map
-      (name: {
-        name = "goimapnotify-${name}";
-        value = {
-          serviceConfig = {
-            ProgramArguments = [
-              "${pkgs.goimapnotify}/bin/goimapnotify"
-              "-conf"
-              (toString ~/.config/imapnotify + "/${name}")
-            ];
-            RunAtLoad = true;
-            EnvironmentVariables = {
-              PATH = "${pkgs.goimapnotify}/bin:${pkgs.notmuch}/bin:${pkgs.isync}/bin:${config.environment.systemPath}";
-              NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+  launchd.user.agents = with builtins; let
+    goimapnotify-conffiles = (filter (filename: (match ".*\.conf" filename) != null) (attrNames (readDir ~/.config/imapnotify)));
+    goimapnotify-agents = listToAttrs
+      (map
+        (name: {
+          name = "goimapnotify-${name}";
+          value = {
+            serviceConfig = {
+              ProgramArguments = [
+                "${pkgs.goimapnotify}/bin/goimapnotify"
+                "-conf"
+                (toString ~/.config/imapnotify + "/${name}")
+              ];
+              RunAtLoad = true;
+              EnvironmentVariables = {
+                PATH = "${pkgs.goimapnotify}/bin:${pkgs.notmuch}/bin:${pkgs.isync}/bin:${config.environment.systemPath}";
+                NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+              };
+              KeepAlive = true;
+              ProcessType = "Background";
             };
-            KeepAlive = true;
-            ProcessType = "Background";
           };
+        }) goimapnotify-conffiles);
+    vdirsyncer-timers = {
+      vdirsyncer-sync = {
+        serviceConfig = {
+          ProgramArguments = [
+            "${pkgs.vdirsyncer}/bin/vdirsyncer"
+            "sync"
+          ];
+          RunAtLoad = true;
+          KeepAlive = false;
+          ProcessType = "Background";
+          StartCalendarInterval = [
+            { Minute =  0; }
+            { Minute = 15; }
+            { Minute = 30; }
+            { Minute = 45; }
+          ];
         };
-      }) goimapnotifyconfs);
+      };
+    };
+  in
+    goimapnotify-agents // vdirsyncer-timers;
 
   programs.zsh.enable = true;
 

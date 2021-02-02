@@ -33,6 +33,7 @@
     notmuch
     pkgpy
     ripgrep
+    rustup
     tmux
     vdirsyncer
     w3m

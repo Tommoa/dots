@@ -18,6 +18,6 @@ self: super:
   });
 
   goimapnotify = super.goimapnotify.overrideAttrs (o: rec {
-    meta.platforms = super.stdenv.lib.platforms.darwin;
+    meta.platforms = super.pkgs.lib.platforms.darwin;
   });
 }

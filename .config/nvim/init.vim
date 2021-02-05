@@ -247,3 +247,13 @@ set t_ZH=[3m
 set t_ZR=[23m
 
 set shell=/bin/sh
+
+" Load machine specific settings
+let host = systemlist("uname -n")[0]
+let filename = expand("~/.config/" . host . ".vim")
+if filereadable(filename)
+    exec "source " . filename
+endif
+if filereadable(expand("~/.config/sysinit.vim"))
+    exec "source " . expand("~/.config/sysinit.vim")
+endif

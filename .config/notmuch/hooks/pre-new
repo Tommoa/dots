@@ -53,7 +53,7 @@ do
     # If its in the "new" directory, we need to set the flags ourselves
     if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
     printf "Trashing ${file}\n"
-    mv "${file}" "${dir}/${trash}/cur/$(uuidgen):${flags%%T}"
+    mv -f "${file}" "${dir}/${trash}/cur/$(uuidgen):${flags%%T}"
 done <<eof
 $(notmuch search --output=files tag:deleted and not folder:"\"${trash}\"" |
     grep -iv "${trash_re}")
@@ -70,7 +70,7 @@ do
     # If its in the "new" directory, we need to set the flags ourselves
     if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
     printf "Untrashing ${file}\n"
-    mv "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
+    mv -f "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
 done <<eof
 $(notmuch search --output=files folder:"\"${trash}\"" and not tag:deleted)
 eof
@@ -108,7 +108,7 @@ do
         directory=${file%%/${name}}
         # If its in the "new" directory, we need to set the flags ourselves
         if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-        mv "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
+        mv -f "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
         printf "${normal}\n" | xargs rm -f
     fi
 done <<eof

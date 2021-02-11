@@ -37,6 +37,7 @@
     tmux
     vdirsyncer
     w3m
+    yarn
   ];
 
   system.keyboard = {

@@ -14,6 +14,7 @@ account=${account:+"${config_dir}/${account}"}
 account=${account:-"${config_dir}"/*}
 
 for name in $account; do
-    [ -f "${name}" ] &&
-        notmuch --config="${name}" new
+    if [ -f "${name}" ]; then
+        while ! notmuch --config="${name}" new; do :; done
+    fi
 done

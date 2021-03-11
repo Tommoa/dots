@@ -64,6 +64,7 @@ lcmd - k : yabai -m space --create
 lcmd + shift - k : yabai -m space --create && \
                           index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
                           yabai -m window --space "${index}"
+lcmd - m : yabai -m space --destroy
 
 # set insertion point in focused container
 lctrl + lalt - h : yabai -m window --insert west

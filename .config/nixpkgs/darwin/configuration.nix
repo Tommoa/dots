@@ -9,7 +9,10 @@
 
   # Packages that should be installed in the system
   environment.systemPackages = with pkgs; let
-    pkgpy = python3.withPackages (ps: with ps; [ beancount fava ]);
+    pkgpy = python3.buildEnv.override {
+      extraLibs = [ beancount fava ];
+      permitUserSite = true;
+    };
   in [
     aerc
     alacritty

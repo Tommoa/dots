@@ -7,11 +7,11 @@
 [core]
     editor = nvim
 [user]
-	email = tom@tommoa.me
-	name = Tom Almeida
-	signingkey = BC44284F6BFB03DF
+    email = tom@tommoa.me
+    name = Tom Almeida
+    signingkey = BC44284F6BFB03DF
 [commit]
-	gpgsign = true
+    gpgsign = true
     # Include the diff in the commit message dialog
     verbose = true
 [tag]
@@ -23,7 +23,7 @@
 [push]
     gpgSign = if-asked
 [pull]
-	rebase = true
+    rebase = true
 [sendmail]
     smtpserver = msmtp
     annotate = yes

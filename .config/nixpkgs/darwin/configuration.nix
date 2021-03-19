@@ -22,7 +22,7 @@
     exa
     fava
     fd
-    git
+    gitFull
     goimapnotify
     gnupg
     isync

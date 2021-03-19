@@ -24,3 +24,6 @@
     gpgSign = if-asked
 [pull]
 	rebase = true
+[sendmail]
+    smtpserver = msmtp
+    annotate = yes

@@ -1,0 +1,15 @@
+image: alpine/edge
+sources:
+  - https://git.sr.ht/~tommoa/dots
+environment:
+  github: git@github.com:Tommoa/dots
+  branch: master
+secrets:
+  - a29c0ad6-f476-4c1c-bfd2-bf4c108b199f # srht-gh-deploy-key
+tasks:
+  - push-to-github: |
+      [ "$BUILD_SUBMITTER" != "git.sr.ht" ] && exit
+      echo "StrictHostKeyChecking=no" >> ~/.ssh/config
+      cd dots
+      git remote add github "$github"
+      git push -f github "$branch"

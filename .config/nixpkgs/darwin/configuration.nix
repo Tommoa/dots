@@ -17,6 +17,7 @@
     aerc
     alacritty
     bat
+    beancount
     catimg
     dante
     exa

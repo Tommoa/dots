@@ -26,6 +26,7 @@
 !/.config/*.profile
 !/.config/aerc
 /.config/aerc/accounts.conf
+/.config/aerc/*-map
 !/.config/alacritty
 /.config/alacritty/platform.yml
 !/.config/bat

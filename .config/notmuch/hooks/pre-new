@@ -41,84 +41,81 @@ archive_re=${archive_re:-$(notmuch config get user.archive 2>/dev/null)}
 archive_re=${archive_re:-${gmail:+'\[Gmail\]/All Mail'}}
 archive_re=${archive_re:-'Archive'}
 
-# Fix up directories with tags before we sync
+# The folder that will be used for sent mail
+sent=$(notmuch config get user.sent 2>/dev/null)
+sent=${sent:-${gmail:+'[Gmail]/Sent Mail'}}
+sent=${sent:-'Sent'}
 
-# Move it to the trash if its deleted and not already there
-while IFS= read -r file && [ -n "${file}" ];
+tags="$(notmuch config get user.folder_tags 2>/dev/null)"
+
+# Add a copy of all emails with a tag to a maildir folder
+tag_to_folder() {
+    # Usage: tag_to_folder "tag" "folder" "folder_re"
+    folder="$2"
+    folder_re="${3:-$folder}"
+    tag="$1"
+    while IFS= read -r message && [ -n "${message}" ];
+    do
+        files="$(notmuch search --output=files --exclude=false ${message})"
+        existing="$(printf "${files}\n" | grep -i "${folder_re}")"
+        if [ -z "${existing}" ];
+        then
+            file=$(printf "${files}\n" | head -n1)
+            printf "Copying ${file} to ${folder}\n"
+            name="${file##*/}"
+            # Get the IMAP flags
+            flags="${name##*:}"
+            directory=${file%%/${name}}
+            # If its in the "new" directory, we need to set the flags ourselves
+            if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
+            cp -f "${file}" "${dir}/${folder}/cur/$(uuidgen):${flags%%T}"
+        fi
+    done <<eof
+$(notmuch search --output=messages tag:${tag} and not folder:"\"${folder}\"")
+eof
+}
+
+folder_prune() {
+    # Usage: folder_prune "tag" "folder"
+    folder="$2"
+    tag="$1"
+    while IFS= read -r file && [ -n "${file}" ];
+    do
+        case "${file}" in
+            *${folder}*)
+                printf "Deleting ${file} -- doesn't have ${tag}\n"
+                rm -f "${file}"
+            ;;
+        esac
+    done <<eof
+$(notmuch search --output=files --exclude=false folder:"\"${folder}\"" and not tag:${tag})
+eof
+}
+
+tag_to_folder deleted "${trash}" "${trash_re}"
+tag_to_folder inbox INBOX
+tag_to_folder sent "${sent}"
+
+while IFS= read -r tag && [ -n "${tag}" ];
 do
-    name="${file##*/}"
-    # Get the IMAP flags
-    flags="${name##*:}"
-    directory=${file%%/${name}}
-    # If its in the "new" directory, we need to set the flags ourselves
-    if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-    printf "Trashing ${file}\n"
-    mv -f "${file}" "${dir}/${trash}/cur/$(uuidgen):${flags%%T}"
+    tag_to_folder "${tag}" "$(notmuch config get user."${tag}")" "$(notmuch config get user."${tag}_re" 2>/dev/null)"
 done <<eof
-$(notmuch search --output=files tag:deleted and not folder:"\"${trash}\"" |
-    grep -iv "${trash_re}")
+${tags}
 eof
 
-# Remove it from trash if its been undeleted and put it back in the archive
-# This will be retagged below
-while IFS= read -r file && [ -n "${file}" ];
+# If it doesn't have a tag, then mark it as archived
+notmuch tag +archive -- not tag:archive and not tag:inbox and not tag:deleted and not tag:sent $(printf "${tags}" | sed 's/^/and not tag:/')
+
+tag_to_folder archive "${archive}" "${archive_re}"
+
+folder_prune deleted "${trash}"
+folder_prune inbox INBOX
+while IFS= read -r tag && [ -n "${tag}" ];
 do
-    name="${file##*/}"
-    # Get the IMAP flags
-    flags="${name##*:}"
-    directory=${file%%/${name}}
-    # If its in the "new" directory, we need to set the flags ourselves
-    if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-    printf "Untrashing ${file}\n"
-    mv -f "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
+    folder_prune "${tag}" "$(notmuch config get user."${tag}")"
 done <<eof
-$(notmuch search --output=files folder:"\"${trash}\"" and not tag:deleted)
+${tags}
 eof
-
-# If its not tagged inbox and is in an inbox, archive it
-notmuch tag +archive -- folder:'"/(INBOX|.*@.*)/"' and not tag:inbox
-
-# Archive things that are marked "archive"
-while IFS= read -r message && [ -n "${message}" ];
-do
-    # There's two different scenarios in which we end up inside this loop:
-    #  - The message has already been archived and we're looking at a copy
-    #       (e.g. Gmail)
-    #  - The message is only in our inbox and needs to be moved to the archive
-    #       (e.g. normal mail)
-
-    # The actual files associated with this message
-    files="$(notmuch search --output=files ${message})"
-    # The files already archived
-    archived="$(printf "${files}\n" | grep -i "${archive_re}")"
-    # The files that aren't archived
-    normal="$(printf "${files}\n" | grep -iv "${archive_re}")"
-    if [ -n "${archived}" ]; then
-        # If the message has already been archived, then just delete it
-        # to prevent duplication.
-        printf "Already archived ${archived}\n"
-        printf "${normal}\n" | xargs rm -f
-    else
-        # The message needs to be moved to the archive
-        file="$(printf "${normal}" | head -n1)"
-        printf "Archiving ${file}\n"
-        name="${file##*/}"
-        # Get the IMAP flags
-        flags="${name##*:}"
-        directory=${file%%/${name}}
-        # If its in the "new" directory, we need to set the flags ourselves
-        if [ "${directory##*/}" = "new" ]; then flags="2,"; fi
-        mv -f "${file}" "${dir}/${archive}/cur/$(uuidgen):${flags%%T}"
-        printf "${normal}\n" | xargs rm -f
-    fi
-done <<eof
-$(notmuch search --output=messages tag:archive and folder:'"/(INBOX|.*@.*)/"')
-eof
-
-# If its in All Mail and not in an inbox, tag it as archived
-# One such reason why it might be this way is because of trash removal
-notmuch tag +archive -inbox -- folder:"\"${archive}\"" \
-    and not folder:'"/(INBOX|.*@.*)/"' \
-    and not tag:archive
+[ -z "${gmail}" ] && folder_prune archive "${archive}"
 
 mbsync "${mbdir}"

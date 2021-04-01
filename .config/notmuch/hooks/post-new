@@ -37,6 +37,15 @@ sent=$(notmuch config get user.sent 2>/dev/null)
 sent=${sent:-${gmail:+'[Gmail]/Sent Mail'}}
 sent=${sent:-'Sent'}
 
+tags="$(notmuch config get user.folder_tags 2>/dev/null)"
+
+folder_to_tag() {
+    # Usage: folder_to_tag "tag" "folder"
+    folder="$2"
+    tag="$1"
+    notmuch tag "+${tag}" -- folder:"\"${folder}\"" and not "tag:${tag}"
+}
+
 # If its already in trash, remove it from the inbox
 notmuch tag +deleted -inbox -- folder:"\"${trash}\""
 # If its been sent, pass that on through
@@ -49,6 +58,13 @@ notmuch search --output=files tag:inbox | grep 'T$' | xargs rm -f
 notmuch tag +archive -inbox -- folder:"\"${archive}\"" and not folder:'"/(INBOX|.*@.*)/"' and not tag:archive
 # If its not in an inbox, don't mark it as "inbox"
 notmuch tag -inbox -- tag:inbox and not folder:'"/(INBOX|.*@.*)/"'
+
+while IFS= read -r tag && [ -n "${tag}" ];
+do
+    folder_to_tag "${tag}" "$(notmuch config get user."${tag}")"
+done <<eof
+${tags}
+eof
 
 # When deleting emails straight from gmail (say on mobile), then they
 # get given the "trashed" IMAP flag and are copied to the trash folder.
@@ -71,9 +87,12 @@ $(notmuch search --output=files tag:deleted and not folder:"\"${trash}\"" |
 eof
 
 # Retag things that have been deleted
-notmuch tag -archive -inbox -- tag:deleted and "(tag:archive or tag:inbox)"
+notmuch tag -archive -inbox -- tag:deleted and "(tag:archive or tag:inbox $(printf "${tags}" | sed 's/^/or tag:/'))"
+
+[ -x "${dir}/.notmuch/hooks/${mbdir}.post-new" ] &&
+    . "${dir}/.notmuch/hooks/${mbdir}.post-new"
 
 notmuch new --no-hooks
 
-count=$(notmuch count tag:unread and tag:inbox)
+count=$(notmuch count tag:unread)
 [ "${count}" -gt 0 ] && ${notification} "${mbdir}: ${count} new emails" || true

@@ -71,7 +71,7 @@ tag_to_folder() {
             cp -f "${file}" "${dir}/${folder}/cur/$(uuidgen):${flags%%T}"
         fi
     done <<eof
-$(notmuch search --output=messages tag:${tag} and not folder:"\"${folder}\"")
+$(notmuch search --output=messages --exclude=false tag:${tag} and not folder:"\"${folder}\"")
 eof
 }
 
@@ -82,7 +82,7 @@ folder_prune() {
     while IFS= read -r file && [ -n "${file}" ];
     do
         case "${file}" in
-            *${folder}*)
+            *"${folder}"*) # The folder needs to be quoted in case of special characters (e.g. `[]`)
                 printf "Deleting ${file} -- doesn't have ${tag}\n"
                 rm -f "${file}"
             ;;

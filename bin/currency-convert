@@ -10,7 +10,7 @@ cache_location = Path(Path.home(), ".cache/currency_convert/")
 cache_location.mkdir(parents=True, exist_ok=True)
 
 
-def currency_convert(cur_to: str, cur_from: str) -> float:
+def currency_convert(cur_to: str, cur_from: str, cache: bool = True) -> float:
     """
     Convert a currency from `cur_from` to `cur_to`.
 
@@ -25,12 +25,13 @@ def currency_convert(cur_to: str, cur_from: str) -> float:
     Arguments:
         cur_to: The shortened name for the currency being converted to
         cur_from: The shortened name for the currency being converted from
+        cache: Whether or not we should use the cache. Defaults to True
     """
     directory = cache_location / cur_to.upper()
     directory.mkdir(parents=True, exist_ok=True)
     location = directory / cur_from.upper()
     value = None
-    if not location.exists() or datetime.fromtimestamp(
+    if not cache or not location.exists() or datetime.fromtimestamp(
             location.stat().st_mtime) < (datetime.now() - timedelta(days=1)):
         page = requests.get("https://currency.world/convert/%s/%s" %
                             (cur_from.upper(), cur_to.upper()))

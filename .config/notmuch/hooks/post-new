@@ -46,6 +46,13 @@ folder_to_tag() {
     notmuch tag "+${tag}" -- folder:"\"${folder}\"" and not "tag:${tag}"
 }
 
+ensure_tag_in_folder() {
+    # Usage: ensure_tag_in_folder "tag" "folder"
+    folder="$2"
+    tag="$1"
+    notmuch tag "-${tag}" -- "tag:${tag}" and not folder:"\"${folder}\""
+}
+
 # If its already in trash, remove it from the inbox
 notmuch tag +deleted -inbox -- folder:"\"${trash}\""
 # If its been sent, pass that on through
@@ -62,6 +69,7 @@ notmuch tag -inbox -- tag:inbox and not folder:'"/(INBOX|.*@.*)/"'
 while IFS= read -r tag && [ -n "${tag}" ];
 do
     folder_to_tag "${tag}" "$(notmuch config get user."${tag}")"
+    ensure_tag_in_folder "${tag}" "$(notmuch config get user."${tag}")"
 done <<eof
 ${tags}
 eof

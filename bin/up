@@ -8,7 +8,7 @@ import json
 from beancount.core.amount import Amount, Decimal
 from datetime import datetime, date, time
 from dateutil import tz
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
 from enum import IntEnum
 from configparser import ConfigParser
 
@@ -18,17 +18,26 @@ class Account(object):
     """
     name: str
     id: str
-    created: datetime
     value: Amount
     attributes: Optional[Dict[str, Any]]
+    created: datetime
+    closed: Optional[datetime] = None
 
     def __init__(self, id: str, name: str, attributes: Dict[str, Any] = None):
         self.name = name
         self.id = id
         self.attributes = attributes
-        self.created = datetime.fromisoformat(attributes['createdAt'])
-        balance = attributes['balance']
-        self.value = Amount(Decimal(balance['value']), balance['currencyCode'])
+        self.created = datetime.fromisoformat(
+            attributes.get('createdAt') or attributes['createdat'])
+        self.closed = attributes.get('closedat')
+        if self.closed:
+            self.value = Amount(Decimal(0),
+                                attributes.get('currency') or 'NOTHING')
+            self.closed = datetime.fromisoformat(self.closed)
+        else:
+            balance = attributes['balance']
+            self.value = Amount(Decimal(balance['value']),
+                                balance['currencyCode'])
 
     @staticmethod
     def from_id(id: str, auth: str) -> 'Account':
@@ -104,18 +113,7 @@ class Transaction(object):
         attributes = json_obj['attributes']
         account = id_to_account.get(
             json_obj['relationships']['account']['data']['id'])
-        if not account:
-            self.account = None
-            # It looks like transactions can return invalid account IDs
-            # For now, just ignore it and set the account to nothing
-            """
-            print(json_obj)
-            id = json_obj['relationships']['account']['data']['id']
-            self.account = Account.from_id(id, auth)
-            id_to_account[id] = self.account
-            """
-        else:
-            self.account = account
+        self.account = account
         self.status = TransactionStatus.fromstr(attributes['status'])
         self.raw_text = attributes['rawText']
         self.description = attributes['description']
@@ -136,9 +134,13 @@ class Transaction(object):
 class Client(object):
     auth: str
     accounts: Optional[Dict[str, Account]] = None
+    other_accounts: Optional[Dict[str, Account]] = None
 
-    def __init__(self, auth):
+    def __init__(self,
+                 auth,
+                 other_accounts: Optional[Dict[str, Account]] = None):
         self.auth = auth
+        self.other_accounts = other_accounts
 
     def get_accounts(self) -> Dict[str, Account]:
         endpoint = 'https://api.up.com.au/api/v1/accounts'
@@ -158,10 +160,11 @@ class Client(object):
             ids.extend(x['id'] for x in returned_data)
             endpoint = links['next']
             parameters = None
-        return {
-            uid: Account(uid, attributes['displayName'], attributes)
-            for uid, attributes in zip(ids, attributes)
-        }
+        return dict(
+            self.other_accounts or dict(), **{
+                uid: Account(uid, attributes['displayName'], attributes)
+                for uid, attributes in zip(ids, attributes)
+            })
 
     def get_transactions(self,
                          since: Optional[date] = None,
@@ -194,7 +197,7 @@ class Client(object):
         return transactions
 
 
-def get_config(file=None) -> ConfigParser:
+def get_config(file=None) -> Dict[str, object]:
     from pathlib import Path
 
     configuration = ConfigParser()
@@ -209,18 +212,23 @@ def get_config(file=None) -> ConfigParser:
         with file.open('r') as conf:
             configuration.read_file(conf)
 
-    auth_key = configuration["default"].get("auth")
+    auth_key = configuration["DEFAULT"].get("auth")
     if not auth_key:
         from subprocess import run
         from sys import stderr
-        process = run([configuration.get("default", "auth_cmd")],
+        process = run([configuration.get("DEFAULT", "auth_cmd")],
                       shell=True,
                       capture_output=True,
                       text=True)
         print(process.stderr, file=stderr, end='')
         auth_key = process.stdout.rstrip()
-    configuration["_auth_key"] = {"key": auth_key}
-    return configuration
+    return dict({
+        "_auth_key": auth_key,
+    }, **{
+        key: Account(key, configuration[key].get('name'),
+                     dict(configuration.items(key)))
+        for key in configuration.sections()
+    })
 
 
 if __name__ == '__main__':
@@ -255,6 +263,7 @@ if __name__ == '__main__':
 
     configuration = get_config(parsed.config)
 
-    client = Client(configuration["_auth_key"]["key"])
+    client = Client(configuration.pop("_auth_key"),
+                    cast(Dict[str, Account], configuration))
 
     parsed.func(client, parsed)

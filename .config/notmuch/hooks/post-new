@@ -74,6 +74,11 @@ done <<eof
 ${tags}
 eof
 
+folder_to_tag "sent" "${sent}"
+[ -z "${gmail}" ] && folder_to_tag "archive" "${archive}"
+ensure_tag_in_folder "sent" "${sent}"
+ensure_tag_in_folder "archive" "${archive}"
+
 # When deleting emails straight from gmail (say on mobile), then they
 # get given the "trashed" IMAP flag and are copied to the trash folder.
 # As such, when we see such emails, we need to make sure they are

@@ -209,6 +209,8 @@ exec swayidle -w \
 exec mako
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
 # Window assignments
 assign     [class="Microsoft Teams - Preview"] workspace 3
 for_window [class="Microsoft Teams - Preview"] move to workspace 3

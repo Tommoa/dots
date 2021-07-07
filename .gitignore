@@ -42,9 +42,11 @@
 !/.config/notmuch/hooks
 !/.config/nvim/
 /.config/nvim/*
-!/.config/nvim/init.vim
+!/.config/nvim/init.lua
+!/.config/nvim/after
 !/.config/nvim/autoload
 !/.config/nvim/coc-settings.json
+!/.config/nvim/lua
 !/.config/coc/
 /.config/coc/*
 !/.config/coc/ultisnips/

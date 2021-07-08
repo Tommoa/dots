@@ -83,7 +83,13 @@ return require('packer').startup(function(use)
 
     -- Git integration
     use {
-        {'tpope/vim-fugitive', cmd = {'Git', 'Gstatus', 'Gblame', 'Gpush', 'Gpull'}},
+        {
+            'tpope/vim-fugitive',
+            cmd = {
+                'G', 'Git', 'Gstatus', 'Gblame',
+                'Gpush', 'Gpull', 'Gedit',
+            },
+        },
         {
             'lewis6991/gitsigns.nvim',
             requires = {'nvim-lua/plenary.nvim'},
@@ -91,7 +97,6 @@ return require('packer').startup(function(use)
                 require('gitsigns').setup()
             end
         },
-        {'TimUntersberger/neogit', opt = true}
     }
 
     -- Languages

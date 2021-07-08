@@ -104,7 +104,7 @@ return require('packer').startup(function(use)
             },
             config = function()
                 require('rust-tools').setup{
-                    server=require('tom.lsp')
+                    server=require('tom.lsp').configs['rust-analyzer']
                 }
             end,
             ft = 'rust',

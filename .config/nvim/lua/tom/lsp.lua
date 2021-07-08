@@ -63,12 +63,13 @@ local on_attach = function(client, bufnr)
 end
 M.on_attach = on_attach
 
+M.configs = {}
+
+-- Lua
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-
--- Lua
-lspconfig.sumneko_lua.setup {
+M.configs['sumneko_lua'] = {
     cmd = { "/usr/bin/lua-language-server" },
     settings = {
         Lua = {
@@ -90,25 +91,33 @@ lspconfig.sumneko_lua.setup {
     }
 }
 -- Rust
-lspconfig.rust_analyzer.setup {
+M.configs['rust_analyzer'] = {
     capabilities = capabilities,
     on_attach = on_attach,
 }
 -- Clangd
-lspconfig.clangd.setup({
+M.configs['clangd'] = {
     handlers = lsp_status.extensions.clangd.setup(),
     init_options = {
         clangdFileStatus = true
     },
     on_attach = on_attach,
     capabilities = capabilities
-})
+}
 -- Python
-lspconfig.pyls_ms.setup({
+M.configs['pyls_ms'] = {
     handlers = lsp_status.extensions.pyls_ms.setup(),
     settings = { python = { workspaceSymbols = { enabled = true }}},
     on_attach = on_attach,
     capabilities = capabilities
-})
+}
+M.configs['pyright'] = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+
+for language, config in pairs(M.configs) do
+    lspconfig[language].setup(config)
+end
 
 return M

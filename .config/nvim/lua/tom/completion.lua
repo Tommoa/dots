@@ -52,8 +52,21 @@ _G.tab_complete = function()
     end
 end
 
-remap('i', '<Tab>', 'v:lua.tab_complete()', {expr = true, silent = true})
-remap('i', '<CR>',  'compe#confirm(\'<CR>\')',  { silent = true, expr = true })
-remap('i', '<C-e>', 'compe#close(\'<C-e>\')',   { silent = true, expr = true })
-remap('i', '<C-f>', "compe#scroll({ 'delta': +4 })", { silent = true, expr = true })
-remap('i', '<C-b>', "compe#scroll({ 'delta': -4 })", { silent = true, expr = true })
+-- I'd quite like control of my enter key back
+-- I often find that with auto-complete on (and I always have it on), getting
+-- to the end of a line without whitespace can be perilous, as the
+-- auto-complete kicks in and decides to enter whatever it'd like when I hit
+-- "enter" to go to a new line. This function fixes that
+_G.do_enter_key = function()
+    if vim.fn.pumvisible() == 1 then
+        -- Make sure compe closes so that floating windows get cleaned up
+        vim.fn['compe#close']()
+    end
+    return t '<C-g>u<CR>'
+end
+
+remap('i', '<Tab>', 'v:lua.tab_complete()', { expr = true, silent = true, noremap = true})
+remap('i', '<CR>',  "v:lua.do_enter_key()",  { expr = true, silent = true, noremap = true })
+remap('i', '<C-e>', 'compe#close(\'<C-e>\')',   { silent = true, expr = true, noremap = true })
+remap('i', '<C-f>', "compe#scroll({ 'delta': +4 })", { silent = true, expr = true, noremap = true })
+remap('i', '<C-b>', "compe#scroll({ 'delta': -4 })", { silent = true, expr = true, noremap = true })

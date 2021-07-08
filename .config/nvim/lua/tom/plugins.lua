@@ -71,6 +71,9 @@ return require('packer').startup(function(use)
         requires = {
             'nvim-treesitter/nvim-treesitter-refactor', 'nvim-treesitter/nvim-treesitter-textobjects'
         },
+        config = function()
+            require('tom.tree-sitter')
+        end,
         run = ':TSUpdate'
     }
 

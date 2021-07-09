@@ -90,11 +90,6 @@ M.configs['sumneko_lua'] = {
         }
     }
 }
--- Rust
-M.configs['rust_analyzer'] = {
-    capabilities = capabilities,
-    on_attach = on_attach,
-}
 -- Clangd
 M.configs['clangd'] = {
     handlers = lsp_status.extensions.clangd.setup(),
@@ -115,6 +110,8 @@ M.configs['pyright'] = {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+
+-- Rust will be setup by `rust-tools.nvim`
 
 for language, config in pairs(M.configs) do
     lspconfig[language].setup(config)

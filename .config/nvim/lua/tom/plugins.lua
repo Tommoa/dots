@@ -111,11 +111,20 @@ return require('packer').startup(function(use)
                 'neovim/nvim-lspconfig',
             },
             config = function()
+                local lsp = require('tom.lsp')
                 require('rust-tools').setup{
-                    server=require('tom.lsp').configs['rust-analyzer']
+                    tools = {
+                        hover_actions = {
+                            auto_focus = true
+                        },
+                    },
+                    server = {
+                        on_attach = lsp.on_attach,
+                        capabilities = lsp.capabilities,
+                    },
                 }
             end,
-            ft = 'rust',
+            ft = { 'rust' },
         },
         -- Nix
         { 'lnl7/vim-nix' },

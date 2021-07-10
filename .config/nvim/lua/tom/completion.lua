@@ -26,6 +26,12 @@ require'compe'.setup {
     calc = true;
     omni = false;
     spell = false;
+    tabnine = {
+        enable = true,
+        sort = false,
+        show_prediction_strength = true,
+        ignore_pattern = '%s',
+    },
     tags = true;
     treesitter = true;
   };

@@ -47,6 +47,7 @@ return require('packer').startup(function(use)
             end
         },
         { 'l3mon4d3/luasnip', requires = { 'hrsh7th/nvim-compe' } },
+        { 'tzachar/compe-tabnine', run='./install.sh', requires = { 'hrsh7th/nvim-compe' } },
         -- {
         --     'neoclide/coc.nvim',
         --     run = function() fn['coc#util#install']() end,

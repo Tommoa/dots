@@ -46,7 +46,7 @@ return require('packer').startup(function(use)
                 require('tom.completion')
             end
         },
-        { 'hrsh7th/vim-vsnip', requires = { 'hrsh7th/nvim-compe' } },
+        { 'l3mon4d3/luasnip', requires = { 'hrsh7th/nvim-compe' } },
         -- {
         --     'neoclide/coc.nvim',
         --     run = function() fn['coc#util#install']() end,

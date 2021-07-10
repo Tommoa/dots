@@ -17,6 +17,7 @@ require'compe'.setup {
       enable = true,
       priority = 1,     -- last priority
     },
+    luasnip = true;
     nvim_lsp = {
       enable = true,
       priority = 10001, -- takes precedence over file completion
@@ -27,7 +28,6 @@ require'compe'.setup {
     spell = false;
     tags = true;
     treesitter = true;
-    vsnip = true;
   };
 }
 
@@ -44,9 +44,9 @@ _G.tab_complete = function()
         -- vim.fn['coc#_select_confirm']()
         return vim.fn['compe#confirm']()
     -- elseif vim.fn['coc#expandableOrJumpable']() then
-    elseif vim.fn['vsnip#available'](1) == 1 then
+    elseif require'luasnip'.expand_or_jumpable() == 1 then
         -- return t "<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>"
-        return t "<Plug>(vsnip-expand-or-jump)"
+        return require'luasnip'.expand_or_jump()
     else
         return t "<Tab>"
     end

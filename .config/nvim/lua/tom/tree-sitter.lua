@@ -7,7 +7,4 @@ configs.setup {
         enable = true,
         disable = {},
     },
-    indent = {
-        enable = true,
-    },
 }

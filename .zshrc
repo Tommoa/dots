@@ -46,6 +46,17 @@ bindkey "${terminfo[kcud1]}" history-beginning-search-forward-end
 # ^U kills the entire line, not just back from cursor
 bindkey '^U' kill-whole-line
 bindkey '^R' history-incremental-search-backward
+bindkey -a "n" vi-down-line-or-history
+bindkey -a "N" vi-join
+bindkey -a "e" vi-up-line-or-history
+bindkey -a "i" vi-forward-char
+bindkey -a "u" vi-insert
+bindkey -a "U" vi-insert-bol
+bindkey -a "k" vi-repeat-search
+bindkey -a "K" vi-rev-repeat-search
+bindkey -a "l" vi-undo
+bindkey -a "j" vi-forward-word-end
+bindkey -a "J" vi-forward-blank-word-end
 
 bindkey '\e[1~' beginning-of-line
 bindkey '\e[4~' end-of-line

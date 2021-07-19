@@ -110,6 +110,11 @@ M.configs['pyright'] = {
     on_attach = on_attach,
     capabilities = capabilities,
 }
+-- Nix
+M.configs['rnix'] = {
+    on_attach = on_attach,
+    capabilities =  capabilities,
+}
 
 -- Rust will be setup by `rust-tools.nvim`
 

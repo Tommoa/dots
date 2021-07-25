@@ -100,12 +100,6 @@ M.configs['clangd'] = {
     capabilities = capabilities
 }
 -- Python
-M.configs['pyls_ms'] = {
-    handlers = lsp_status.extensions.pyls_ms.setup(),
-    settings = { python = { workspaceSymbols = { enabled = true }}},
-    on_attach = on_attach,
-    capabilities = capabilities
-}
 M.configs['pyright'] = {
     on_attach = on_attach,
     capabilities = capabilities,

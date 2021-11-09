@@ -16,7 +16,7 @@ set $sleep 'swaylock -f'
 set $appmenu wofi -diImSdrun | xargs swaymsg exec --
 set $pathmenu wofi -diImSrun | xargs swaymsg exec --
 
-xwayland disable
+xwayland enable
 
 # Visual settings
 default_border pixel 2

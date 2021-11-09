@@ -36,3 +36,7 @@ mapper("n", "zk", ":bd!<CR>")
 mapper("n", "gV", "`[v`]")
 -- When using the nvim terminal, escape puts you back in normal mode
 mapper("t", "<Esc>", "<c-\\><c-n>")
+
+-- Add a keybind for finding files with Telescope
+mapper("n", "zf", ":Telescope find_files<CR>")
+mapper("n", "zb", ":Telescope buffers<CR>")

@@ -196,9 +196,7 @@ exec_always {
 }
 
 # Pass off the bar to waybar
-bar {
-    swaybar_command waybar
-}
+exec waybar -c ~/.config/waybar/"`uname -n`_config"
 
 # Execing
 exec swayidle -w \

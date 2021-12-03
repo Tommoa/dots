@@ -69,10 +69,10 @@ input * xkb_options "caps:escape"
 #
 # XF86 keybinds should work even whilst locked
 bindsym --locked {
-    XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pamixer --get-volume > $SWAYSOCK.wob
-    XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pamixer --get-volume > $SWAYSOCK.wob
-    XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    XF86AudioRaiseVolume exec pamixer -i 5 && pamixer --get-volume > $SWAYSOCK.wob
+    XF86AudioLowerVolume exec pamixer -d 5 && pamixer --get-volume > $SWAYSOCK.wob
+    XF86AudioMute        exec pamixer -t
+    XF86AudioMicMute     exec pamixer --default-source -t
     # An equivalent without rg is "grep '(\([[:digit:]]\+%\))' -o | sed 's/[^[:digit:]]//g'"
     XF86MonBrightnessDown exec brightnessctl set 5%- | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob
     XF86MonBrightnessUp   exec brightnessctl set +5% | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob

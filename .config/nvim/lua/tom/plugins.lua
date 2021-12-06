@@ -93,6 +93,9 @@ return require('packer').startup(function(use)
                 'G', 'Git', 'Gstatus', 'Gblame',
                 'Gpush', 'Gpull', 'Gedit',
             },
+            fn = {
+                'FugitiveHead',
+            },
         },
         {
             'lewis6991/gitsigns.nvim',

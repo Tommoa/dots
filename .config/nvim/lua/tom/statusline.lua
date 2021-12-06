@@ -158,7 +158,7 @@ gls.left[5] = {
 }
 gls.left[6] = {
     GitBranch = {
-        provider = 'GitBranch',
+        provider = function () return vim.fn.FugitiveHead(10) end,
         condition = condition.check_git_workspace,
         highlight = { colors.middlegrey, colors.bg },
         separator = ' ',

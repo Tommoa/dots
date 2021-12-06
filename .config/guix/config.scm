@@ -114,9 +114,8 @@
             (service greetd-service-type
                      (greetd-configuration
                        (terminal-vt "next")
-                       (greeter (mixed-text-file "greeter"
-                                  greetd "/bin/agreety" " --cmd "
-                                  sway "/bin/sway"))))
+                       (greeter `(,greetd "/bin/agreety" " --cmd "
+                                  ,sway "/bin/sway"))))
             (service docker-service-type))
       (modify-services %desktop-services
         (network-manager-service-type config =>

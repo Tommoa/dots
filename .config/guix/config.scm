@@ -87,7 +87,7 @@
         neovim vim tmux
         ripgrep fd bat exa
         git openssh curl pinentry
-        libappindicator dbus
+        libappindicator dbus bluez
         xdg-user-dirs xdg-utils xdg-desktop-portal xdg-desktop-portal-wlr
         sway swaybg swayidle swaylock wl-clipboard globalprotect-openconnect
         flatpak)

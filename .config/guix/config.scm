@@ -94,12 +94,7 @@
       %base-packages))
   (services
     (append
-      (modify-services (list (service network-manager-service-type))
-        (network-manager-service-type config =>
-          (network-manager-configuration (inherit config)
-            (vpn-plugins (list network-manager-openconnect)))))
-      (list (service wpa-supplicant-service-type)
-            (service cups-service-type)
+      (list (service cups-service-type)
             (bluetooth-service #:auto-enable? #t)
             (screen-locker-service swaylock)
             (simple-service 'wayland-env-vars session-environment-service-type
@@ -122,33 +117,12 @@
                        (greeter (mixed-text-file "greeter"
                                   greetd "/bin/agreety" " --cmd "
                                   sway "/bin/sway"))))
-            (service docker-service-type)
-
-            (simple-service 'mtp udev-service-type (list libmtp))
-            (service sane-service-type)
-            polkit-wheel-service
-            (simple-service 'mount-setuid-helpers setuid-program-service-type
-                            (map (lambda (program)
-                                   (setuid-program
-                                     (program program)))
-                                 (list (file-append nfs-utils "/sbin/mount.nfs")
-                                   (file-append ntfs-3g "/sbin/mount.ntfs-3g"))))
-           fontconfig-file-system-service
-           (service modem-manager-service-type)
-           (service usb-modeswitch-service-type)
-           (service avahi-service-type)
-           (udisks-service)
-           (service upower-service-type)
-           (accountsservice-service)
-           (service cups-pk-helper-service-type)
-           (service colord-service-type)
-           (geoclue-service)
-           (service polkit-service-type)
-           (elogind-service)
-           (dbus-service)
-           x11-socket-directory-service
-           (service ntp-service-type))
-      %base-services))
+            (service docker-service-type))
+      (modify-services %desktop-services
+        (network-manager-service-type config =>
+          (network-manager-configuration (inherit config)
+            (vpn-plugins (list network-manager-openconnect))))
+        (delete gdm-service-type))))
   (bootloader
     (bootloader-configuration
       (bootloader grub-efi-bootloader)

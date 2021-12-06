@@ -46,10 +46,12 @@
 
 ;; These go here to override the package modules
 (use-modules
-  (greetd)
-  (globalprotect-openconnect)
-  (linux-zen) ;; Use linux-zen instead of linux-libre
-  (neovim) ;; Use neovim 0.5 instead of 0.4.4
+  (tommoa packages greetd)
+  (tommoa services greetd)
+  (tommoa packages globalprotect-openconnect)
+  (tommoa services globalprotect-openconnect)
+  (tommoa packages linux-zen) ;; Use linux-zen instead of linux-libre
+  (tommoa packages neovim) ;; Use neovim 0.6 instead of 0.4.4
   (nongnu packages mozilla))
 
 (operating-system

@@ -33,6 +33,8 @@
 !/.config/fontconfig/
 !/.config/fontconfig/fonts.conf
 !/.config/git/
+!/.config/guix/
+/.config/guix/current
 !/.config/imv/
 !/.config/khard
 !/.config/khal

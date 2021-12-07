@@ -94,6 +94,7 @@
                         "docker"  ;; docker
                         "lp"      ;; control bluetooth devices
                         "netdev"  ;; control network devices
+                        "realtime";; enable realtime scheduling
                         "video"   ;; control video devices
                         "wheel"   ;; sudo
                        )))
@@ -114,6 +115,9 @@
                         flatpak)
                       %base-packages))
 
+    (groups (cons (user-group (system? #t) (name "realtime"))
+                  %base-groups))
+
     (services
       (append
         (list (service cups-service-type)
@@ -132,6 +136,10 @@
                     ("XDG_SESSION_DESKTOP" . "sway")
                     ("XDG_SESSION_TYPE" . "wayland")))
               (service globalprotect-openconnect-service-type)
+              (pam-limits-service
+                     (list
+                      (pam-limits-entry "@realtime" 'both 'rtprio 99)
+                      (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
               (service greetd-service-type
                        (greetd-configuration
                          (terminal-vt "next")

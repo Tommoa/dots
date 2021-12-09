@@ -3,6 +3,12 @@
 # A script that sets up the environment for all other programs at login.
 # This should really only be used for adding environment variables.
 
+if [ -d "${HOME}/.guix-home" ]; then
+    HOME_ENVIRONMENT="${HOME}/.guix-home"
+    . "${HOME_ENVIRONMENT}/setup-environment"
+    "${HOME_ENVIRONMENT}/on-first-login"
+fi
+
 if [ -d "${HOME}/.nix-profile/etc/profile.d" ]; then
     for i in "${HOME}/.nix-profile/etc/profile.d/"*.sh; do
         if [ -r "${i}" ]; then

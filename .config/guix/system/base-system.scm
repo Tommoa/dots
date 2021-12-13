@@ -142,6 +142,7 @@
                       (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
               (service greetd-service-type
                        (greetd-configuration
+                         (gnupg? #t)
                          (terminal-vt "next")
                          (greeter `(,greetd "/bin/agreety" " --cmd "
                                     ,sway "/bin/sway"))))

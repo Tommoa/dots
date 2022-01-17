@@ -144,7 +144,9 @@
                        (greetd-configuration
                          (gnupg? #t)
                          (terminal-vt "next")
-                         (greeter `(,greetd "/bin/agreety" " --cmd "
-                                    ,sway "/bin/sway"))))
+                         (greeter (sway-greet-configuration
+                                    (keyboard-layout keyboard-layout)
+                                    (greeter (gtk-greet-configuration
+                                               (command `(,sway "/bin/sway"))))))))
               (service docker-service-type))
         %desktop-services))))

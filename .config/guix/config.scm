@@ -14,8 +14,19 @@
   (guix gexp)
   (tommoa services mail)
   (tommoa services pipewire)
+  (tommoa services wlsunset)
   (tommoa packages aerc)
+  (tommoa packages pipewire)
+  (ice-9 textual-ports)
   (gnu home services shells))
+
+(define add-profile-service-type
+  (service-type
+    (name 'add-profile-service)
+    (extensions
+      (list
+        (service-extension home-shell-profile-service-type
+          (const `(,(local-file (string-append (getenv "HOME") "/.config/profile")))))))))
 
 (home-environment
   (packages
@@ -30,6 +41,9 @@
                "aerc"
                "notmuch"
                "isync"
+               "msmtp"
+               "imv"
+
                "pipewire"
                "pavucontrol"
                "pamixer"
@@ -49,7 +63,15 @@
                "font-inconsolata")))
   (services
     (list
-      (service pipewire-service-type)
+      (service pipewire-service-type
+               (pipewire-configuration
+                 (media-session `("env" "WIREPLUMBER_DEBUG=T" (string-append ,wireplumber "/bin/wireplumber")))))
+      (service add-profile-service-type '())
+      (service wlsunset-service-type
+               (wlsunset-configuration
+                 (low-temp  3500)
+                 (latitude  31.95)
+                 (longitude 115.86)))
       (service imapnotify-service-type (imapnotify-configuration
                                          (configuration (string-append
                                                           (getenv "HOME")

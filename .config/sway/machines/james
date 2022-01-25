@@ -1,0 +1,8 @@
+# vim: filetype=conf
+
+exec dbus-update-activation-environment --all
+
+exec wlsunset -t 3500 -l -31.95 -L 115.86
+exec wireplumber
+
+output HDMI-A-1 mode 2560x1440@144Hz

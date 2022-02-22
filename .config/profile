@@ -11,6 +11,10 @@ if [ -d "${HOME}/.nix-profile/etc/profile.d" ]; then
     done
 fi
 
+if [ -e "${HOME}/.guix-profile/etc/profile" ]; then
+   . "${HOME}/.guix-profile/etc/profile"
+fi
+
 export ENV="${HOME}/.env"
 export EDITOR="nvim"
 export PAGER="less"

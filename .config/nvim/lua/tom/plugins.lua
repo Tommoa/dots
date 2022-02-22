@@ -41,13 +41,24 @@ return require('packer').startup(function(use)
     use {
         -- { 'nvim-lua/completion-nvim' },
         {
-            'hrsh7th/nvim-compe',
+            'hrsh7th/nvim-cmp',
             config = function()
                 require('tom.completion')
-            end
+            end,
+            requires = {
+               'hrsh7th/cmp-cmdline',
+               'hrsh7th/cmp-path',
+               'hrsh7th/cmp-buffer',
+               'hrsh7th/cmp-nvim-lsp'
+            }
         },
-        { 'l3mon4d3/luasnip', requires = { 'hrsh7th/nvim-compe' } },
-        { 'tzachar/compe-tabnine', run='./install.sh', requires = { 'hrsh7th/nvim-compe' } },
+        {
+           'l3mon4d3/luasnip', requires = {
+              'hrsh7th/nvim-cmp',
+              'saadparwaiz1/cmp_luasnip',
+           }
+        },
+        { 'tzachar/cmp-tabnine', run='./install.sh', requires = { 'hrsh7th/nvim-cmp' } },
         -- {
         --     'neoclide/coc.nvim',
         --     run = function() fn['coc#util#install']() end,

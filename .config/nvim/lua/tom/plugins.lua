@@ -148,6 +148,8 @@ return require('packer').startup(function(use)
         { 'kevinoid/vim-jsonc' },
         -- beancount
         { 'nathangrigg/vim-beancount' },
+        -- lilypond
+        { 'sersorrel/vim-lilypond' },
     }
 
     -- Org mode!

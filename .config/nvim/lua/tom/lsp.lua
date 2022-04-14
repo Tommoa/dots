@@ -71,7 +71,6 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 M.configs['sumneko_lua'] = {
-    cmd = { "/usr/bin/lua-language-server" },
     settings = {
         Lua = {
             runtime = {

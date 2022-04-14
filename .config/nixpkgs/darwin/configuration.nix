@@ -13,7 +13,8 @@
       extraLibs = [ beancount fava ];
       permitUserSite = true;
     };
-  in [
+  in
+  [
     aerc
     alacritty
     bat
@@ -42,6 +43,12 @@
     vdirsyncer
     w3m
     yarn
+
+    pyright
+    rnix-lsp
+    sumneko-lua-language-server
+
+    lilypond
   ];
 
   system.keyboard = {
@@ -95,7 +102,8 @@
               ProcessType = "Background";
             };
           };
-        }) goimapnotify-conffiles);
+        })
+        goimapnotify-conffiles);
     vdirsyncer-timers = {
       vdirsyncer-sync = {
         serviceConfig = {
@@ -107,7 +115,7 @@
           KeepAlive = false;
           ProcessType = "Background";
           StartCalendarInterval = [
-            { Minute =  0; }
+            { Minute = 0; }
             { Minute = 15; }
             { Minute = 30; }
             { Minute = 45; }
@@ -116,7 +124,7 @@
       };
     };
   in
-    goimapnotify-agents // vdirsyncer-timers;
+  goimapnotify-agents // vdirsyncer-timers;
 
   programs.zsh.enable = true;
 

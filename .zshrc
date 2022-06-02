@@ -33,6 +33,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 # key bindings
+bindkey -v
 # tab completion
 bindkey '^[=' expand-cmd-path
 # arrow keys

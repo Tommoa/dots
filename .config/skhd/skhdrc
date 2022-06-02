@@ -62,7 +62,7 @@ lcmd + lalt + shift - y : yabai -m window --display recent
 lcmd - k : yabai -m space --create
 # Create and move
 lcmd + shift - k : yabai -m space --create && \
-                          index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+                          index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" | not))[-1].index')" && \
                           yabai -m window --space "${index}"
 lcmd - m : yabai -m space --destroy
 

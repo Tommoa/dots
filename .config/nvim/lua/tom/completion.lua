@@ -58,7 +58,7 @@ cmp.setup {
     -- autocomplete = true;
   };
 
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ['<Tab>'] = cmp.mapping(_G.tab_complete, { "i", "c" });
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' });
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' });
@@ -66,7 +66,7 @@ cmp.setup {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     });
-  };
+  });
 
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
@@ -79,6 +79,7 @@ cmp.setup {
 }
 
 cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline();
   sources = cmp.config.sources({
     { name = 'nvim_lsp_document_symbol' }
   }, {
@@ -87,6 +88,7 @@ cmp.setup.cmdline('/', {
 })
 
 cmp.setup.cmdline('?', {
+  mapping = cmp.mapping.preset.cmdline();
   sources = cmp.config.sources({
     { name = 'nvim_lsp_document_symbol' }
   }, {
@@ -95,6 +97,7 @@ cmp.setup.cmdline('?', {
 })
 
 cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline();
   sources = cmp.config.sources({
     { name = 'path' }
   }, {

@@ -79,7 +79,17 @@ cmp.setup {
 }
 
 cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline();
+  mapping = cmp.mapping.preset.cmdline({
+      ['<C-n>'] = {
+        c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      };
+      ['<C-p>'] = {
+        c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      };
+      ['<Tab>'] = {
+        c = cmp.mapping.confirm(),
+      }
+  });
   sources = cmp.config.sources({
     { name = 'nvim_lsp_document_symbol' }
   }, {
@@ -88,7 +98,17 @@ cmp.setup.cmdline('/', {
 })
 
 cmp.setup.cmdline('?', {
-  mapping = cmp.mapping.preset.cmdline();
+  mapping = cmp.mapping.preset.cmdline({
+      ['<C-n>'] = {
+        c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      };
+      ['<C-p>'] = {
+        c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      };
+      ['<Tab>'] = {
+        c = cmp.mapping.confirm(),
+      }
+  });
   sources = cmp.config.sources({
     { name = 'nvim_lsp_document_symbol' }
   }, {
@@ -97,7 +117,17 @@ cmp.setup.cmdline('?', {
 })
 
 cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline();
+  mapping = cmp.mapping.preset.cmdline({
+      ['<C-n>'] = {
+        c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      };
+      ['<C-p>'] = {
+        c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      };
+      ['<Tab>'] = {
+        c = cmp.mapping.confirm(),
+      }
+  });
   sources = cmp.config.sources({
     { name = 'path' }
   }, {

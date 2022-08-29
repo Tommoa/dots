@@ -2,13 +2,13 @@ self: super:
 
 {
   yabai = super.yabai.overrideAttrs (o: rec {
-    version = "4.0.0";
+    version = "4.0.2";
     src = builtins.fetchTarball {
       url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
-      sha256 = "1iwzan3mgayfkx7qbbij53hkxvr419b6kmypp7zmvph270yzy4r9";
+      sha256 = "00nxzk1g0hd8jqd1r0aig6wdsbpk60551qxnvvqb9475i8qbzjf6";
     };
 
-    
+
     installPhase = ''
       mkdir -p $out/bin
       mkdir -p $out/share/man/man1/

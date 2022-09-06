@@ -41,7 +41,7 @@ vim.cmd [[
 ]]
 
 -- Set the default shell
-opt.shell="/bin/sh"
+opt.shell = vim.env.SHELL
 
 vim.g.markdown_fenced_languages = { 'html', 'python', 'bash=sh', 'rust', 'cpp' }
 

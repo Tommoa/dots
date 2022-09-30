@@ -10,7 +10,7 @@
   # Packages that should be installed in the system
   environment.systemPackages = with pkgs; let
     pkgpy = python3.buildEnv.override {
-      extraLibs = [ beancount fava ];
+      extraLibs = [ beancount fava python3Packages.pip ];
       permitUserSite = true;
     };
   in
@@ -29,7 +29,7 @@
     gnupg
     isync
     jq
-    khal
+    # khal
     khard
     less
     msmtp

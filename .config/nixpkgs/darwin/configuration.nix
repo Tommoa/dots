@@ -31,6 +31,7 @@
     jq
     # khal
     khard
+    kitty
     less
     msmtp
     neovim

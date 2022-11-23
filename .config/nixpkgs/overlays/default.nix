@@ -8,6 +8,7 @@ self: super:
       sha256 = "03kkjgq1kdaic7hbqhlgmr6vcvcdpsyivdh87492sgp5l71i0hvl";
     };
 
+    postPatch = '''';
 
     installPhase = ''
       mkdir -p $out/bin

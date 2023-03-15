@@ -50,6 +50,7 @@
 !/.config/nvim/autoload
 !/.config/nvim/coc-settings.json
 !/.config/nvim/lua
+.config/nvim/lua/.luarc.json
 !/.config/coc/
 /.config/coc/*
 !/.config/coc/ultisnips/

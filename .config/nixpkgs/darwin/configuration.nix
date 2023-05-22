@@ -47,7 +47,6 @@
 
     pyright
     rnix-lsp
-    rust-analyzer
     sumneko-lua-language-server
 
     lilypond

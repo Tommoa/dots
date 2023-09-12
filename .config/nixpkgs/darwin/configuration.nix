@@ -21,7 +21,7 @@
     beancount
     catimg
     dante
-    exa
+    eza
     fava
     fd
     gitFull

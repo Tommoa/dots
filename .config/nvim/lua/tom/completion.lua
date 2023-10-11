@@ -9,7 +9,7 @@ end
 --  - If we can complete, complete
 --  - If we can fill out a snipped, fill out a snippet
 --  - Otherwise, put in a tab
-_G.tab_complete = function(args)
+_G.tab_complete = function(_)
     if cmp.visible() then
         -- vim.fn['coc#_select_confirm']()
         return cmp.confirm()
@@ -27,7 +27,7 @@ end
 -- to the end of a line without whitespace can be perilous, as the
 -- auto-complete kicks in and decides to enter whatever it'd like when I hit
 -- "enter" to go to a new line. This function fixes that
-_G.do_enter_key = function(args)
+_G.do_enter_key = function(_)
     if cmp.visible() then
         -- Make sure compe closes so that floating windows get cleaned up
         cmp.close()

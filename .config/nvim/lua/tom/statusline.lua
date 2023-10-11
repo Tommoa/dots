@@ -127,6 +127,7 @@ gls.left[1] = {
 gls.left[3] = {
     LspStatus = {
         provider = { LspStatus },
+        condition = condition.check_active_lsp,
         highlight = { colors.fg, colors.section_bg },
     },
 }

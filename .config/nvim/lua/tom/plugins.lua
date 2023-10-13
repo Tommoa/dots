@@ -24,9 +24,12 @@ return require('packer').startup(function(use)
         -- { 'chriskempson/base16-vim' },
         -- { 'drewtempelmeyer/palenight.vim' },
         {
-            'joshdick/onedark.vim',
+            'navarasu/onedark.nvim',
             config = function()
-                vim.api.nvim_command('colorscheme onedark')
+                require('onedark').setup {
+                    ending_tildes = true,
+                }
+                require('onedark').load()
             end
         },
         {

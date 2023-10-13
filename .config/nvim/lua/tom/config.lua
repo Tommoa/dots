@@ -45,5 +45,4 @@ opt.shell = vim.env.SHELL
 
 vim.g.markdown_fenced_languages = { 'html', 'python', 'bash=sh', 'rust', 'cpp' }
 
-vim.v.scheme = 'onedark'
 vim.fn.syntax = true

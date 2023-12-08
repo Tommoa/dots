@@ -34,5 +34,6 @@ yabai -m config right_padding                12
 yabai -m config window_gap                   06
 
 yabai -m rule --add app='System Preferences' manage=off
+yabai -m rule --add app='Obsidian' space=5
 
 echo "yabai configuration loaded..."

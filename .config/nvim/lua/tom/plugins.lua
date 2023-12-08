@@ -121,6 +121,34 @@ return require('packer').startup(function(use)
         },
     }
 
+    -- Obsidian
+    use {
+        "epwalsh/obsidian.nvim",
+        tag = "*",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "hrsh7th/nvim-cmp",
+        },
+        config = function()
+            require("obsidian").setup {
+                workspaces = {
+                    {
+                        name = "personal",
+                        path = "~/Documents/Obsidian Vault/",
+                    }
+                },
+                daily_notes = {
+                    folder = "Resources/Daily Note",
+                },
+                completion = {
+                    nvim_cmp = true,
+                },
+            }
+        end,
+    }
+
     -- Languages
     use {
         -- Rust

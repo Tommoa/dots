@@ -133,7 +133,7 @@
 
   nix.configureBuildUsers = true;
 
-  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = "-1";
+  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

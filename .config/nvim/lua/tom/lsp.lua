@@ -108,7 +108,7 @@ M.configs['pyright'] = {
     capabilities = capabilities,
 }
 -- Nix
-M.configs['rnix'] = {
+M.configs['nixd'] = {
     on_attach = on_attach,
     capabilities = capabilities,
 }

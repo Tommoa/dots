@@ -33,7 +33,7 @@
     tmux
 
     pyright
-    rnix-lsp
+    nixd
     sumneko-lua-language-server
   ];
 

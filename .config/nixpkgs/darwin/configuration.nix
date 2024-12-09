@@ -69,11 +69,6 @@
   nix.package = pkgs.nix;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  nixpkgs.hostPlatform = {
-    config = "aarch64-apple-darwin";
-    system = "aarch64-darwin";
-  };
-
   # launchd.user.agents = with builtins; let
   #   goimapnotify-conffiles = (filter (filename: (match ".*\.conf" filename) != null) (attrNames (readDir ~/.config/imapnotify)));
   #   goimapnotify-agents = listToAttrs

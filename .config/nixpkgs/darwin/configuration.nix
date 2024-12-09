@@ -82,6 +82,7 @@
 
   # Auto upgrade nix package
   nix.package = pkgs.nix;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # launchd.user.agents = with builtins; let
   #   goimapnotify-conffiles = (filter (filename: (match ".*\.conf" filename) != null) (attrNames (readDir ~/.config/imapnotify)));
@@ -133,9 +134,7 @@
 
   nix.configureBuildUsers = true;
 
-  system.defaults.".GlobalPreferences"."com.apple.mouse.scaling" = -1.0;
-
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
-  system.stateVersion = 4;
+  system.stateVersion = 5;
 }

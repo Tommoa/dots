@@ -40,6 +40,7 @@
 !/.config/khal
 !/.config/kitty
 !/.config/nixpkgs/
+/.config/nixpkgs/darwin/flake.lock
 !/.config/notmuch/
 /.config/notmuch/*
 !/.config/notmuch/hooks

@@ -16,42 +16,25 @@
   in
   [
     aerc
-    alacritty
     bat
     beancount
-    catimg
-    dante
     eza
     fava
     fd
-    gh
-    gh-dash
     gitFull
-    goimapnotify
     gnupg
-    isync
     jq
-    # khal
-    khard
     kitty
-    less
-    msmtp
     neovim
     nodejs
-    notmuch
     pkgpy
     ripgrep
     rustup
     tmux
-    vdirsyncer
-    w3m
-    yarn
 
     pyright
     rnix-lsp
     sumneko-lua-language-server
-
-    lilypond
   ];
 
   system.keyboard = {

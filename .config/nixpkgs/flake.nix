@@ -11,7 +11,7 @@
   };
 
   outputs = inputs@{ nix-darwin, ... }: {
-    darwinConfigurations."toma6XD4C4m" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."apollo" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [ ./darwin/configuration.nix ];
       specialArgs = { inherit inputs; };

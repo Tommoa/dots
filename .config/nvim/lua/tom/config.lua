@@ -45,4 +45,16 @@ opt.shell = vim.env.SHELL
 
 vim.g.markdown_fenced_languages = { 'html', 'python', 'bash=sh', 'rust', 'cpp' }
 
+if vim.env.SSH_CLIENT ~= nil then
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy,
+    },
+    paste = {
+      ['+'] = require('vim.ui.clipboard.osc52').paste,
+    },
+  }
+end
+
 vim.fn.syntax = true

@@ -6,6 +6,7 @@
   nixpkgs.overlays = [
     (import ../overlays)
   ];
+  nixpkgs.config.allowUnfree = true;
 
   # Packages that should be installed in the system
   environment.systemPackages = with pkgs; let
@@ -15,26 +16,35 @@
     };
   in
   [
-    aerc
+    # stdutils
     bat
-    beancount
     eza
-    fava
     fd
     gitFull
     gnupg
     jq
-    kitty
-    neovim
-    nodejs
-    pkgpy
     ripgrep
-    rustup
     tmux
 
+    # language support
+    nodejs
+    rustup
+    # language servers
     pyright
     nixd
     sumneko-lua-language-server
+
+    # terminal + editing
+    kitty
+    neovim
+
+    # accounting
+    beancount
+    fava
+    pkgpy
+
+    # applications
+    obsidian
   ];
 
   system.keyboard = {

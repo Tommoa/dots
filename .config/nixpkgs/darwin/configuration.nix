@@ -35,7 +35,7 @@
     sumneko-lua-language-server
 
     # terminal + editing
-    kitty
+    alacritty
     neovim
 
     # accounting

@@ -62,7 +62,7 @@ local function get_current_file_name()
     end
     if vim.bo.modifiable then
         if vim.bo.modified then
-            return file .. '  '
+            return file .. ' + '
         end
     end
     return file .. ' '
@@ -83,7 +83,7 @@ local GetGitRoot = function()
 end
 
 local LspStatus = function()
-    if #vim.lsp.get_active_clients() > 0 then
+    if #vim.lsp.get_clients() > 0 then
         local status = vim.trim(require('lsp-status').status())
         if status:len() > 0 then
             status = status .. ' | '

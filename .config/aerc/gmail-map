@@ -1,6 +1,0 @@
-# vim: ft=conf
-INBOX=tag:inbox
-Archive=tag:archive
-Flagged=tag:flagged
-Deleted=tag:deleted
-Sent=tag:sent

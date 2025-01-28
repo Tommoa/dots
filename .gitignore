@@ -56,7 +56,6 @@
 !/.config/swaylock/
 !/.config/user-dirs.dirs
 !/.config/wofi
-!/.config/yabai
 !/.ssh
 /.ssh/*
 !/.ssh/config

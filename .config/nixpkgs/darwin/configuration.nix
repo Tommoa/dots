@@ -68,16 +68,11 @@
       mouse_follows_focus        = "on";
       focus_follows_mouse        = "autoraise";
       window_placement           = "second_child";
-      window_topmost             = "off";
       window_shadow              = "on";
       window_opacity             = "off";
       window_opacity_duration    = 0.0;
       active_window_opacity      = 1.0;
       normal_window_opacity      = 0.90;
-      window_border              = "off";
-      window_border_width        = 2;
-      active_window_border_color = "0xff775759";
-      normal_window_border_color = "0xff555555";
       insert_feedback_color      = "0xffd75f5f";
       split_ratio                = 0.50;
       auto_balance               = "off";
@@ -99,6 +94,7 @@
       yabai -m rule --add app='System Settings' manage=off
       yabai -m rule --add app='Obsidian' space=5
       yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+      sudo yabai --load-sa
     '';
   };
 

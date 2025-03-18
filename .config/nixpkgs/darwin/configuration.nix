@@ -76,7 +76,7 @@
       insert_feedback_color      = "0xffd75f5f";
       split_ratio                = 0.50;
       auto_balance               = "off";
-      mouse_modifier             = "fn";
+      mouse_modifier             = "cmd";
       mouse_action1              = "move";
       mouse_action2              = "resize";
       mouse_drop_action          = "swap";

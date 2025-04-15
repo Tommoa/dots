@@ -96,8 +96,20 @@ return require('packer').startup(function(use)
     -- Search
     use {
         'nvim-telescope/telescope.nvim',
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
-        cmd = 'Telescope'
+        tag = '0.1.8',
+        requires = {'nvim-lua/plenary.nvim'},
+        config = function()
+            local actions = require("telescope.actions")
+            require('telescope').setup {
+                defaults = {
+                    mappings = {
+                        i = {
+                            ["<esc>"] = actions.close,
+                        }
+                    }
+                }
+            }
+        end,
     }
 
     -- Git integration

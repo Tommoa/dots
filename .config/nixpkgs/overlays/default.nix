@@ -2,10 +2,10 @@ self: super:
 
 {
   yabai = super.yabai.overrideAttrs (o: rec {
-    version = "7.1.13";
+    version = "7.1.14";
     src = builtins.fetchTarball {
       url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
-      sha256 = "0fnbvbz76j9jqmkq9nxmg5fi9qjmha0b5zq580h0gsy2nq2czxyp";
+      sha256 = "0h4q7y5rywb6c39plw4zzjcnx98f0xbkgcasj723q1agncg8scvh";
     };
 
     postPatch = '''';

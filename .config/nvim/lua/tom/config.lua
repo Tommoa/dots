@@ -7,6 +7,7 @@ opt.hls = false        -- Don't highlight all matches in a search
 opt.signcolumn = "yes" -- Keep the gutter on the left open at all times
 opt.scrolloff = 4      -- Keep 4 lines above and below the cursor
 opt.bufhidden = "hide" -- Let me hide buffers without unloading them
+opt.conceallevel = 2   -- Hide some syntax things
 
 -- Make sure that the CursorHold event is triggered faster than every 4 seconds (4000)
 opt.updatetime = 300

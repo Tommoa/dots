@@ -40,3 +40,7 @@ mapper("t", "<Esc>", "<c-\\><c-n>")
 -- Add a keybind for finding files with Telescope
 mapper("n", "zf", ":Telescope find_files<CR>")
 mapper("n", "zb", ":Telescope buffers<CR>")
+
+-- Clear Avante chat history
+mapper("n", "<leader>ac", ":AvanteClear<CR>")
+mapper("n", "<leader>an", ":AvanteChatNew<CR>")

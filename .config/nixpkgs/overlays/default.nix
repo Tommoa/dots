@@ -17,8 +17,4 @@ self: super:
       cp ./doc/yabai.1 $out/share/man/man1/yabai.1
     '';
   });
-
-  goimapnotify = super.goimapnotify.overrideAttrs (o: rec {
-    meta.platforms = super.pkgs.lib.platforms.darwin;
-  });
 }

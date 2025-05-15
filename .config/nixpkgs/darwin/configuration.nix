@@ -5,6 +5,10 @@
   # See ~/.config/nixpkgs/overlays for the actual changes
   nixpkgs.overlays = [
     (import ../overlays)
+    (self: super: {
+      nodejs = super.nodejs_22;
+      nodejs-slim = super.nodejs-slim_22;
+    })
   ];
   nixpkgs.config.allowUnfree = true;
 

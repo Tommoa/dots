@@ -25,6 +25,17 @@ export PYTHONPATH="${HOME}/lib/python:${PYTHONPATH}"
 export CARGO_HOME="${HOME}/.cargo"
 export RUSTUP_HOME="${HOME}/.rustup"
 
+if [ -e "${HOME}/.config/search-engines/google-api-key" ]
+then
+    export GOOGLE_SEARCH_API_KEY=$(cat "${HOME}/.config/search-engines/google-api-key")
+    export GOOGLE_SEARCH_ENGINE_ID=$(cat "${HOME}/.config/search-engines/google-engine-id")
+fi
+
+if [ -e "${HOME}/.config/search-engines/tavily-api-key" ]
+then
+    export TAVILY_API_KEY=$(cat "${HOME}/.config/search-engines/tavily-api-key")
+fi
+
 case "$(uname)" in
     FreeBSD)
         export CARGO_HOME="${CARGO_HOME}_freebsd"

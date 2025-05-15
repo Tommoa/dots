@@ -69,6 +69,24 @@ return require('packer').startup(function(use)
         -- }
     }
 
+    -- AI completion
+    use {
+            'yetone/avante.nvim',
+            requires = {
+                'nvim-treesitter/nvim-treesitter',
+                'stevearc/dressing.nvim',
+                'nvim-lua/plenary.nvim',
+                'MunifTanjim/nui.nvim',
+                'MeanderingProgrammer/render-markdown.nvim',
+                'hrsh7th/nvim-cmp',
+            },
+            run = 'make',
+            branch = 'main',
+            config = function()
+                require('tom.avante')
+            end,
+    }
+
     -- LSP
     use {
         { 'neovim/nvim-lspconfig' },

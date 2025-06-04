@@ -33,6 +33,8 @@
     pyright
     nixd
     sumneko-lua-language-server
+    # AI servers
+    ollama
 
     # terminal + editing
     alacritty

@@ -5,10 +5,6 @@
   # See ~/.config/nixpkgs/overlays for the actual changes
   nixpkgs.overlays = [
     (import ../overlays)
-    (self: super: {
-      nodejs = super.nodejs_22;
-      nodejs-slim = super.nodejs-slim_22;
-    })
   ];
   nixpkgs.config.allowUnfree = true;
 
@@ -51,6 +47,9 @@
     obsidian
   ];
 
+  # TODO: Migrate yabai/dock/skhd config to home-manager.
+  system.primaryUser = "toma";
+
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
@@ -61,6 +60,8 @@
     showhidden = true;
     show-recents = false;
   };
+
+  system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
 
   services.yabai = {
     enable = true;
@@ -107,8 +108,6 @@
     package = pkgs.skhd;
   };
 
-  services.nix-daemon.enable = true;
-
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
@@ -118,8 +117,6 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   programs.zsh.enable = true;
-
-  nix.configureBuildUsers = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

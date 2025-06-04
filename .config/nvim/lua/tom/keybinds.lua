@@ -42,5 +42,5 @@ mapper("n", "zf", ":Telescope find_files<CR>")
 mapper("n", "zb", ":Telescope buffers<CR>")
 
 -- Clear Avante chat history
-mapper("n", "<leader>ac", ":AvanteClear<CR>")
+mapper("n", "<leader>aC", ":AvanteClear<CR>")
 mapper("n", "<leader>an", ":AvanteChatNew<CR>")

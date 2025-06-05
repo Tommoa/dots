@@ -1,6 +1,6 @@
 require('avante').setup {
-    -- Use the gemini provider
-    provider = 'gemini',
+    -- Use the gemini_pro provider
+    provider = 'gemini_pro',
     providers = {
         gemini = {
             api_key_name = { 'cat', '~/.config/ai-keys/gemini' },

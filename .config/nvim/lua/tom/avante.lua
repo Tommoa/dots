@@ -24,7 +24,6 @@ require('avante').setup {
     },
     rag_service = {
         enabled = true,
-        host_mount = os.getenv("HOME"), -- Or the appropriate path
         provider = "ollama",
         llm_model = "gemma3:4b",
         embed_model = "nomic-embed-text",

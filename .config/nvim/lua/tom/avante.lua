@@ -14,6 +14,9 @@ require('avante').setup {
             api_key_name = { 'cat', '~/.config/ai-keys/openai' },
         },
     },
+    behaviour = {
+        enable_token_counting = false,
+    },
     mappings = {
         sidebar = {
             edit_user_request = 'u',

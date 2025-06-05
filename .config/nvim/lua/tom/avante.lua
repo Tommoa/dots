@@ -8,7 +8,7 @@ require('avante').setup {
         },
         gemini_pro = {
             __inherited_from = "gemini",
-            model = 'gemini-2.5-pro-preview-05-06',
+            model = 'gemini-2.5-pro-preview-06-05',
         },
         openai = {
             api_key_name = { 'cat', '~/.config/ai-keys/openai' },

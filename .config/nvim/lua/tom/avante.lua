@@ -24,10 +24,18 @@ require('avante').setup {
     },
     rag_service = {
         enabled = true,
-        provider = "ollama",
-        llm_model = "gemma3:4b",
-        embed_model = "nomic-embed-text",
-        endpoint = "http://localhost:11434",
+        llm = {
+            provider = "ollama",
+            endpoint = "http://localhost:11434",
+            api_key = "",
+            model = "gemma3:4b",
+        },
+        embed = {
+            provider = "ollama",
+            endpoint = "http://localhost:11434",
+            api_key = "",
+            embed_model = "nomic-embed-text",
+        },
         runner = "nix",
     },
     web_search_engine = {

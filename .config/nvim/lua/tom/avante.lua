@@ -4,11 +4,11 @@ require('avante').setup {
     providers = {
         gemini = {
             api_key_name = { 'cat', '~/.config/ai-keys/gemini' },
-            model = 'gemini-2.5-flash-preview-05-20',
+            model = 'gemini-2.5-flash',
         },
         gemini_pro = {
             __inherited_from = "gemini",
-            model = 'gemini-2.5-pro-preview-06-05',
+            model = 'gemini-2.5-pro',
         },
         openai = {
             api_key_name = { 'cat', '~/.config/ai-keys/openai' },

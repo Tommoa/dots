@@ -16,6 +16,7 @@ require('avante').setup {
     },
     behaviour = {
         enable_token_counting = false,
+        auto_approve_tool_permissions = true,
     },
     mappings = {
         sidebar = {

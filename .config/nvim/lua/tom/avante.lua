@@ -42,4 +42,21 @@ require('avante').setup {
     web_search_engine = {
         provider = 'google',
     },
+    custom_tools = function()
+        local custom_tools_path = vim.fn.expand("~/.config/custom_tools.lua")
+        if vim.fn.filereadable(custom_tools_path) == 0 then
+            -- This is not an error, as there may not be custom tools.
+            return {}
+        end
+        local ok, result = pcall(dofile, custom_tools_path)
+        if not ok then
+            vim.notify("Failed to load custom tools from " .. custom_tools_path .. ": " .. result, vim.log.levels.ERROR)
+            return {}
+        end
+        if type(result) ~= "table" then
+            vim.notify("Custom tools file " .. custom_tools_path .. " did not return a table.", vim.log.levels.ERROR)
+            return {}
+        end
+        return result
+    end,
 }

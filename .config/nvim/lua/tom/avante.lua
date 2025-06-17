@@ -35,7 +35,7 @@ require('avante').setup {
             provider = "ollama",
             endpoint = "http://localhost:11434",
             api_key = "",
-            embed_model = "nomic-embed-text",
+            model = "nomic-embed-text",
         },
         runner = "nix",
     },

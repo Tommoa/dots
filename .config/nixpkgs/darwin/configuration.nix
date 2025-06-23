@@ -29,6 +29,7 @@
     # language support
     nodejs
     rustup
+    uv
     # language servers
     pyright
     nixd

@@ -1,3 +1,5 @@
+local mcp_tools = require("mcphub.extensions.avante").mcp_tool()
+
 require('avante').setup {
     -- Use the gemini_pro provider
     provider = 'gemini_pro',
@@ -49,21 +51,26 @@ require('avante').setup {
     web_search_engine = {
         provider = 'google',
     },
+    -- Enable MCP as the system prompt if it exists.
+    system_prompt = function()
+        local hub = require("mcphub").get_hub_instance()
+        return hub and hub:get_active_servers_prompt() or ""
+    end,
     custom_tools = function()
         local custom_tools_path = vim.fn.expand("~/.config/custom_tools.lua")
         if vim.fn.filereadable(custom_tools_path) == 0 then
             -- This is not an error, as there may not be custom tools.
-            return {}
+            return mcp_tools
         end
         local ok, result = pcall(dofile, custom_tools_path)
         if not ok then
             vim.notify("Failed to load custom tools from " .. custom_tools_path .. ": " .. result, vim.log.levels.ERROR)
-            return {}
+            return mcp_tools
         end
         if type(result) ~= "table" then
             vim.notify("Custom tools file " .. custom_tools_path .. " did not return a table.", vim.log.levels.ERROR)
-            return {}
+            return mcp_tools
         end
-        return result
+        return vim.tbl_deep_extend('keep', mcp_tools, result)
     end,
 }

@@ -87,6 +87,16 @@ return require('packer').startup(function(use)
                 require('tom.avante')
             end,
     }
+    use {
+            'ravitemer/mcphub.nvim',
+            requires = {
+                'nvim-lua/plenary.nvim',
+            },
+            build = "bundled_build.lua",  -- Installs `mcp-hub` node binary locally
+            config = function()
+                require('tom.mcphub')
+            end
+    }
 
     -- LSP
     use {

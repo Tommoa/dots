@@ -42,6 +42,7 @@ require('lualine').setup {
                 'lsp_status',
                 icon='(lsp)',
             },
+            { require('mcphub.extensions.lualine') },
         },
         lualine_x = {
             {

@@ -7,12 +7,16 @@ require('lualine').setup {
         lualine_a = { 'mode' },
         lualine_b = {
             {
+                require('mcphub.extensions.lualine'),
+                padding = { left = 1, right = 0 },
+            },
+            {
                 'diagnostics',
                 separator = '|',
                 update_in_insert = true,
                 icon='',
                 symbols = { error = 'E ', warn = 'W ', info = 'I ', hint = 'H ' },
-                padding = { left = 0, right = 1 },
+                padding = { left = 1, right = 1 },
             },
             {
                 'filename',
@@ -41,8 +45,8 @@ require('lualine').setup {
             {
                 'lsp_status',
                 icon='(lsp)',
+                padding = 0,
             },
-            { require('mcphub.extensions.lualine') },
         },
         lualine_x = {
             {

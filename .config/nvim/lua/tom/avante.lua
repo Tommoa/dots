@@ -1,6 +1,7 @@
 require('avante').setup {
     -- Use the gemini_pro provider
     provider = 'gemini_pro',
+    auto_suggestions_provider = 'gemini',
     providers = {
         gemini = {
             api_key_name = { 'cat', '~/.config/ai-keys/gemini' },
@@ -17,10 +18,16 @@ require('avante').setup {
     behaviour = {
         enable_token_counting = false,
         auto_approve_tool_permissions = true,
+        auto_suggestions = true,
     },
     mappings = {
         sidebar = {
             edit_user_request = 'u',
+        },
+        suggestion = {
+            accept = "<C-y>",
+            next = "<C-u>",
+            prev = "<C-l>",
         },
     },
     rag_service = {

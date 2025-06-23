@@ -33,9 +33,10 @@ return require('packer').startup(function(use)
             end
         },
         {
-            'glepnir/galaxyline.nvim',
+            'nvim-lualine/lualine.nvim',
+            requires = { 'nvim-tree/nvim-web-devicons', opt=true },
             config = function()
-                require('tom.statusline')
+                require('tom.lualine')
             end
         },
     }

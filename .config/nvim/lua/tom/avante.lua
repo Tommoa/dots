@@ -36,7 +36,7 @@ require('avante').setup {
         },
     },
     rag_service = {
-        enabled = true,
+        enabled = false,
         llm = {
             provider = "ollama",
             endpoint = "http://localhost:11434",

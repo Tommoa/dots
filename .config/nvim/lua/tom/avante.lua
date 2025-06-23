@@ -30,7 +30,7 @@ require('avante').setup {
             edit_user_request = 'u',
         },
         suggestion = {
-            accept = "<C-y>",
+            accept = "<M-j>",
             next = "<C-u>",
             prev = "<C-l>",
         },

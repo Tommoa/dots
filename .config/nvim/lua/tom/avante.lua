@@ -16,6 +16,9 @@ require('avante').setup {
         openai = {
             api_key_name = { 'cat', '~/.config/ai-keys/openai' },
         },
+        ollama = {
+            model = 'gemini3:4b',
+        },
     },
     behaviour = {
         enable_token_counting = false,

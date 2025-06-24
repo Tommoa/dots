@@ -21,6 +21,7 @@ require('lualine').setup {
             {
                 'filename',
                 path = 1,
+                shorting_target = 85,
             },
         },
         lualine_c = {

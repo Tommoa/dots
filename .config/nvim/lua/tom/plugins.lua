@@ -1,210 +1,248 @@
 -- Package sources for my nvim config
 --
--- Uses packer.nvim
+-- Uses lazy.nvim
 
--- Bootstrap packer.nvim
-local execute = vim.api.nvim_command
-local fn = vim.fn
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-
-if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
-  execute 'packadd packer.nvim'
+-- Load plugins defined in another file (if it exists).
+local function local_plugins()
+  local filename = '~/.config/sysplugin.lua'
+  if (vim.uv or vim.loop).fs_stat(filename) then
+    local ok, result = pcall(dofile, filename)
+    if not ok then
+      vim.notify("Failed to load sysplugin.lua: " .. result, vim.log.levels.ERROR)
+      return {}
+    end
+    return result
+  end
 end
 
-return require('packer').startup(function(use)
-    -- Make packer manage itself
-    use 'wbthomason/packer.nvim'
+return require('lazy').setup({
+  spec = {
+    -- Make sure that lazy manages itself.
+    { 'folke/lazy.nvim' },
 
-    -- Visual customization
-    --  The actual theme will be selected by a variable elsewhere
-    use {
-        -- { 'arcticicestudio/nord-vim' },
-        -- { 'chriskempson/base16-vim' },
-        -- { 'drewtempelmeyer/palenight.vim' },
-        {
-            'navarasu/onedark.nvim',
-            config = function()
-                require('onedark').setup {
-                    ending_tildes = true,
-                }
-                require('onedark').load()
-            end
-        },
-        {
-            'nvim-lualine/lualine.nvim',
-            requires = { 'nvim-tree/nvim-web-devicons', opt=true },
-            config = function()
-                require('tom.lualine')
-            end
-        },
-    }
+    -- Visual customization.
+    --
+    -- Colourscheme.
+    {
+      'navarasu/onedark.nvim',
+      lazy = false,
+      opts = {
+        ending_tildes = true,
+      },
+      config = function()
+        require('onedark').load()
+      end,
+    },
+    -- Line
+    {
+      'nvim-lualine/lualine.nvim',
+      dependencies = { 'nvim-tree/nvim-web-devicons', lazy=true },
+      lazy = false,
+      config = function()
+          require('tom.lualine')
+      end
+    },
 
-    -- Completion engine
-    use {
-        -- { 'nvim-lua/completion-nvim' },
-        {
-            'hrsh7th/nvim-cmp',
-            config = function()
-                require('tom.completion')
-            end,
-            requires = {
-               'hrsh7th/cmp-cmdline',
-               'hrsh7th/cmp-path',
-               'hrsh7th/cmp-buffer',
-               'hrsh7th/cmp-nvim-lsp',
-               'hrsh7th/cmp-nvim-lsp-document-symbol'
-            }
-        },
-        {
-           'l3mon4d3/luasnip', requires = {
-              'hrsh7th/nvim-cmp',
-              'saadparwaiz1/cmp_luasnip',
-           }
-        },
-        { 'tzachar/cmp-tabnine', run='./install.sh', requires = { 'hrsh7th/nvim-cmp' } },
-        -- {
-        --     'neoclide/coc.nvim',
-        --     run = function() fn['coc#util#install']() end,
-        -- }
-    }
+    -- Completion engine.
+    --
+    -- nvim-cmp
+    {
+      'hrsh7th/nvim-cmp',
+      -- Load cmp on InsertEnter
+      event = 'InsertEnter',
+      config = function ()
+        require('tom.completion')
+      end,
+      dependencies = {
+        'hrsh7th/cmp-cmdline',
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-nvim-lsp-document-symbol'
+      },
+    },
+    -- Snippets.
+    {
+      'l3mon4d3/luasnip',
+      event = 'InsertEnter',
+      dependencies = {
+        'hrsh7th/nvim-cmp',
+        'saadparwaiz1/cmp_luasnip',
+      },
+    },
 
-    -- AI completion
-    use {
-            'yetone/avante.nvim',
-            requires = {
-                'nvim-treesitter/nvim-treesitter',
-                'stevearc/dressing.nvim',
-                'nvim-lua/plenary.nvim',
-                'MunifTanjim/nui.nvim',
-                'MeanderingProgrammer/render-markdown.nvim',
-                'hrsh7th/nvim-cmp',
-            },
-            run = 'make',
-            branch = 'main',
-            config = function()
-                require('tom.avante')
-            end,
-    }
-    use {
-            'ravitemer/mcphub.nvim',
-            requires = {
-                'nvim-lua/plenary.nvim',
-            },
-            build = "bundled_build.lua",  -- Installs `mcp-hub` node binary locally
-            config = function()
-                require('tom.mcphub')
-            end
-    }
-
-    -- LSP
-    use {
-        { 'neovim/nvim-lspconfig' },
-        {
-            'nvim-lua/lsp-status.nvim',
-            requires = { 'neovim/nvim-lspconfig' },
-            config = function()
-                require('tom.lsp')
-            end
-        },
-    }
-
-    -- Highlights
-    use {
+    -- AI completion.
+    {
+      'yetone/avante.nvim',
+      event = 'VeryLazy',
+      dependencies = {
         'nvim-treesitter/nvim-treesitter',
-        requires = {
-            'nvim-treesitter/nvim-treesitter-refactor', 'nvim-treesitter/nvim-treesitter-textobjects'
-        },
-        config = function()
-            require('tom.tree-sitter')
-        end,
-        run = ':TSUpdate'
-    }
+        'stevearc/dressing.nvim',
+        'nvim-lua/plenary.nvim',
+        'MunifTanjim/nui.nvim',
+        'MeanderingProgrammer/render-markdown.nvim',
+        'hrsh7th/nvim-cmp',
+        'ravitemer/mcphub.nvim',
+      },
+      build = 'make',
+      branch = 'main',
+      config = function()
+        require('tom.avante')
+      end,
+    },
+    -- MCP
+    {
+      'ravitemer/mcphub.nvim',
+      event = 'VeryLazy',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+      },
+      build = 'bundled_build.lua',  -- Installs `mcp-hub` node binary locally
+      opts = {
+        use_bundled_binary = true,  -- Use local `mcp-hub` binary
+        auto_approve = true,
+      },
+    },
 
-    -- Search
-    use {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.8',
-        requires = {'nvim-lua/plenary.nvim'},
-        config = function()
-            local actions = require("telescope.actions")
-            require('telescope').setup {
-                defaults = {
-                    mappings = {
-                        i = {
-                            ["<esc>"] = actions.close,
-                        }
-                    }
-                }
-            }
-        end,
-    }
+    -- Language Server Protocol.
+    {
+      'neovim/nvim-lspconfig',
+      lazy = false,
+    },
+    {
+      'nvim-lua/lsp-status.nvim',
+      dependencies = { 'neovim/nvim-lspconfig' },
+      config = function()
+        require('tom.lsp')
+      end
+    },
 
-    -- Git integration
-    use {
-        {
-            'tpope/vim-fugitive',
-            cmd = {
-                'G', 'Git', 'Gstatus', 'Gblame',
-                'Gpush', 'Gpull', 'Gedit',
+    -- Highlights (tree-sitter).
+    {
+      'nvim-treesitter/nvim-treesitter',
+      event = 'VeryLazy',
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter-refactor',
+        'nvim-treesitter/nvim-treesitter-textobjects'
+      },
+      config = function()
+        require('tom.tree-sitter')
+      end,
+      build = ':TSUpdate'
+    },
+
+    -- Search.
+    {
+      'nvim-telescope/telescope.nvim',
+      version = '0.1.8',
+      dependencies = {'nvim-lua/plenary.nvim'},
+      opts = {
+        defaults = {
+          mappings = {
+            i = {
+              ["<esc>"] = "close"
             },
-            fn = {
-                'FugitiveHead',
-            },
+          },
         },
-        {
-            'lewis6991/gitsigns.nvim',
-            requires = {'nvim-lua/plenary.nvim'},
-            config = function()
-                require('gitsigns').setup()
-            end
-        },
-    }
+      },
+    },
 
-    -- Languages
-    use {
-        -- Rust
-        {
-            'simrat39/rust-tools.nvim',
-            requires = {
-                'neovim/nvim-lspconfig',
-            },
-            config = function()
-                local lsp = require('tom.lsp')
-                require('rust-tools').setup{
-                    tools = {
-                        hover_actions = {
-                            auto_focus = true
-                        },
-                    },
-                    server = {
-                        on_attach = lsp.on_attach,
-                        capabilities = lsp.capabilities,
-                    },
-                }
-            end,
-            ft = { 'rust' },
-        },
-        -- Nix
-        { 'lnl7/vim-nix' },
-        -- jsonc
-        { 'kevinoid/vim-jsonc' },
-        -- beancount
-        { 'nathangrigg/vim-beancount' },
-        -- lilypond
-        { 'sersorrel/vim-lilypond' },
-    }
+    -- Git integration.
+    {
+      'tpope/vim-fugitive',
+      cmd = {
+        'G', 'Git', 'Gstatus', 'Gblame',
+        'Gpush', 'Gpull', 'Gedit',
+      },
+      ft = { 'gitcommit', 'gitrebase' },
+      fn = { 'FugitiveHead' },
+    },
+    {
+      'lewis6991/gitsigns.nvim',
+      dependencies = {'nvim-lua/plenary.nvim'},
+      opts = {},
+    },
 
+    -- Languages.
+    {
+      'mrcjkb/rustaceanvim',
+      dependencies = {
+        'neovim/nvim-lspconfig',
+      },
+      config = function ()
+        require('rustaceanvim').setup {
+          server = {
+            on_attach = require('tom.lsp').on_attach,
+            capabilities = require('tom.lsp').capabilities,
+          },
+        }
+      end,
+      ft = { 'rust' },
+    },
+    {
+      'lnl7/vim-nix',
+      ft = { 'nix' },
+    },
+    {
+      'kevinoid/vim-jsonc',
+      ft = { 'jsonc' },
+    },
+    { 'nathangrigg/vim-beancount' },
+    { 'sersorrel/vim-lilypond' },
     -- Obsidian
-    use {
-        'epwalsh/obsidian.nvim',
-        tag='*',
-        requires={
-            'nvim-lua/plenary.nvim',
-        },
-        config = function ()
-            require('tom.obsidian')
-        end,
-    }
-end)
+    {
+      'epwalsh/obsidian.nvim',
+      lazy = true,
+      ft = { 'markdown' },
+      version = '*',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+      },
+      config = function()
+        require('tom.obsidian')
+      end,
+    },
+
+    -- Load custom plugins.
+    local_plugins()
+  },
+  -- Configure any other settings here. See the documentation for more details.
+  -- colorscheme that will be used when installing plugins.
+  install = { colorscheme = { "onedark" } },
+  -- automatically check for plugin updates
+  checker = { enabled = true },
+  ui = {
+    icons = {
+      cmd = "⌘",
+      config = "🛠",
+      event = "📅",
+      ft = "📂",
+      init = "⚙",
+      keys = "🗝",
+      plugin = "🔌",
+      runtime = "💻",
+      require = "🌙",
+      source = "📄",
+      start = "🚀",
+      task = "📌",
+      lazy = "💤 ",
+    },
+  },
+})

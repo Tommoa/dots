@@ -29,11 +29,6 @@ require('avante').setup {
         sidebar = {
             edit_user_request = 'u',
         },
-        suggestion = {
-            accept = "<M-j>",
-            next = "<C-u>",
-            prev = "<C-l>",
-        },
     },
     rag_service = {
         enabled = false,

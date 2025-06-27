@@ -53,11 +53,7 @@ require('lualine').setup {
         lualine_x = {
             {
                 "fileformat",
-                symbols = {
-                    dos = 'dos',
-                    unix = 'unix',
-                    mac = 'mac',
-                },
+                icons_enabled = false,
             },
             "encoding",
             "filetype"

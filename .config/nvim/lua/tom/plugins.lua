@@ -23,12 +23,7 @@ vim.opt.rtp:prepend(lazypath)
 local function local_plugins()
   local filename = '~/.config/sysplugin.lua'
   if (vim.uv or vim.loop).fs_stat(filename) then
-    local ok, result = pcall(dofile, filename)
-    if not ok then
-      vim.notify("Failed to load sysplugin.lua: " .. result, vim.log.levels.ERROR)
-      return {}
-    end
-    return result
+    return { import = filename }
   end
 end
 

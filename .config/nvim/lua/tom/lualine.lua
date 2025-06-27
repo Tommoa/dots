@@ -9,6 +9,7 @@ require('lualine').setup {
             {
                 require('mcphub.extensions.lualine'),
                 padding = { left = 1, right = 0 },
+                icon = '(mcp)',
             },
             {
                 'diagnostics',

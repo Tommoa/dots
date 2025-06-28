@@ -29,11 +29,13 @@
     # language support
     nodejs
     rustup
+    typescript
     uv
     # language servers
     pyright
     nixd
     sumneko-lua-language-server
+    typescript-language-server
     # AI servers
     ollama
 

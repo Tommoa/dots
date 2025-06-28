@@ -2,6 +2,13 @@ require('lualine').setup {
     options = {
         section_separators = { left = '', right = '' },
         component_separators = { left = '', right = '|' },
+        disabled_filetypes = {
+            'AvanteTodos',
+            'AvanteSelectedFiles',
+        },
+    },
+    extensions = {
+        'avante',
     },
     sections = {
         lualine_a = { 'mode' },

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -35,8 +35,12 @@
     neovim
 
     # applications
-    discord
     obsidian
+
+    # messaging
+    caprine
+    discord
+    (if lib.strings.hasInfix "linux" pkgs.system then whatsapp-for-linux else whatsapp-for-mac)
   ];
 
   # This value determines the Home Manager release that your

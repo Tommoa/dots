@@ -28,6 +28,7 @@
 !/.config/bat
 !/.config/fontconfig/
 !/.config/fontconfig/fonts.conf
+/.config/fontconfig/conf.d/
 !/.config/git/
 !/.config/imv/
 !/.config/kitty

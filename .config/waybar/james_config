@@ -79,11 +79,11 @@
         "tooltip": false
     },
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "format-wifi": "{essid} ({signalStrength}%): {bandwidthTotalBytes} ",
+        "format-ethernet": "{ifname}: {bandwidthTotalBytes} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "format-alt": "{ifname}: {bandwidthTotalBytes}/{cidr}",
         "tooltip": false
     },
     "wireplumber": {

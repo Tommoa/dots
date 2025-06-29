@@ -16,6 +16,10 @@ require('avante').setup {
         openai = {
             api_key_name = { 'cat', '~/.config/ai-keys/openai' },
         },
+        ["o4-mini"] = {
+            __inherited_from = "openai",
+            model = "o4-mini",
+        },
         ollama = {
             model = 'gemini3:4b',
         },

@@ -3,7 +3,10 @@ local uname = vim.loop.os_uname()
 
 configs.setup {
     ensure_installed = "all",
-    ignore_install = {},
+    ignore_install = {
+        "ipkg",
+        "norg",
+    },
     auto_install = true,
     sync_install = false,
     modules= {},

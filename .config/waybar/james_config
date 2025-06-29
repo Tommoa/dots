@@ -18,7 +18,7 @@
     "modules-right": [
         "tray",
         "idle_inhibitor",
-        "pulseaudio",
+        "wireplumber",
         "network",
         "backlight",
         "cpu",
@@ -44,7 +44,7 @@
         "tooltip": false
     },
     "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "hwmon-path": "/sys/class/hwmon/hwmon0/temp1_input",
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": [
@@ -86,13 +86,11 @@
         "format-alt": "{ifname}: {ipaddr}/{cidr}",
         "tooltip": false
     },
-    "pulseaudio": {
-        // Even though I'm using pipewire, the pulseaudio
-        // compatibility module allows this to work.
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+    "wireplumber": {
+        "format": "{volume}% {icon} {node_name}",
+        "format-bluetooth": "{volume}% {icon} {node_name}",
+        "format-bluetooth-muted": " {icon} {node_name}",
+        "format-muted": " {node_name}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {

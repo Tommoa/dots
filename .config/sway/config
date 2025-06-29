@@ -58,7 +58,7 @@ input type:pointer {
     # Kill mouse acceleration when using a mouse
     accel_profile flat
     dwt disabled
-    natural_scroll disabled
+    natural_scroll enabled
 }
 
 input * xkb_layout  "us"
@@ -69,10 +69,10 @@ input * xkb_options "caps:escape"
 #
 # XF86 keybinds should work even whilst locked
 bindsym --locked {
-    XF86AudioRaiseVolume exec pamixer -i 5 && pamixer --get-volume > $SWAYSOCK.wob
-    XF86AudioLowerVolume exec pamixer -d 5 && pamixer --get-volume > $SWAYSOCK.wob
-    XF86AudioMute        exec pamixer -t
-    XF86AudioMicMute     exec pamixer --default-source -t
+    XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && echo $(( ~~($(wpctl get-volume @DEFAULT_AUDIO_SINK@ | rg '[\d.]+' -o) * 100) )) > $SWAYSOCK.wob
+    XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && echo $(( ~~($(wpctl get-volume @DEFAULT_AUDIO_SINK@ | rg '[\d.]+' -o) * 100) )) > $SWAYSOCK.wob
+    XF86AudioMute        exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    XF86AudioMicMute     exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
     # An equivalent without rg is "grep '(\([[:digit:]]\+%\))' -o | sed 's/[^[:digit:]]//g'"
     XF86MonBrightnessDown exec brightnessctl set 5%- | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob
     XF86MonBrightnessUp   exec brightnessctl set +5% | rg '\((\d+)%\)' -o -r '$1' > $SWAYSOCK.wob
@@ -210,10 +210,10 @@ exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
 # Window assignments
-assign     [class="Microsoft Teams - Preview"] workspace 3
-for_window [class="Microsoft Teams - Preview"] move to workspace 3
-for_window [class="Slack"] move to workspace 3
-for_window [class="discord"] move to workspace 3
+assign     [class="Microsoft Teams - Preview"] workspace 4
+for_window [class="Microsoft Teams - Preview"] move to workspace 4
+for_window [class="Slack"] move to workspace 4
+for_window [class="discord"] move to workspace 4
 for_window [class="[Ss]potify"] move to scratchpad
 
 include ~/.config/sway/config.d/*

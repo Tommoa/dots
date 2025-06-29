@@ -36,6 +36,16 @@ then
     export TAVILY_API_KEY=$(cat "${HOME}/.config/search-engines/tavily-api-key")
 fi
 
+if [ -e "${HOME}/.config/ai-keys/gemini" ]
+then
+    export GEMINI_API_KEY=$(cat "${HOME}/.config/ai-keys/gemini")
+fi
+
+if [ -e "${HOME}/.config/ai-keys/openai" ]
+then
+    export OPENAI_API_KEY=$(cat "${HOME}/.config/ai-keys/openai")
+fi
+
 case "$(uname)" in
     FreeBSD)
         export CARGO_HOME="${CARGO_HOME}_freebsd"

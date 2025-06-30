@@ -37,7 +37,7 @@
           home-manager.users.tommoa = import ./home.nix;
         }
       ];
-      specialArgs = { inherit inputs; };
+      specialArgs = { inherit inputs; name = "james"; };
     };
   };
 }

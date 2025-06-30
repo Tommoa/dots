@@ -2,12 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, name, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./james-hardware.nix
+      (./. + "/${name}-hardware.nix")
     ];
 
   # Bootloader.
@@ -17,7 +17,7 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "james"; # Define your hostname.
+  networking.hostName = name; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

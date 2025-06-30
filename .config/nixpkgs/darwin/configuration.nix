@@ -79,6 +79,10 @@
     extraConfig = ''
       yabai -m rule --add app='System Settings' manage=off
       yabai -m rule --add app='Obsidian' space=5
+      yabai -m rule --add app='Discord' space=4
+      yabai -m rule --add app='WhatsApp' space=4
+      yabai -m rule --add app='Messenger' space=4
+      yabai -m rule --add app='Messages' space=4
       yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
       sudo yabai --load-sa
     '';

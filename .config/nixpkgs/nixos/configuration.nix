@@ -146,6 +146,9 @@
     neovim
     networkmanagerapplet
   ];
+  # Default enviroment variables.
+  # Enforce Wayland for Electron/Chromium
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

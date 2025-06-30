@@ -16,7 +16,14 @@
   outputs = inputs@{ nixpkgs, nix-darwin, home-manager, ... }: {
     darwinConfigurations."apollo" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
-      modules = [ ./darwin/configuration.nix ];
+      modules = [
+        ./darwin/configuration.nix
+        home-manager.darwinModules.home-manager {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.toma = import ./home.nix;
+        }
+      ];
       specialArgs = { inherit inputs; };
     };
 

@@ -36,11 +36,12 @@
 
     # applications
     obsidian
+    spotify
 
     # messaging
     caprine
     discord
-    (if lib.strings.hasInfix "linux" pkgs.system then whatsapp-for-linux else whatsapp-for-mac)
+    (if lib.strings.hasInfix "linux" system then whatsapp-for-linux else whatsapp-for-mac)
   ];
 
   # This value determines the Home Manager release that your
@@ -54,7 +55,7 @@
   home.stateVersion = "25.05";
 
   gtk = {
-    enable = true;
+    enable = pkgs.lib.strings.hasInfix "linux" pkgs.system;
     iconTheme = {
       name = "Pop-dark";
       package = pkgs.pop-icon-theme;

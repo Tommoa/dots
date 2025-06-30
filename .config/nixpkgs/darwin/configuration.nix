@@ -16,44 +16,20 @@
     };
   in
   [
-    # stdutils
-    bat
-    eza
-    fd
-    gitFull
-    gnupg
-    jq
-    ripgrep
-    tmux
-
-    # language support
-    nodejs
-    rustup
-    typescript
-    uv
-    # language servers
-    pyright
-    nixd
-    sumneko-lua-language-server
-    typescript-language-server
-    # AI servers
-    ollama
-
-    # terminal + editing
-    alacritty
-    neovim
-
     # accounting
     beancount
     fava
     pkgpy
-
-    # applications
-    obsidian
   ];
 
   # TODO: Migrate yabai/dock/skhd config to home-manager.
   system.primaryUser = "toma";
+  users.users.toma = {
+    description = "Tom Hill Almeida";
+    home = "/Users/toma";
+    shell = pkgs.zsh;
+    packages = [ ];
+  };
 
   system.keyboard = {
     enableKeyMapping = true;

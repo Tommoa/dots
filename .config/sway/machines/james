@@ -5,3 +5,6 @@ exec dbus-update-activation-environment --all
 exec wlsunset -t 3500 -l -33.88 -L 151.17
 
 output HDMI-A-1 mode 2560x1440@144Hz
+
+exec discord
+exec steam

@@ -210,11 +210,17 @@ exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
 # Window assignments
-assign     [class="Microsoft Teams - Preview"] workspace 4
-for_window [class="Microsoft Teams - Preview"] move to workspace 4
-for_window [class="Slack"] move to workspace 4
-for_window [class="discord"] move to workspace 4
-for_window [class="[Ss]potify"] move to scratchpad
+assign [class="Microsoft Teams - Preview"] workspace 4
+assign [class="Slack"] workspace 4
+assign [class="discord"] workspace 4
+assign [app_id="discord"] workspace 4
+assign [class="Caprine"] workspace 4
+assign [app_id="Caprine"] workspace 4
+assign [app_id="wasistlos"] workspace 4
+assign [class="[Ss]potify"] scratchpad
+assign [class="obsidian"] workspace 5
+assign [app_id="obsidian"] workspace 5
+assign [class="steam"] workspace 6
 
 include ~/.config/sway/config.d/*
 include "~/.config/sway/machines/`uname -n`"

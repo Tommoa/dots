@@ -27,7 +27,7 @@
     optimise = {
       automatic = true;
     } // (if lib.strings.hasInfix "linux" pkgs.system then {
-      dates = "daily";
+      dates = [ "04:00" ];
     } else {
       # Optimise the store every day.
       interval = {

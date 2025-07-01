@@ -21,9 +21,9 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load plugins defined in another file (if it exists).
 local function local_plugins()
-  local filename = '~/.config/sysplugin.lua'
+  local filename = vim.uv.os_homedir() .. '/.config/sysplugin.lua'
   if (vim.uv or vim.loop).fs_stat(filename) then
-    return { import = filename }
+    return dofile(filename)
   end
 end
 

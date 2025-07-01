@@ -3,12 +3,12 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, name, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      (./. + "/${name}-hardware.nix")
-    ];
+  imports = [
+    (./. + "/${name}-hardware.nix")
+    ../common/nix.nix
+    ../common/fonts.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -59,6 +59,7 @@
     variant = "colemak";
     options = "caps:escape";
   };
+  console.useXkbConfig = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -122,10 +123,6 @@
     ];
   };
   programs.waybar.enable = true;
-  programs.zsh.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # Enable steam
   programs.steam = {
@@ -134,12 +131,6 @@
     localNetworkGameTransfers.openFirewall = true;
   };
 
-  # Add fonts
-  fonts.packages = with pkgs; [
-    dejavu_fonts
-    fira-code
-    font-awesome
-  ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -150,6 +141,7 @@
   # Enforce Wayland for Electron/Chromium
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+  programs.zsh.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
@@ -176,15 +168,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
-  nix = {
-    package = pkgs.lix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 1w";
-    };
-    settings.auto-optimise-store = true;
-  };
 }

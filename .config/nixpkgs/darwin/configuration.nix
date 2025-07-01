@@ -1,25 +1,20 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [
+    ../common/nix.nix
+    ../common/fonts.nix
+  ];
+
   # Override some packages for some specific changes for macOS
   # See ~/.config/nixpkgs/overlays for the actual changes
   nixpkgs.overlays = [
     (import ../overlays)
   ];
-  nixpkgs.config.allowUnfree = true;
 
   # Packages that should be installed in the system
-  environment.systemPackages = with pkgs; let
-    pkgpy = python3.buildEnv.override {
-      extraLibs = [ beancount fava python3Packages.pip ];
-      permitUserSite = true;
-    };
-  in
-  [
-    # accounting
-    beancount
-    fava
-    pkgpy
+  environment.systemPackages = with pkgs; [
+    neovim
   ];
 
   # TODO: Migrate yabai/dock/skhd config to home-manager.
@@ -28,7 +23,9 @@
     description = "Tom Hill Almeida";
     home = "/Users/toma";
     shell = pkgs.zsh;
-    packages = [ ];
+    packages = with pkgs; [
+      chatgpt
+    ];
   };
 
   system.keyboard = {
@@ -93,15 +90,12 @@
     package = pkgs.skhd;
   };
 
-  # Use a custom configuration.nix location.
-  # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
-
-  # Auto upgrade nix package
-  nix.package = pkgs.lix;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   programs.zsh.enable = true;
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

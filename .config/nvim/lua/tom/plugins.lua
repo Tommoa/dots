@@ -48,7 +48,7 @@ return require('lazy').setup({
     -- Line
     {
       'nvim-lualine/lualine.nvim',
-      lazy = false,
+      event = 'VeryLazy', -- Allow lualine to come in late
       config = function()
           require('tom.lualine')
       end
@@ -91,7 +91,6 @@ return require('lazy').setup({
         'stevearc/dressing.nvim',
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
-        'MeanderingProgrammer/render-markdown.nvim',
         'hrsh7th/nvim-cmp',
         'ravitemer/mcphub.nvim',
       },
@@ -146,6 +145,7 @@ return require('lazy').setup({
     {
       'nvim-telescope/telescope.nvim',
       version = '0.1.8',
+      event = 'VeryLazy',
       dependencies = {'nvim-lua/plenary.nvim'},
       opts = {
         defaults = {

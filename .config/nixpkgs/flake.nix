@@ -14,6 +14,37 @@
   };
 
   outputs = inputs@{ nixpkgs, nix-darwin, home-manager, ... }: {
+    homeConfigurations."toma" = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        system = "aarch64-darwin";
+        config.allowUnfree = true;
+        overlays = [
+          (import ./overlays)
+        ];
+      };
+      modules = [
+        ./home.nix
+        {
+          home.username = "toma";
+          home.homeDirectory = "/Users/toma";
+        }
+      ];
+    };
+
+    homeConfigurations."tommoa" = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+      modules = [
+        ./home.nix
+        {
+          home.username = "tommoa";
+          home.homeDirectory = "/home/tommoa";
+        }
+      ];
+    };
+
     darwinConfigurations."apollo" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
@@ -21,7 +52,10 @@
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.toma = import ./home.nix;
+          home-manager.users.toma = { ... }: {
+            imports = [ ./home.nix ];
+            home.enableGraphical = true;
+          };
         }
       ];
       specialArgs = { inherit inputs; };
@@ -34,7 +68,10 @@
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.tommoa = import ./home.nix;
+          home-manager.users.tommoa = { ... }: {
+            imports = [ ./home.nix ];
+            home.enableGraphical = true;
+          };
         }
       ];
       specialArgs = { inherit inputs; name = "james"; };

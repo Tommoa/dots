@@ -1,75 +1,60 @@
-{ pkgs, ... }:
+{ pkgs, lib ? pkgs.lib, config, ... }:
 
 {
-  home.packages = with pkgs; [
-    # Standard terminal tools.
-    bat
-    eza
-    fd
-    git
-    gnupg
-    gnumake
-    jq
-    ripgrep
-    tmux
-
-    # language support
-    clang
-    nodejs
-    python3
-    rustup
-    typescript
-    uv
-    # language servers
-    pyright
-    nixd
-    sumneko-lua-language-server
-    typescript-language-server
-    # AI servers/helpers
-    codex
-    ollama
-    opencode
-
-    # terminal + editing
-    alacritty
-    neovim
-
-    # applications
-    obsidian
-    spotify
-
-    # messaging
-    caprine
-    discord
-    (if lib.strings.hasInfix "linux" system then whatsapp-for-linux else whatsapp-for-mac)
-  ];
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "25.05";
-
-  gtk = {
-    enable = pkgs.lib.strings.hasInfix "linux" pkgs.system;
-    iconTheme = {
-      name = "Pop-dark";
-      package = pkgs.pop-icon-theme;
-    };
-    cursorTheme = {
-      name = "Pop";
-      package = pkgs.pop-gtk-theme;
-    };
-    theme = {
-      name = "Pop-dark";
-      package = pkgs.pop-gtk-theme;
-    };
+  options.home.enableGraphical = lib.mkOption {
+    type = lib.types.bool;
+    default = false;
+    description = "Whether to enable graphical applications";
   };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  config = lib.mkMerge [
+    {
+      home.packages = with pkgs; [
+        # Standard terminal tools.
+        bat
+        eza
+        fd
+        git
+        gnupg
+        gnumake
+        jq
+        ripgrep
+        tmux
+
+        # language support
+        clang
+        nodejs
+        python3
+        rustup
+        typescript
+        uv
+        # language servers
+        pyright
+        nixd
+        sumneko-lua-language-server
+        typescript-language-server
+        # AI servers/helpers
+        codex
+        ollama
+        opencode
+
+        # terminal + editing
+        neovim
+      ];
+
+      # This value determines the Home Manager release that your
+      # configuration is compatible with. This helps avoid breakage
+      # when a new Home Manager release introduces backwards
+      # incompatible changes.
+      #
+      # You can update Home Manager without changing this value. See
+      # the Home Manager release notes for a list of state version
+      # changes in each release.
+      home.stateVersion = "25.05";
+
+      # Let Home Manager install and manage itself.
+      programs.home-manager.enable = true;
+    }
+    (lib.mkIf config.home.enableGraphical (import ./common/graphical.nix { inherit pkgs lib config; }))
+  ];
 }

@@ -46,6 +46,11 @@ then
     export OPENAI_API_KEY=$(cat "${HOME}/.config/ai-keys/openai")
 fi
 
+if [ -e "${HOME}/.config/ai-keys/anthropic" ]
+then
+    export ANTHROPIC_API_KEY=$(cat "${HOME}/.config/ai-keys/anthropic")
+fi
+
 case "$(uname)" in
     FreeBSD)
         export CARGO_HOME="${CARGO_HOME}_freebsd"

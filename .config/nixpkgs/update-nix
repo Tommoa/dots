@@ -1,0 +1,300 @@
+#!/bin/sh
+
+# POSIX shell script to detect and upgrade current nix configuration
+# Handles both system configurations and home-manager configurations
+
+set -e
+
+# Colors for output
+blue=$'\033[38;5;4m'
+green=$'\033[38;5;85m'
+red=$'\033[38;5;1m'
+cyan=$'\033[38;5;6m'
+bold=$'\033[1m'
+reset=$'\033[m'
+
+# Function to print colored output
+print_info() {
+    printf "${blue}[INFO]${reset} %s\n" "$1"
+}
+
+print_success() {
+    printf "${green}[SUCCESS]${reset} %s\n" "$1"
+}
+
+print_error() {
+    printf "${red}[ERROR]${reset} %s\n" "$1"
+}
+
+# Function to detect system type and available configurations
+detect_system() {
+    local system_type=""
+    local has_system_config=false
+    local has_home_config=false
+    
+    # Detect system type
+    case "$(uname -s)" in
+        Darwin) 
+            system_type="darwin"
+            # Check if we have nix-darwin
+            if command -v darwin-rebuild >/dev/null 2>&1; then
+                has_system_config=true
+            fi
+            ;;
+        Linux) 
+            system_type="linux"
+            # Check if we have nixos
+            if command -v nixos-rebuild >/dev/null 2>&1; then
+                has_system_config=true
+            fi
+            ;;
+        *) 
+            print_error "Unsupported system: $(uname -s)"
+            exit 1
+            ;;
+    esac
+    
+    # Check if we have home-manager
+    if command -v home-manager >/dev/null 2>&1; then
+        has_home_config=true
+    fi
+    
+    echo "${system_type}:${has_system_config}:${has_home_config}"
+}
+
+# Function to detect current home-manager configuration
+detect_home_config() {
+    local username="$(whoami)"
+    local system_type="$1"
+    
+    # Check if we're in a known work environment
+    local config_type="personal"
+    if [ "$username" = "toma" ]; then
+        config_type="work"
+    elif [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "$(ps -o comm= -p $PPID)" = "sshd" ]; then
+        # Likely an SSH session to a server
+        config_type="server"
+    fi
+    
+    echo "${username}@${config_type}"
+}
+
+# Function to detect current system configuration
+detect_system_config() {
+    echo "$(hostname)"
+}
+
+# Function to check if configuration exists in flake
+check_config_exists() {
+    local config_type="$1"  # "system" or "home"
+    local config_name="$2"
+    local flake_dir="${HOME}/.config/nixpkgs"
+    
+    if [ ! -f "${flake_dir}/flake.nix" ]; then
+        print_error "Flake not found at ${flake_dir}/flake.nix"
+        exit 1
+    fi
+    
+    local flake_attr=""
+    case "$config_type" in
+        system)
+            case "$(uname -s)" in
+                Darwin) flake_attr="darwinConfigurations" ;;
+                Linux) flake_attr="nixosConfigurations" ;;
+            esac
+            ;;
+        home)
+            flake_attr="homeConfigurations"
+            ;;
+    esac
+    
+    # Check if the configuration exists in the flake
+    local config_exists=$(nix eval "${flake_dir}#${flake_attr}" --apply "builtins.hasAttr \"${config_name}\"" 2>/dev/null)
+    if [ "$config_exists" != "true" ]; then
+        print_error "Configuration '${config_name}' not found in ${flake_attr}"
+        print_info "Available configurations:"
+        nix eval "${flake_dir}#${flake_attr}" --apply builtins.attrNames
+        exit 1
+    fi
+}
+
+# Function to update flake inputs
+update_flake() {
+    local flake_dir="${HOME}/.config/nixpkgs"
+    
+    print_info "Updating flake inputs..."
+    if ! nix flake update --flake "$flake_dir"; then
+        print_error "Failed to update flake inputs"
+        exit 1
+    fi
+}
+
+# Function to update system configuration
+update_system() {
+    local config_name="$1"
+    local flake_dir="${HOME}/.config/nixpkgs"
+    
+    print_info "Switching to system configuration: ${bold}${config_name}${reset}"
+    
+    case "$(uname -s)" in
+        Darwin)
+            if ! sudo darwin-rebuild switch --flake "${flake_dir}#${config_name}"; then
+                print_error "Failed to switch to darwin configuration '${config_name}'"
+                exit 1
+            fi
+            ;;
+        Linux)
+            if ! sudo nixos-rebuild switch --flake "${flake_dir}#${config_name}"; then
+                print_error "Failed to switch to nixos configuration '${config_name}'"
+                exit 1
+            fi
+            ;;
+    esac
+    
+    print_success "Successfully updated system configuration '${config_name}'"
+}
+
+# Function to update home-manager configuration
+update_home() {
+    local config_name="$1"
+    local flake_dir="${HOME}/.config/nixpkgs"
+    
+    print_info "Switching to home-manager configuration: ${bold}${config_name}${reset}"
+    if ! home-manager switch --flake "${flake_dir}#${config_name}"; then
+        print_error "Failed to switch to home-manager configuration '${config_name}'"
+        exit 1
+    fi
+    
+    print_success "Successfully updated home-manager configuration '${config_name}'"
+}
+
+# Function to show available update modes
+show_modes() {
+    local system_info="$1"
+    local system_type="$(echo "$system_info" | cut -d: -f1)"
+    local has_system="$(echo "$system_info" | cut -d: -f2)"
+    local has_home="$(echo "$system_info" | cut -d: -f3)"
+    
+    print_info "Available update modes on ${system_type}:"
+    
+    if [ "$has_system" = "true" ]; then
+        case "$system_type" in
+            darwin) print_info "  ${bold}system${reset} - Update nix-darwin system configuration" ;;
+            linux) print_info "  ${bold}system${reset} - Update NixOS system configuration" ;;
+        esac
+    fi
+    
+    if [ "$has_home" = "true" ]; then
+        print_info "  ${bold}home${reset} - Update home-manager configuration"
+    fi
+    
+    print_info "  ${bold}both${reset} - Update both system and home-manager (if available)"
+}
+
+# Main execution
+main() {
+    local mode="$1"
+    local config_override="$2"
+    
+    # Detect system capabilities
+    local system_info="$(detect_system)"
+    local system_type="$(echo "$system_info" | cut -d: -f1)"
+    local has_system="$(echo "$system_info" | cut -d: -f2)"
+    local has_home="$(echo "$system_info" | cut -d: -f3)"
+    
+    # Default mode selection
+    if [ -z "$mode" ]; then
+        if [ "$has_system" = "true" ] && [ "$has_home" = "true" ]; then
+            mode="both"
+        elif [ "$has_system" = "true" ]; then
+            mode="system"
+        elif [ "$has_home" = "true" ]; then
+            mode="home"
+        else
+            print_error "No nix configurations available (no darwin-rebuild, nixos-rebuild, or home-manager found)"
+            exit 1
+        fi
+    fi
+    
+    print_info "Update mode: ${bold}${mode}${reset}"
+    
+    # Update flake inputs once
+    update_flake
+    
+    # Handle different modes
+    case "$mode" in
+        system)
+            if [ "$has_system" != "true" ]; then
+                print_error "System configuration not available on this system"
+                exit 1
+            fi
+            
+            local system_config="${config_override:-$(detect_system_config "$system_type")}"
+            check_config_exists "system" "$system_config"
+            update_system "$system_config"
+            ;;
+            
+        home)
+            if [ "$has_home" != "true" ]; then
+                print_error "Home-manager not available on this system"
+                exit 1
+            fi
+            
+            local home_config="${config_override:-$(detect_home_config "$system_type")}"
+            check_config_exists "home" "$home_config"
+            update_home "$home_config"
+            ;;
+            
+        both)
+            if [ "$has_system" = "true" ]; then
+                local system_config="$(detect_system_config "$system_type")"
+                check_config_exists "system" "$system_config"
+                update_system "$system_config"
+            fi
+            
+            if [ "$has_home" = "true" ]; then
+                local home_config="$(detect_home_config "$system_type")"
+                check_config_exists "home" "$home_config"
+                update_home "$home_config"
+            fi
+            ;;
+            
+        *)
+            print_error "Invalid mode: $mode"
+            show_modes "$system_info"
+            exit 1
+            ;;
+    esac
+}
+
+# Show help if requested
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    cat << EOF
+Usage: $0 [MODE] [CONFIG_NAME]
+
+Detects and upgrades nix configurations (system and/or home-manager).
+
+MODES:
+  system    Update system configuration (nix-darwin/NixOS)
+  home      Update home-manager configuration  
+  both      Update both system and home-manager (default if both available)
+
+If CONFIG_NAME is provided, uses that configuration instead of auto-detection.
+
+Auto-detection logic:
+  System configs: hostname
+  Home configs: toma@work (macOS), username@server (SSH), username@personal (default)
+
+Examples:
+  $0                        # Auto-detect mode and configs
+  $0 system                 # Update system only
+  $0 home                   # Update home-manager only  
+  $0 both                   # Update both
+  $0 home toma@server       # Update specific home config
+  $0 system apollo          # Update specific system config
+
+EOF
+    exit 0
+fi
+
+main "$@"

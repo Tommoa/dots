@@ -1,5 +1,5 @@
 {
-  description = "Tom's nix systems";
+  description = "Tom's modular nix systems";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
@@ -13,68 +13,109 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
-  outputs = inputs@{ nixpkgs, nix-darwin, home-manager, ... }: {
-    homeConfigurations."toma" = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {
-        system = "aarch64-darwin";
-        config.allowUnfree = true;
-        overlays = [
-          (import ./overlays)
-        ];
-      };
-      modules = [
-        ./home.nix
-        {
-          home.username = "toma";
-          home.homeDirectory = "/Users/toma";
-        }
-      ];
-    };
-
-    homeConfigurations."tommoa" = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-      modules = [
-        ./home.nix
-        {
-          home.username = "tommoa";
-          home.homeDirectory = "/home/tommoa";
-        }
-      ];
-    };
-
-    darwinConfigurations."apollo" = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [
-        ./darwin/configuration.nix
-        home-manager.darwinModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.toma = { ... }: {
-            imports = [ ./home.nix ];
-            home.enableGraphical = true;
+  outputs = inputs@{ nixpkgs, nix-darwin, home-manager, ... }:
+    let
+      # Helper function to create home-manager configurations
+      mkHomeConfig = { username, homeDirectory, system, profiles ? [ "base" "development" ] }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [ (import ./overlays) ];
           };
-        }
-      ];
-      specialArgs = { inherit inputs; };
-    };
+          modules = [
+            {
+              home.username = username;
+              home.homeDirectory = homeDirectory;
+              nixpkgs.config.allowUnfree = true;
+            }
+          ] ++ map (profile: ./modules/home-manager/profiles/${profile}.nix) profiles;
+        };
 
-    nixosConfigurations."james" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./nixos/configuration.nix
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.tommoa = { ... }: {
-            imports = [ ./home.nix ];
-            home.enableGraphical = true;
-          };
-        }
-      ];
-      specialArgs = { inherit inputs; name = "james"; };
+      # Helper function to create darwin configurations
+      mkDarwinConfig = { hostConfig, username, homeDirectory, homeProfiles ? [ "base" "development" "desktop" ] }:
+        nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            hostConfig
+            home-manager.darwinModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = { ... }: {
+                imports = map (profile: ./modules/home-manager/profiles/${profile}.nix) homeProfiles;
+                home.username = username;
+                home.homeDirectory = homeDirectory;
+              };
+            }
+          ];
+          specialArgs = { inherit inputs; };
+        };
+
+      # Helper function to create nixos configurations  
+      mkNixosConfig = { hostConfig, username, homeDirectory, homeProfiles ? [ "base" "development" "desktop" ] }:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            hostConfig
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = { ... }: {
+                imports = map (profile: ./modules/home-manager/profiles/${profile}.nix) homeProfiles;
+                home.username = username;
+                home.homeDirectory = homeDirectory;
+              };
+            }
+          ];
+          specialArgs = { inherit inputs; };
+        };
+    in
+    {
+      # Standalone home-manager configurations
+      homeConfigurations = {
+        # Work desktop (macOS)
+        "toma@work" = mkHomeConfig {
+          username = "toma";
+          homeDirectory = "/Users/toma";
+          system = "aarch64-darwin";
+          profiles = [ "base" "development" "desktop" ];
+        };
+
+        # Personal desktop (Linux)
+        "tommoa@personal" = mkHomeConfig {
+          username = "tommoa";
+          homeDirectory = "/home/tommoa";
+          system = "x86_64-linux";
+          profiles = [ "base" "development" "desktop" ];
+        };
+
+        # Server deployments (headless)
+        "toma@server" = mkHomeConfig {
+          username = "toma";
+          homeDirectory = "/home/toma";
+          system = "x86_64-linux";
+          profiles = [ "base" "development" "server" ];
+        };
+
+        "tommoa@server" = mkHomeConfig {
+          username = "tommoa";
+          homeDirectory = "/home/tommoa";
+          system = "x86_64-linux";
+          profiles = [ "base" "development" "server" ];
+        };
+      };
+
+      # System configurations
+      darwinConfigurations."apollo" = mkDarwinConfig {
+        hostConfig = ./hosts/apollo.nix;
+        username = "toma";
+        homeDirectory = "/Users/toma";
+      };
+
+      nixosConfigurations."james" = mkNixosConfig {
+        hostConfig = ./hosts/james.nix;
+        username = "tommoa";
+        homeDirectory = "/home/tommoa";
+      };
     };
-  };
 }

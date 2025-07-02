@@ -1,46 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [
-    ../common/nix.nix
-    ../common/fonts.nix
-  ];
-
-  # Override some packages for some specific changes for macOS
-  # See ~/.config/nixpkgs/overlays for the actual changes
-  nixpkgs.overlays = [
-    (import ../overlays)
-  ];
-
-  # Packages that should be installed in the system
-  environment.systemPackages = with pkgs; [
-    neovim
-  ];
-
-  # TODO: Migrate yabai/dock/skhd config to home-manager.
-  system.primaryUser = "toma";
-  users.users.toma = {
-    description = "Tom Hill Almeida";
-    home = "/Users/toma";
-    shell = pkgs.zsh;
-    packages = with pkgs; [
-      chatgpt
-    ];
-  };
-
-  system.keyboard = {
-    enableKeyMapping = true;
-    remapCapsLockToEscape = true;
-  };
-
-  system.defaults.dock = {
-    autohide = true;
-    showhidden = true;
-    show-recents = false;
-  };
-
-  system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
-
   services.yabai = {
     enable = true;
     package = pkgs.yabai;
@@ -89,15 +49,4 @@
     enable = true;
     package = pkgs.skhd;
   };
-
-  programs.zsh.enable = true;
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 5;
 }

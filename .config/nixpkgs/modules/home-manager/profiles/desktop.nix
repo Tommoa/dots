@@ -2,21 +2,21 @@
 
 {
   home.packages = with pkgs; [
-    # terminal + editing
+    # Terminal applications
     alacritty
     
-    # applications
+    # Desktop applications
     obsidian
     spotify
     
-    # messaging
+    # Messaging
     caprine
     discord
-    (if lib.strings.hasInfix "linux" pkgs.system then whatsapp-for-linux else whatsapp-for-mac)
+    (if pkgs.stdenv.isLinux then whatsapp-for-linux else whatsapp-for-mac)
   ];
 
   gtk = {
-    enable = pkgs.lib.strings.hasInfix "linux" pkgs.system;
+    enable = pkgs.stdenv.isLinux;
     iconTheme = {
       name = "Pop-dark";
       package = pkgs.pop-icon-theme;

@@ -12,7 +12,7 @@
     gc = {
       automatic = true;
       options = "--delete-older-than 1w";
-    } // (if lib.strings.hasInfix "linux" pkgs.system then {
+    } // (if pkgs.stdenv.isLinux then {
       # dates only exists on Linux.
       dates = "weekly";
     } else {
@@ -26,7 +26,7 @@
     });
     optimise = {
       automatic = true;
-    } // (if lib.strings.hasInfix "linux" pkgs.system then {
+    } // (if pkgs.stdenv.isLinux then {
       dates = [ "04:00" ];
     } else {
       # Optimise the store every day.

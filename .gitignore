@@ -18,6 +18,7 @@
 !/bin/currency-convert
 !/bin/up
 !/bin/update-mail
+!/bin/update-nix
 !/lib
 /lib/python/__pycache__/*
 !/.config

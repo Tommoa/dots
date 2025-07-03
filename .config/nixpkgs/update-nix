@@ -5,6 +5,9 @@
 
 set -e
 
+# Nix command flags for experimental features
+NIX_FLAGS="--extra-experimental-features nix-command --extra-experimental-features flakes"
+
 # Colors for output
 blue=$'\033[38;5;4m'
 green=$'\033[38;5;85m'
@@ -109,11 +112,11 @@ check_config_exists() {
     esac
     
     # Check if the configuration exists in the flake
-    local config_exists=$(nix eval "${flake_dir}#${flake_attr}" --apply "builtins.hasAttr \"${config_name}\"" 2>/dev/null)
+    local config_exists=$(nix eval ${NIX_FLAGS} "${flake_dir}#${flake_attr}" --apply "builtins.hasAttr \"${config_name}\"" 2>/dev/null)
     if [ "$config_exists" != "true" ]; then
         print_error "Configuration '${config_name}' not found in ${flake_attr}"
         print_info "Available configurations:"
-        nix eval "${flake_dir}#${flake_attr}" --apply builtins.attrNames
+        nix eval ${NIX_FLAGS} "${flake_dir}#${flake_attr}" --apply builtins.attrNames
         exit 1
     fi
 }
@@ -123,7 +126,7 @@ update_flake() {
     local flake_dir="${HOME}/.config/nixpkgs"
     
     print_info "Updating flake inputs..."
-    if ! nix flake update --flake "$flake_dir"; then
+    if ! nix flake update ${NIX_FLAGS} --flake "$flake_dir"; then
         print_error "Failed to update flake inputs"
         exit 1
     fi
@@ -160,7 +163,7 @@ update_home() {
     local flake_dir="${HOME}/.config/nixpkgs"
     
     print_info "Switching to home-manager configuration: ${bold}${config_name}${reset}"
-    if ! home-manager switch --flake "${flake_dir}#${config_name}"; then
+    if ! home-manager switch ${NIX_FLAGS} --flake "${flake_dir}#${config_name}"; then
         print_error "Failed to switch to home-manager configuration '${config_name}'"
         exit 1
     fi

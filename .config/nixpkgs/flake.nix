@@ -94,7 +94,15 @@
           username = "toma";
           homeDirectory = "/home/toma";
           system = "x86_64-linux";
-          profiles = [ "base" "development" "server" ];
+          # c/cpp not allowed as they would shadow the work tools.
+          profiles = [
+            "base"
+            "development/ai-tools"
+            "development/javascript"
+            "development/lua"
+            "development/nix"
+            "development/python"
+          ];
         };
 
         "tommoa@server" = mkHomeConfig {

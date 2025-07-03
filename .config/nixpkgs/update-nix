@@ -72,11 +72,11 @@ detect_home_config() {
     
     # Check if we're in a known work environment
     local config_type="personal"
-    if [ "$username" = "toma" ]; then
-        config_type="work"
-    elif [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "$(ps -o comm= -p $PPID)" = "sshd" ]; then
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ "$(ps -o comm= -p $PPID)" = "sshd" ]; then
         # Likely an SSH session to a server
         config_type="server"
+    elif [ "$username" = "toma" ]; then
+        config_type="work"
     fi
     
     echo "${username}@${config_type}"

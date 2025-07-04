@@ -15,9 +15,6 @@
 
     # Terminal editing
     neovim
-
-    # Nix
-    lix
   ];
 
   home.stateVersion = "25.05";

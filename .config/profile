@@ -69,7 +69,13 @@ then
     export PATH="${CARGO_HOME}/bin:${PATH}"
 fi
 
-[ -e "${CARGO_HOME}/env" ] && . "${CARGO_HOME}/env"
+if [ -e "${CARGO_HOME}/env" ]
+then
+    . "${CARGO_HOME}/env"
+fi
 
 # If there's a profile for this specific host, then source it
-[ -e "${HOME}/.config/$(uname -n).profile" ] && . "${HOME}/.config/$(uname -n).profile"
+if [ -e "${HOME}/.config/$(uname -n).profile" ]
+then
+    . "${HOME}/.config/$(uname -n).profile"
+fi

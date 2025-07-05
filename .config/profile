@@ -11,10 +11,6 @@ if [ -d "${HOME}/.nix-profile/etc/profile.d" ]; then
     done
 fi
 
-if [ -e "${HOME}/.guix-profile/etc/profile" ]; then
-   . "${HOME}/.guix-profile/etc/profile"
-fi
-
 export ENV="${HOME}/.env"
 export EDITOR="nvim"
 export PAGER="less"
@@ -49,6 +45,11 @@ fi
 if [ -e "${HOME}/.config/ai-keys/anthropic" ]
 then
     export ANTHROPIC_API_KEY=$(cat "${HOME}/.config/ai-keys/anthropic")
+fi
+
+if [ -e "${HOME}/.config/ai-keys/openrouter" ]
+then
+    export OPENROUTER_API_KEY=$(cat "${HOME}/.config/ai-keys/openrouter")
 fi
 
 case "$(uname)" in

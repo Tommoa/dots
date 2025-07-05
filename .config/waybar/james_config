@@ -44,7 +44,8 @@
         "tooltip": false
     },
     "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon0/temp1_input",
+        "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+        "input-filename": "temp1_input",
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": [

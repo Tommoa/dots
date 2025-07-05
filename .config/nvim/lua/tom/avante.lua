@@ -20,6 +20,20 @@ require('avante').setup {
             __inherited_from = "openai",
             model = "o4-mini",
         },
+        claude = {
+            api_key_name = { 'cat', '~/.config/ai-keys/anthropic' },
+        },
+        openrouter = {
+            __inherited_from = "openai",
+            endpoint = "https://openrouter.ai/api/v1",
+            api_key_name = { 'cat', '~/.config/ai-keys/openrouter' },
+            timeout = 30000, -- Timeout in milliseconds
+            context_window = 200000,
+            extra_request_body = {
+                temperature = 0.75,
+                max_tokens = 64000,
+            },
+        },
         ollama = {
             model = 'gemini3:4b',
         },
